@@ -1,0 +1,3 @@
+apt-get:
+
+avahi-daemon - for assigning .local domains on LAN

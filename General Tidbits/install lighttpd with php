@@ -1,0 +1,5 @@
+#for RPi. If not, adjust username below.
+#yes, I know it's quick and dirty. But it works. Who are you to judge.
+
+sudo apt-get update && echo ----update complete---- && sudo apt-get upgrade -y && echo ----upgrade complete---- && sudo apt-get -y install lighttpd && echo ----lighttpd install complete---- && sudo apt-get -y install php5-common php5-cgi php5 && echo ----php install complete---- && sudo lighty-enable-mod fastcgi-php && echo ----fastcgi phpmod complete---- && sudo service lighttpd force-reload && echo ----lighttpd force reloaded---- && echo install complete! && echo ----setting permissions now---- && sudo chown www-data:www-data /var/www && sudo chmod 775 /var/www && sudo usermod -a -G www-data pi && cd ~ && sudo ln -s /var/www www && echo ---- Permissions modified, link created---- && clear && echo ==========mission complete: webserver installed==========;
+echo hi;

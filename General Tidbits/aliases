@@ -1,0 +1,3 @@
+cdls = change dir and then display it's output
+
+alias cdls="cd $1; ls"

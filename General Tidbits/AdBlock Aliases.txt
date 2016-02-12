@@ -1,0 +1,36 @@
+For DNS Server
+
+#For quick whitelist adds (main server, dir structure dif on RPi)
+alias whitelist="
+
+whitelist() {
+    echo $1 >> ~/whitelist.txt;
+    echo ; 
+    echo Adding $1 to the whitelist;
+    echo Please wait.....;
+    sudo ./gravity.sh > /dev/null;
+    echo ;
+    echo $1 added to whitelist successfully;
+    echo ; 
+}
+
+refresh() {
+    echo ; 
+    echo Refreshing the DNS service;
+    echo Please wait.....;
+    sudo ./gravity.sh > /dev/null;
+    echo ;
+    echo refreshed successfully;
+    echo ; 
+}
+
+blacklist() {
+    echo $1 >> ~/blacklist.txt;
+    echo ; 
+    echo Adding $1 to the blacklist;
+    echo Please wait.....;
+    sudo ./gravity.sh > /dev/null;
+    echo ;
+    echo $1 added to blacklist successfully;
+    echo ; 
+}

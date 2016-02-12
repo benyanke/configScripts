@@ -1,0 +1,7 @@
+sudo apt-get install ruby
+wget http://martin.ankerl.com/files/e
+chmod a+x e
+sudo mv e /usr/local/bin
+
+
+#from http://martin.ankerl.com/2006/08/11/program-e-extract-any-archive/

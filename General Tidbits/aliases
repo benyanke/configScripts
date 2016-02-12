@@ -1,5 +1,19 @@
-cdls = change dir and then display it's output
+#add this to .bashrc in home dir
 
+#cdls: change dir and then display it's output
 alias cdls="cd $1; ls;"
 
+#In case it isn't already there
+alias l="ls;"
+
+#another ls mod
+alias la="ls -a"
+
+#upg: upgrade all packages after updating repo
 alias upg="sudo apt-get update; sudo apt-get upgrade -y;"
+
+#Get man pages from all sections
+alias man="man -a"
+
+#better formatted ls
+alias ts='ls -lhart'

@@ -1,3 +1,11 @@
 apt-get:
 
 avahi-daemon - for assigning .local domains on LAN
+tmux - terminal multiplexer - commands: http://www.dayid.org/comp/tm.html
+
+other:
+ssh-copy-id - http://linux.die.net/man/1/ssh-copy-id ssh key management
+
+
+Other things:
+http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/

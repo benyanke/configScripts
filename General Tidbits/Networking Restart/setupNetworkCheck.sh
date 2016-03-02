@@ -1,6 +1,7 @@
 #!/bin/bash
 
-## Run this: wget https://raw.githubusercontent.com/benyanke/configScripts/master/General%20Tidbits/Networking%20Restart/setupNetworkCheck.sh && sudo chmod 111 setupNetworkCheck.sh && sudo ./setupNetworkCheck.sh && sudo rm setupNetworkCheck.sh && echo COMPLETE;
+## Run this: 
+## sudo cat * && sudo wget https://raw.githubusercontent.com/benyanke/configScripts/master/General%20Tidbits/Networking%20Restart/setupNetworkCheck.sh && sudo chmod 111 setupNetworkCheck.sh && sudo ./setupNetworkCheck.sh && sudo rm setupNetworkCheck.sh && echo COMPLETE && exit; echo ERROR;
 
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"

@@ -12,4 +12,6 @@ if [ "$EUID" -ne 0 ]
 fi
 
 
-ping -c 2 8.8.8.8 > /dev/null && echo "up" > /dev/null || ifdown eth0 && ifup eth0
+#ping -c 2 8.8.8.8 > /dev/null && echo "up" > /dev/null || ifdown eth0 && ifup eth0
+
+ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && echo "ok" > /dev/null || ifdown eth0 && ifup eth0

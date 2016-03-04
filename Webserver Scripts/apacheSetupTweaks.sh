@@ -14,7 +14,7 @@ USER=benyanke
 WEBDIR=/var/www
 
 # Set proper permissions
-adduser $USER $WEBDIR
+adduser $USER www-data
 chown $USER:www-data -R $WEBDIR
 chmod u=rwX,g=rwX,o=rX -R $WEBDIR
 

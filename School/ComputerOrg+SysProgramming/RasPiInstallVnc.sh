@@ -12,13 +12,13 @@ fi
 # Check if internet access is present
 wget -q --tries=10 --timeout=20 --spider http://google.com
 if [[ $? -eq 0 ]]; then
-	# Do nothing! Connected to the internet successfully
+	echo "Installing VNC now....";
 else
 	echo "You are offline. Please connect to internet before continuing."
 	exit 1
 fi
 
-echo "Installing VNC now....";
+
 
 # update apt-get's local package list
 apt-get update >/dev/null 2>&1
@@ -26,6 +26,7 @@ apt-get update >/dev/null 2>&1
 #install the VNC server
 apt-get install x11vnc -y  >/dev/null 2>&1
 
+mkdir /home/pi/.config
 mkdir /home/pi/.config/autostart
 touch /home/pi/.config/autostart/x11vnc.desktop
 

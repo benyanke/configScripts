@@ -44,7 +44,7 @@ echo "StartupNotify=false" >> /home/pi/.config/autostart/x11vnc.desktop
 echo "Terminal=false" >> /home/pi/.config/autostart/x11vnc.desktop
 echo "Hidden=false" >> /home/pi/.config/autostart/x11vnc.desktop
 
-echo "Set up successfully. Your IP is:"
+printf "\n\nVNC set up successfully. You can try connecting to it now. Your currently active IPs are:"
 ifconfig | perl -nle 's/dr:(\S+)/print $1/e'
 
 # - sudo apt-get install x11vnc

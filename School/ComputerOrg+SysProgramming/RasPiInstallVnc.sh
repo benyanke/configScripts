@@ -12,13 +12,14 @@ fi
 # Check if internet access is present
 wget -q --tries=10 --timeout=20 --spider http://google.com
 if [[ $? -eq 0 ]]; then
-	# Do nothing! Connected to the internet successfully
+	# Connected to the internet successfully
+	echo "Installing VNC now....";
 else
 	echo "You are offline. Please connect to internet before continuing."
 	exit 1
 fi
 
-echo "Installing VNC now....";
+
 
 # update apt-get's local package list
 apt-get update >/dev/null 2>&1

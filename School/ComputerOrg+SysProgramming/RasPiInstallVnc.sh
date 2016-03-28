@@ -12,7 +12,6 @@ fi
 # Check if internet access is present
 wget -q --tries=10 --timeout=20 --spider http://google.com
 if [[ $? -eq 0 ]]; then
-	# Connected to the internet successfully
 	echo "Installing VNC now....";
 else
 	echo "You are offline. Please connect to internet before continuing."
@@ -27,7 +26,12 @@ apt-get update >/dev/null 2>&1
 #install the VNC server
 apt-get install x11vnc -y  >/dev/null 2>&1
 
-mkdir /home/pi/.config/autostart
+#setup server with password
+echo "You will now be asked for a password for your VNC server. Please write it down!"
+x11vnc -storepasswd
+
+
+mkdir -p /home/pi/.config/autostart
 touch /home/pi/.config/autostart/x11vnc.desktop
 
 echo "[Desktop Entry]" > /home/pi/.config/autostart/x11vnc.desktop
@@ -39,6 +43,9 @@ echo "Exec=x11vnc -forever -usepw -display :0 -ultrafilexfer" >> /home/pi/.confi
 echo "StartupNotify=false" >> /home/pi/.config/autostart/x11vnc.desktop
 echo "Terminal=false" >> /home/pi/.config/autostart/x11vnc.desktop
 echo "Hidden=false" >> /home/pi/.config/autostart/x11vnc.desktop
+
+echo "Set up successfully. Your IP is:"
+ifconfig | perl -nle 's/dr:(\S+)/print $1/e'
 
 # - sudo apt-get install x11vnc
 # - x11vnc -storepasswd

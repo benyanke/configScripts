@@ -1,0 +1,1 @@
+sudo chown $USER:$(id -gn) $HOME/.nano_history

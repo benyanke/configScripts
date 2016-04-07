@@ -1,0 +1,19 @@
+# create a block storage drive
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer b843f533071508dcf464104c54b0b74d546f94db77251d6f0a278b199a78421e" -d '{"size_gigabytes":64, "name": "Website Backups (big)", "description": "Block Storage drive to store website backups. A second big drive.", "region": "nyc1"}' "https://api.digitalocean.com/v2/drives"
+
+
+#List drives
+
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer b843f533071508dcf464104c54b0b74d546f94db77251d6f0a278b199a78421e" "https://api.digitalocean.com/v2/drives?region=nyc1"
+
+
+
+
+#attach drive to droplet
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer b843f533071508dcf464104c54b0b74d546f94db77251d6f0a278b199a78421e" -d '{"droplet_id": 12613601}' "https://api.digitalocean.com/v2/drives/7a1b1dac-fae2-11e5-b627-000f53315860/attachments"
+
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer b843f533071508dcf464104c54b0b74d546f94db77251d6f0a278b199a78421e" -d '{"droplet_id": 12613601}' "https://api.digitalocean.com/v2/drives/b5d63e90-fae2-11e5-8fbc-000f53315870/attachments"
+
+
+# List droplets
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer b843f533071508dcf464104c54b0b74d546f94db77251d6f0a278b199a78421e" "https://api.digitalocean.com/v2/droplets?page=1&per_page=10"

@@ -1,0 +1,22 @@
+sudo mkdir /media/backups
+sudo mkdir /media/backupsLarge
+
+
+/dev/sda
+/dev/sdb
+
+
+
+sudo fdisk /dev/sdb
+
+sudo mkfs -t ext3 /dev/sda1
+sudo mkfs -t ext3 /dev/sdb1
+
+
+sudo mount /dev/sda /media/backups
+
+sudo mount -t ext3 /dev/sda1 /media/backups
+sudo mount -t ext3 /dev/sdb1 /media/backupsLarge
+
+sudo chown -R benyanke:benyanke /media/backups
+sudo chown -R benyanke:benyanke /media/backupsLarge

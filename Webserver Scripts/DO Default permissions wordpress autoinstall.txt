@@ -1,1 +1,8 @@
+
+#MAKE SURE TO RUN IN WEB ROOT, NOT ELSEWHERE
+
+# Ensure all files owned by www-data
 sudo chown -R www-data:www-data /var/www
+
+# modify all file permissions to proper
+sudo find . -type f -exec chmod 664 {} \

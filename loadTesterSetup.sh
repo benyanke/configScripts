@@ -13,7 +13,7 @@ step() { sed 's/^/[] /'; }
 subStep() { sed 's/^/      /'; }
 
 # Username to run tests under
-testUser="loadtest"
+testUser="loadtest1"
 
 ########################
 # Main

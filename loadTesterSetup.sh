@@ -35,7 +35,7 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-echo "Downloading packages." | step
+echo "Installing packages." | step
 apt-get install apache2-utils -y >/dev/null 2>&1
 if [ $? -ne 0 ]; then
 	echo "Packages could not be downloaded." | subStep

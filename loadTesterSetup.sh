@@ -6,11 +6,14 @@ if [ "$EUID" -ne 0 ]
 fi
 
 ########################
-# Functions
+# Functions and Variables
 ########################
 
 step() { sed 's/^/[] /'; }
 subStep() { sed 's/^/      /'; }
+
+# Username to run tests under
+testUser="loadtest"
 
 ########################
 # Main
@@ -44,3 +47,12 @@ if [ $? -ne 0 ]; then
 	echo "Packages could not be downloaded." | subStep
 	exit 1
 fi
+
+
+echo "Creating user for testing." | step
+useradd -m -d /home/$testUser -s /bin/bash -g sudo $testUser  >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+	echo "User could not be created." | subStep
+	exit 1
+fi
+

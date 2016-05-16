@@ -17,13 +17,14 @@ stopOutput() { echo $1; }
 # Main
 ########################
 
-
+echo "Updating package repository" | step
 apt-get update | stopOutput
 if [ $? -ne 0 ]; then
-	echo "Could not update packages." | subStep
+	echo "Could not update package repository." | subStep
 	exit 1
 fi
 
+echo "Downloading packages." | step
 apt-get install apache2-utils -y | stopOutput
 if [ $? -ne 0 ]; then
 	echo "Packages could not be downloaded." | subStep

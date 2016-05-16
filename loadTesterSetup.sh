@@ -51,7 +51,6 @@ fi
 
 echo "Creating user for testing." | step
 
-
 getent passwd testUser  > /dev/null
 if [ $? -eq 0 ]; then
 	# User already exists

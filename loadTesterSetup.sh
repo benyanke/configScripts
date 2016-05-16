@@ -11,11 +11,22 @@ fi
 
 step() { sed 's/^/[] /'; }
 subStep() { sed 's/^/      /'; }
-stopOutput() { echo $1; }
 
 ########################
 # Main
 ########################
+clear;
+
+echo ;
+echo "WEB LOAD TEST INSTALLER";
+echo ;
+echo "Tested on Ubuntu Server.";
+echo ;
+echo "For more information, visit:";
+echo "https://github.com/benyanke";
+echo ;
+echo "########################"
+echo ;
 
 echo "Updating package repository" | step
 apt-get update >/dev/null 2>&1

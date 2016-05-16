@@ -17,6 +17,9 @@ subStep() { sed 's/^/      /'; }
 ########################
 clear;
 
+# Based on:
+# https://www.digitalocean.com/community/tutorials/how-to-use-apachebench-to-do-load-testing-on-an-ubuntu-13-10-vps
+
 echo ;
 echo "WEB LOAD TEST INSTALLER";
 echo ;

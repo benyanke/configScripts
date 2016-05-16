@@ -64,3 +64,6 @@ if [ $? -ne 0 ]; then
 	echo "User could not be created." | subStep
 	exit 1
 fi
+
+
+# Script not yet complete

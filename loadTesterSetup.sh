@@ -50,9 +50,18 @@ fi
 
 
 echo "Creating user for testing." | step
+
+
+getent passwd testUser  > /dev/null
+if [ $? -eq 0 ]; then
+	# User already exists
+    echo "User already exists. Use another user for testing." | subStep
+    exit 1
+fi
+
+
 useradd -m -d /home/$testUser -s /bin/bash -g sudo $testUser  >/dev/null 2>&1
 if [ $? -ne 0 ]; then
 	echo "User could not be created." | subStep
 	exit 1
 fi
-

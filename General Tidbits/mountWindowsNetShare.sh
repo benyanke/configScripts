@@ -15,6 +15,6 @@ mount.cifs //server/share \
 -o user=user,\
 password=pw;
 
-ln -s /mnt /home/user/networkShares;
+# ln -s /mnt /home/user/networkShares;
 
 exit;

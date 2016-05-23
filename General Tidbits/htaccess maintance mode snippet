@@ -1,0 +1,39 @@
+################################################
+# MAINTENANCE-PAGE REDIRECT
+# uncomment all these lines to block all users
+# except the ip addr below
+################################################
+SetEnv maint_mode false
+
+############
+# Uncomment the next line to enable maintance mode
+############
+# SetEnv maint_mode true
+
+ <IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteCond %{ENV:maint_mode} true
+  
+  # addresses to exempt from public maintance mode page
+  RewriteCond %{REMOTE_ADDR} !^10\.10\.10\.10
+  RewriteCond %{REMOTE_ADDR} !^10\.10\.10\.10
+  RewriteCond %{REMOTE_ADDR} !^10\.10\.10\.10
+  
+  RewriteCond %{REQUEST_URI} !/maintenance.php$ [NC]
+  RewriteCond %{REQUEST_URI} !\.(jpe?g?|png|gif) [NC]
+  RewriteRule .* /maintenance.php [L]
+ </IfModule>
+
+###############################################
+# end maintenance mode
+###############################################
+
+
+################################
+# Reject all error log requests
+################################
+<Files "error_log">
+     Order allow,deny
+     Deny from all
+</Files>
+

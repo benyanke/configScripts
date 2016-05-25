@@ -1,0 +1,13 @@
+## Switch between HTTP and HTTPS ##
+$setSecureSite = true;
+
+$domain = "www.example.com";
+
+if ($setSecureSite) {
+	define('WP_HOME','https://' . $domain);
+	define('WP_SITEURL','https://' . $domain);
+} else {
+	define('WP_HOME','http://' . $domain);
+	define('WP_SITEURL','http://' . $domain);
+}
+

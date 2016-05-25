@@ -1,0 +1,12 @@
+## Move WP Content Directory ##
+
+$siteUrl = "http://example.com";
+$siteUrlPath = "/blog";
+
+define( 'WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . $siteUrlPath . '/wp-content' );
+define( 'WP_CONTENT_URL', $siteUrl . $siteUrlPath . '/wp-content');
+define( 'WP_PLUGIN_DIR', $_SERVER['DOCUMENT_ROOT'] . $siteUrlPath . '/wp-content/plugins' );
+define( 'WP_PLUGIN_URL', $siteUrl . $siteUrlPath . '/wp-content/plugins');
+
+unset($siteUrl);
+unset($siteUrlPath);

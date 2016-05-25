@@ -1,0 +1,6 @@
+## Manually override site url ##
+
+$siteBaseUrl = "https://example.com";
+define('WP_HOME', $siteBaseUrl);
+define('WP_SITEURL', $siteBaseUrl);
+unset($siteBaseUrl);

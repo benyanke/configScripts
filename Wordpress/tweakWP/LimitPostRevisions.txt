@@ -1,0 +1,2 @@
+## Set the number of post revisions to keep ##
+define('WP_POST_REVISIONS', 5);

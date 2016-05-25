@@ -1,0 +1,4 @@
+#!/bin/bash
+
+find /path/to/your/wordpress/install/ -type d -exec chmod 755 {} \;
+find /path/to/your/wordpress/install/ -type f -exec chmod 644 {} \;

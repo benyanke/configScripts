@@ -1,0 +1,2 @@
+## Change number of days posts stay in trash ##
+define('EMPTY_TRASH_DAYS', 7 ); 

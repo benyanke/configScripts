@@ -1,0 +1,5 @@
+## Stop File Editing within Interface ##
+define('DISALLOW_FILE_EDIT', true);
+
+## Stop All Forms of Editing and Updating ##
+define('DISALLOW_FILE_MODS', true);

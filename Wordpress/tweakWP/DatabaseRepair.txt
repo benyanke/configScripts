@@ -1,0 +1,4 @@
+## Enable database repair interface ##
+define('WP_ALLOW_REPAIR', true);
+
+// once enabled, visit http://www.yoursite.com/wp-admin/maint/repair.php

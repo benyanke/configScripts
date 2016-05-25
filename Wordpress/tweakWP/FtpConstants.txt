@@ -1,0 +1,20 @@
+## Set FTP user ##
+
+// forces the filesystem method: "direct", "ssh", "ftpext", or "ftpsockets"
+define('FS_METHOD', 'ftpext');
+// absolute path to root installation directory
+define('FTP_BASE', '/path/to/wordpress/');
+// absolute path to "wp-content" directory
+define('FTP_CONTENT_DIR', '/path/to/wordpress/wp-content/');
+// absolute path to "wp-plugins" directory
+define('FTP_PLUGIN_DIR ', '/path/to/wordpress/wp-content/plugins/');
+// absolute path to your SSH public key
+define('FTP_PUBKEY', '/home/username/.ssh/id_rsa.pub');
+// absolute path to your SSH private key
+define('FTP_PRIVKEY', '/home/username/.ssh/id_rsa');
+// either your FTP or SSH username
+define('FTP_USER', 'username');
+// password for FTP_USER username
+define('FTP_PASS', 'password');
+// hostname:port combo for your SSH/FTP server
+define('FTP_HOST', 'ftp.example.org:21'); 

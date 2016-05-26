@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt-get update;
+sudo apt-get upgrade -y;
 sudo apt-get install ubuntu-desktop x11vnc -y;
 sudo apt-get install build-essential -y; sudo apt-get install ubuntu-desktop -y
 

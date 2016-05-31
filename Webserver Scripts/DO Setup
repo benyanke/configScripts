@@ -1,0 +1,19 @@
+#!/bin/bash
+
+
+
+# Set vars
+USER=benyanke
+WEBDIR=/var/www
+
+adduser $USER sudo
+
+
+
+# Set proper permissions
+adduser $USER www-data
+chown $USER:www-data -R $WEBDIR
+chmod u=rwX,g=rwX,o=rX -R $WEBDIR
+
+# Add link to home directory
+ln -s  $WEBDIR /home/$USER/www

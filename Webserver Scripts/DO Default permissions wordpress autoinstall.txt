@@ -1,6 +1,10 @@
 
 #MAKE SURE TO RUN IN WEB ROOT, NOT ELSEWHERE
 
+
+# Add user to www-data
+usermod -a -G www-data benyanke
+
 # Ensure all files owned by www-data
 sudo chown -R www-data:www-data /var/www
 

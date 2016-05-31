@@ -5,5 +5,5 @@
 sudo chown -R www-data:www-data /var/www
 
 # modify all file permissions to proper
-sudo find . -type d -exec chmod 0775 {} \;
-sudo find . -type f -exec chmod 064 {} \;
+sudo find /var/www -type d -exec chmod 0775 {} \;
+sudo find /var/www -type f -exec chmod 0664 {} \;

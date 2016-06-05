@@ -17,6 +17,7 @@ chmod 600 /swapfile
 
 # make swap file
 mkswap /swapfile
+swapon /swapfile
 
 echo ; 
 echo ;
@@ -26,4 +27,12 @@ swapon -s
 echo "Press any key to continue"
 read dump;
 
-"\n/swapfile   none    swap    sw    0   0" >> /etc/fstab
+echo "/swapfile   none    swap    sw    0   0" >> /etc/fstab
+
+# turn down swappiness
+sysctl vm.swappiness=5
+echo "vm.swappiness=5" >> /etc/sysctl.conf
+
+# turn down the cache pressure
+sysctl vm.vfs_cache_pressure=50
+echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.conf

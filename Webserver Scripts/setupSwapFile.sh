@@ -31,8 +31,10 @@ echo "/swapfile   none    swap    sw    0   0" >> /etc/fstab
 
 # turn down swappiness
 sysctl vm.swappiness=5
+echo " " >> /etc/sysctl.conf
 echo "vm.swappiness=5" >> /etc/sysctl.conf
 
 # turn down the cache pressure
 sysctl vm.vfs_cache_pressure=50
+echo " " >> /etc/sysctl.conf
 echo "vm.vfs_cache_pressure = 50" >> /etc/sysctl.conf

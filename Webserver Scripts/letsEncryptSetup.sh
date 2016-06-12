@@ -12,7 +12,7 @@ echo "What domain should we use for this cert?";
 read domain;
 
 apt-get update >> /dev/null 2>&1;
-apt-get upgrade >> /dev/null 2>&1;
+apt-get upgrade -y >> /dev/null 2>&1;
 apt-get install git -y >> /dev/null 2>&1;
 git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt >> /dev/null 2>&1;
 cd /opt/letsencrypt;

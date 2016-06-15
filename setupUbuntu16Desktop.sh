@@ -53,7 +53,7 @@ apt-get dist-upgrade -y
 
 
 # CLI packages
-apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine1.8 winetricks
+apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks
 echo "### Installed CLI tools ###" > $homeDir/installedTools
 echo " - htop (process manager)" >> $homeDir/installedTools
 echo " - git (version control)" >> $homeDir/installedTools

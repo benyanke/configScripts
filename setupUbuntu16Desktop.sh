@@ -5,8 +5,7 @@
 
 # destination for papertrail logging
 #example: 
-# papertrailDest="logs12345.papertrailapp.com:12345"
-papertrailDest="logs12345.papertrailapp.com:12345
+papertrailDest="logs12345.papertrailapp.com:12345"
 
 
 # get current user, and home directory path
@@ -182,4 +181,5 @@ reownHome
 if [ -a /etc/rsyslog.conf ]; then
  "" >> /etc/rsyslog.conf
  "*.*          @" $papertrailDest >> /etc/rsyslog.conf
+ service rsyslog restart
 fi

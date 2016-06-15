@@ -6,6 +6,9 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Set up firewall
+ufw default deny incoming
+ufw default allow outgoing
+
 ufw allow 22
 ufw allow 80
 ufw allow 443

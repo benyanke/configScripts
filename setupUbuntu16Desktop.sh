@@ -148,15 +148,21 @@ ufw --force enable
 # Setup nightly package upgrade 
 
 #write out current crontab
+
+commandToRun="0 4 * * * apt-get update && apt-get dist-upgrade -y >/dev/null 2>&1"
+
 crontab -l > $tempDir/mycron
 #echo new cron into cron file
-echo "# Upgrade packages nightly" >> $tempDir/mycron
-echo "0 4 * * * apt-get update && apt-get dist-upgrade -y >/dev/null 2>&1" >> $tempDir/mycron
-echo "" >> $tempDir/mycron
-#install new cron file
-crontab $tempDir/mycron
-rm $tempDir/mycron
 
+ if ! grep -q $commandToRun "$tempDir/mycron"; then
+	echo "# Upgrade packages nightly" >> $tempDir/mycron
+	echo $commandToRun >> $tempDir/mycron
+	echo "" >> $tempDir/mycron
+	echo "" >> $tempDir/mycron
+	crontab $tempDir/mycron
+  fi
+
+rm $tempDir/mycron
 
 
 # Upgrade all packages before finishing

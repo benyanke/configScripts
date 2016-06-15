@@ -50,6 +50,11 @@ apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
 
+
+sudo apt-get update
+sudo apt-get install wine1.8
+sudo apt-get install winetricks
+
 # CLI packages
 apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw
 echo "### Installed CLI tools ###" > $homeDir/installedTools
@@ -59,7 +64,7 @@ echo " - openvpn (vpn)" >> $homeDir/installedTools
 echo " - tree (directory structure viewer)" >> $homeDir/installedTools
 echo " - jq (json formatter)" >> $homeDir/installedTools
 echo " - nmap (network mapping tool)" >> $homeDir/installedTools
-echo " - nmap (network mapping tool)" >> $homeDir/installedTools
+echo " - Wine (Windows API)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages

@@ -1,5 +1,14 @@
 #!/bin/bash
 
+
+#CHANGE THESE
+
+# destination for papertrail logging
+#example: 
+# papertrailDest="logs12345.papertrailapp.com:12345"
+papertrailDest="logs12345.papertrailapp.com:12345
+
+
 # get current user, and home directory path
 currentUser=$SUDO_USER
 tempDir="/home/$currentUser/temp"
@@ -166,3 +175,11 @@ gsettings set com.canonical.Unity.Launcher favorites "$newlist"
 su $currentUser -c "unity --replace"
 
 reownHome
+
+
+#Add to papertrail
+
+if [ -a /etc/rsyslog.conf ]; then
+ "" >> /etc/rsyslog.conf
+ "*.*          @" $papertrailDest >> /etc/rsyslog.conf
+fi

@@ -179,7 +179,7 @@ reownHome
 #Add to papertrail
 
 if [ -a /etc/rsyslog.conf ]; then
- "" >> /etc/rsyslog.conf
- "*.*          @" $papertrailDest >> /etc/rsyslog.conf
+ echo "" >> /etc/rsyslog.conf
+ echo "*.*          @$papertrailDest" >> /etc/rsyslog.conf
  service rsyslog restart
 fi

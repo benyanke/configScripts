@@ -45,18 +45,15 @@ gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.
 #############
 
 # Install packages
-add-apt-repository universe
+add-apt-repository ppa:ubuntu-wine/ppa -y
+add-apt-repository universe -y
 apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
 
 
-sudo apt-get update
-sudo apt-get install wine1.8
-sudo apt-get install winetricks
-
 # CLI packages
-apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw
+apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine1.8 winetricks
 echo "### Installed CLI tools ###" > $homeDir/installedTools
 echo " - htop (process manager)" >> $homeDir/installedTools
 echo " - git (version control)" >> $homeDir/installedTools

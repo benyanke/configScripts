@@ -43,13 +43,14 @@ apt-get upgrade -y
 apt-get dist-upgrade -y
 
 # CLI packages
-apt-get install -y htop git tree openvpn jq
+apt-get install -y htop git tree openvpn jq nmap
 echo "### Installed CLI tools ###" > $homeDir/installedTools
 echo " - htop (process manager)" >> $homeDir/installedTools
 echo " - git (version control)" >> $homeDir/installedTools
 echo " - openvpn (vpn)" >> $homeDir/installedTools
 echo " - tree (directory structure viewer)" >> $homeDir/installedTools
 echo " - jq (json formatter)" >> $homeDir/installedTools
+echo " - nmap (network mapping tool)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages

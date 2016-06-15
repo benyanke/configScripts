@@ -53,7 +53,7 @@ echo " - jq (json formatter)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla cheese vlc musescore minitube eclipse
+apt-get install -y inkscape gimp lyx audacity filezilla cheese vlc musescore minitube eclipse virtualbox
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -65,6 +65,7 @@ echo " - VLC (Media viewer)" >> $homeDir/installedTools
 echo " - MuseScore (Music Engraving)" >> $homeDir/installedTools
 echo " - MiniTube (Youtube Player)" >> $homeDir/installedTools
 echo " - Eclipse (Development)" >> $homeDir/installedTools
+echo " - Virtualbox (VMs)" >> $homeDir/installedTools
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1
@@ -154,4 +155,3 @@ gsettings set com.canonical.Unity.Launcher favorites "$newlist"
 su $currentUser -c "unity --replace"
 
 reownHome
-

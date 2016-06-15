@@ -177,9 +177,13 @@ reownHome
 
 
 #Add to papertrail
-
+# If computer uses rsyslog
 if [ -a /etc/rsyslog.conf ]; then
- echo "" >> /etc/rsyslog.conf
- echo "*.*          @$papertrailDest" >> /etc/rsyslog.conf
- service rsyslog restart
+# if it doesn't already contain papertrail logging
+ if ! grep -q $papertrailDest "/etc/rsyslog.conf"; then
+    echo "" >> /etc/rsyslog.conf
+    echo "*.*          @$papertrailDest" >> /etc/rsyslog.conf
+    service rsyslog restart
+  fi
 fi
+

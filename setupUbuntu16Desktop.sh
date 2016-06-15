@@ -43,7 +43,7 @@ apt-get upgrade -y
 apt-get dist-upgrade -y
 
 # CLI packages
-apt-get install -y htop git tree openvpn jq nmap dconf-tools 
+apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw
 echo "### Installed CLI tools ###" > $homeDir/installedTools
 echo " - htop (process manager)" >> $homeDir/installedTools
 echo " - git (version control)" >> $homeDir/installedTools
@@ -128,6 +128,13 @@ rm $tempdir/oc.key -f
 
 
 reownHome
+
+# Enable UFW firewall
+
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22
+ufw --force enable
 
 
 # Setup nightly package upgrade 

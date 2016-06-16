@@ -1,3 +1,5 @@
+# run in htaccess
+
 # Protect wp-config.php
 <Files wp-config.php>
 	order allow,deny

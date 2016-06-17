@@ -45,6 +45,7 @@ gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.
 #############
 
 # Install packages
+add-apt-repository ppa:n-muench/programs-ppa
 add-apt-repository ppa:ubuntu-wine/ppa -y
 add-apt-repository universe -y
 apt-get update

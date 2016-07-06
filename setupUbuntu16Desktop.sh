@@ -66,7 +66,7 @@ echo " - Wine (Windows API)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc musescore minitube eclipse virtualbox scribus network-manager-openvpn shutter
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore minitube eclipse virtualbox scribus network-manager-openvpn shutter
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools

@@ -11,6 +11,8 @@ sudo apt-add-repository -y ppa:fingerprint/fingerprint-gui
 sudo apt-get update
 sudo apt-get install libbsapi policykit-1-fingerprint-gui fingerprint-gui -y
 
+nohup fingerprint-gui &
+
 # from http://www.omgubuntu.co.uk/2013/03/how-to-get-your-fingerprint-reader-working-in-ubuntu
 
 

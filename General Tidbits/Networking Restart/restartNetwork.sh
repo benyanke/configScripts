@@ -2,8 +2,8 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 
-#Set this to run frequently
-#Restarts networking when it goes down
+# Set this to run frequently in my virtualbox VMs where networking occasionally goes down
+# Restarts networking when it goes down
 
 ## Add this to crontab (SUDO)
 ## * * * * * /bin/bash /home/benyanke/scripts/restartNetwork.sh >/dev/null 2>&1

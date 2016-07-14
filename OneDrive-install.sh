@@ -15,9 +15,12 @@ apt-get update
 apt-get install -y libcurl-dev 
 apt-get install -y libcurl3 
 apt-get install -y libsqlite3-dev
+
 wget http://master.dl.sourceforge.net/project/d-apt/files/d-apt.list -O /etc/apt/sources.list.d/d-apt.list
 wget -qO - http://dlang.org/d-keyring.gpg | apt-key add -
-apt-get update && sudo apt-get install dmd-bin
+
+apt-get update
+apt-get install -y dmd-bin
 
 make
 make install

@@ -27,8 +27,6 @@ apt-get -qq install -y dmd-bin
 
 git clone https://github.com/skilion/onedrive /home/$user/OneDriveInstall
 
-exit
-
 make -C  /home/$user/OneDriveInstall
 make install -C  /home/$user/OneDriveInstall
 

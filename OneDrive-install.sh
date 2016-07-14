@@ -29,10 +29,13 @@ wget -qO - http://dlang.org/d-keyring.gpg | apt-key add -
 apt-get -qq update
 apt-get -qq install -y dmd-bin
 
-git clone https://github.com/skilion/onedrive /home/$user/OneDriveInstall
+installFolderName="OneDrive"
+installFolderPath="/home/$user/$installFolderName"
 
-make -C  /home/$user/OneDriveInstall
-make install -C  /home/$user/OneDriveInstall
+git clone https://github.com/skilion/onedrive $installFolderPath
+
+make -C  $installFolderPath
+make install -C  $installFolderPath
 
 mkdir -p /home/$user/.config/onedrive
 cp /usr/local/etc/onedrive.conf /home/$user/.config/onedrive/config

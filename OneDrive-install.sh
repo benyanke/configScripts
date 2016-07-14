@@ -14,7 +14,7 @@ user=${SUDO_USER:-$(whoami)}
 apt-get -qq update
 #apt-get -qq install -y libcurl-dev 
 apt-get -qq install -y libcurl3 
-apt-get -qq install -y libcurl4-openssl-dev libcurl4-gnutls-dev
+apt-get -qq install -y libcurl4-openssl-dev libcurl4-openssl-dev libcurl4-openssl-dev
 
 apt-get -qq install -y libsqlite3-dev
 apt-get -qq install -y make git

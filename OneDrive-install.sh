@@ -11,19 +11,19 @@ fi
 # get current user
 user=${SUDO_USER:-$(whoami)}
 
-apt-get update
-#apt-get install -y libcurl-dev 
-apt-get install -y libcurl3 
-apt-get install -y libcurl4-openssl-dev libcurl4-gnutls-dev
+apt-get -qq update
+#apt-get -qq install -y libcurl-dev 
+apt-get -qq install -y libcurl3 
+apt-get -qq install -y libcurl4-openssl-dev libcurl4-gnutls-dev
 
-apt-get install -y libsqlite3-dev
-apt-get install -y make git
+apt-get -qq install -y libsqlite3-dev
+apt-get -qq install -y make git
 
 wget http://master.dl.sourceforge.net/project/d-apt/files/d-apt.list -O /etc/apt/sources.list.d/d-apt.list
 wget -qO - http://dlang.org/d-keyring.gpg | apt-key add -
 
-apt-get update
-apt-get install -y dmd-bin
+apt-get -qq update
+apt-get -qq install -y dmd-bin
 
 git clone https://github.com/skilion/onedrive /home/$user/OneDriveInstall
 

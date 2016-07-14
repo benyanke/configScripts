@@ -11,6 +11,10 @@ fi
 # get current user
 user=${SUDO_USER:-$(whoami)}
 
+echo "OneOrive for Linux - One click install script"
+echo ""
+echo "Installing packages"
+
 apt-get -qq update
 #apt-get -qq install -y libcurl-dev 
 apt-get -qq install -y libcurl3 

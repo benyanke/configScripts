@@ -20,7 +20,7 @@ wget -qO - http://dlang.org/d-keyring.gpg | apt-key add -
 apt-get update && sudo apt-get install dmd-bin
 
 make
-sudo make install
+make install
 
 mkdir -p /home/$user/.config/onedrive
 cp /usr/local/etc/onedrive.conf /home/$user/.config/onedrive/config

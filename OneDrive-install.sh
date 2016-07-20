@@ -21,7 +21,7 @@ apt-get -qq install -y libcurl3
 apt-get -qq install -y libcurl4-openssl-dev libcurl4-openssl-dev libcurl4-openssl-dev
 
 apt-get -qq install -y libsqlite3-dev
-apt-get -qq install -y make git
+apt-get -qq install -y make git sqlite sqlite3
 
 wget http://master.dl.sourceforge.net/project/d-apt/files/d-apt.list -O /etc/apt/sources.list.d/d-apt.list
 wget -qO - http://dlang.org/d-keyring.gpg | apt-key add -

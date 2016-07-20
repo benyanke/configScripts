@@ -27,7 +27,11 @@ wget http://master.dl.sourceforge.net/project/d-apt/files/d-apt.list -O /etc/apt
 wget -qO - http://dlang.org/d-keyring.gpg | apt-key add -
 
 apt-get -qq update
-apt-get -qq install -y dmd-bin
+# apt-get -qq install -y dmd-bin 
+
+# Temporary
+apt-get -qq install -y dmd-bin --allow-unauthenticated
+
 
 installFolderName="OneDrive"
 installFolderPath="/home/$user/$installFolderName"

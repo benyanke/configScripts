@@ -127,9 +127,15 @@ echo " - Dropbox (File Sync)" >> $homeDir/installedTools
 
 
 # Install OwnCloud
+curl http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/Release.key > /tmp/owncloud-release.key
+
+apt-key add - < /tmp/owncloud-release.key
+rm /tmp/owncloud-release.key -f
+
 sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
 apt-get update
-apt-get install owncloud-client -y --allow-unauthenticated
+apt-get install owncloud-client -y 
+# apt-get install owncloud-client -y --allow-unauthenticated
 
 echo " - OwnCloud (File Sync)" >> $homeDir/installedTools
 

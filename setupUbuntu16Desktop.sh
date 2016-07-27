@@ -104,26 +104,22 @@ echo " - Chrome (Browser)" >> $homeDir/installedTools
 
 
 # Install Dropbox
-#apt-get install -y libgconf2-4 libnss3-1d libxss1
-#if [ $? != 0 ]; then
-#  apt-get install -f -y;
-#  apt-get install -y libgconf2-4 libnss3-1d libxss1
-#fi
+# No longer using, keeping code here in case I ever choose to revert
 
-rm  $tempDir/dropbox.deb -f
-wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb -O $tempDir/dropbox.deb
+# rm  $tempDir/dropbox.deb -f
+# wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb -O $tempDir/dropbox.deb
 
-dpkg --install $tempDir/dropbox.deb
+# dpkg --install $tempDir/dropbox.deb
 
-if [ $? != 0 ]; then
-  apt-get install -f -y;
-  dpkg --install $tempDir/dropbox.deb;
-fi
+# if [ $? != 0 ]; then
+#   apt-get install -f -y;
+#   dpkg --install $tempDir/dropbox.deb;
+# fi
 
 # restart nautilus
-nautilus -q && nautilus &
+# nautilus -q && nautilus &
 
-echo " - Dropbox (File Sync)" >> $homeDir/installedTools
+# echo " - Dropbox (File Sync)" >> $homeDir/installedTools
 
 
 # Install OwnCloud

@@ -54,7 +54,7 @@ apt-get dist-upgrade -y
 
 
 # CLI packages
-apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks
+apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc
 echo "### Installed CLI tools ###" > $homeDir/installedTools
 echo " - htop (process manager)" >> $homeDir/installedTools
 echo " - git (version control)" >> $homeDir/installedTools
@@ -63,6 +63,7 @@ echo " - tree (directory structure viewer)" >> $homeDir/installedTools
 echo " - jq (json formatter)" >> $homeDir/installedTools
 echo " - nmap (network mapping tool)" >> $homeDir/installedTools
 echo " - Wine (Windows API)" >> $homeDir/installedTools
+echo " - Midnight Commander (CLI File Manager)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages

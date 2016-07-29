@@ -33,7 +33,7 @@ apt-get -qq update
 apt-get -qq install -y dmd-bin --allow-unauthenticated
 
 
-installFolderName="OneDrive"
+installFolderName="OneDrive-Install"
 installFolderPath="/home/$user/$installFolderName"
 
 git clone https://github.com/skilion/onedrive $installFolderPath

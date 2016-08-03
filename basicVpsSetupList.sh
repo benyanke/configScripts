@@ -33,15 +33,17 @@ keyFile="/home/$user/.ssh/authorized_keys"
 mkdir -p /home/$user/.ssh/
 touch $keyFile
 
+echo "# BY Main  Key" >> $keyFile
+curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-43587-ssh2-PubKeyAlt.txt >> $keyFile
+echo " " >> $keyFile
+
 echo "# BY Mobile Key" >> $keyFile
 curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-Mobile-48569-ssh2-PubKeyAlt.txt >> $keyFile
 echo " " >> $keyFile
 
-
 chown $user:$user /home/$user/.ssh
 chown $user:$user /home/$user/.ssh/authorized_keys
 chmod 600 /home/$user/.ssh/authorized_keys
-
 
 
 clear;

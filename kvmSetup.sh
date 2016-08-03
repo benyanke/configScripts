@@ -7,10 +7,10 @@ apt update
 apt install -y qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
 
 # Add User
-sudo adduser `id -un` libvirtd
+adduser `id -un` libvirtd
 
 # Setup Gui Tool
-sudo apt install -y virt-manager
+apt install -y virt-manager
 
 clear;
 echo ""

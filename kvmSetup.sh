@@ -14,4 +14,4 @@ sudo apt install -y virt-manager
 
 clear;
 echo ""
-echo "Looks like KVM setup is complete. Try running 'virt-manager' to use the gui."
+echo "Looks like KVM setup is complete. Try running 'sudo virt-manager' to use the gui."

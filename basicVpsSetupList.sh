@@ -1,9 +1,14 @@
 #!/bin/bash
 
+# Root check
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root."
+  then echo "Please run as root"
   exit
 fi
+
+# get current user
+user=${SUDO_USER:-$(whoami)}
+
 
 # Set up firewall
 ufw default deny incoming
@@ -21,6 +26,23 @@ apt-get upgrade -y
 
 # Installing handy tools
 apt-get install git htop tree stress mc -y
+
+
+# Adding SSH Keys
+keyFile="/home/$user/.ssh/authorized_keys"
+mkdir -p /home/$user/.ssh/
+touch $keyFile
+
+echo "# BY Mobile Key" >> $keyFile
+curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-Mobile-48569-ssh2-PubKeyAlt.txt >> $keyFile
+echo " " >> $keyFile
+
+
+chown $user:$user /home/$user/.ssh
+chown $user:$user /home/$user/.ssh/authorized_keys
+chmod 600 /home/$user/.ssh/authorized_keys
+
+
 
 clear;
 echo "Run complete. Things you need to do still:";

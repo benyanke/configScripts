@@ -1,4 +1,6 @@
 
+#!/bin/bash
+
 #MAKE SURE TO RUN IN WEB ROOT, NOT ELSEWHERE
 
 
@@ -16,7 +18,7 @@ sudo find /var/www -type f -exec chmod 0664 {} \;
 
 
 
-
+exit
 # add nonsudo user
 adduser geoffreybutz
 usermod -a -G www-data geoffreybutz

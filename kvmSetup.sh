@@ -14,8 +14,7 @@ adduser $currentUser libvirtd
 adduser $currentUser kvm
 
 # Setup Gui Tool
-apt install -y virt-manager
-
+apt install -y virt-manager ssh-askpass-gnome ssh-askpass
 clear;
 echo ""
 echo "Looks like KVM setup is complete. Try running 'sudo virt-manager' to use the gui."

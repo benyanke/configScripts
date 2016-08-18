@@ -1,0 +1,2 @@
+# Fix proxy problems with https
+$_SERVER['HTTPS'] = 'on';

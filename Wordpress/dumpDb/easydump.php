@@ -31,11 +31,6 @@
 	// Only allow connections from IP adresses
 	// Add as many lines as you need
 
-	$allowableIps[] = "24.240.110.45"; // Office LAN
-	$allowableIps[] = "24.183.104.66"; // Office Server1
-	$allowableIps[] = "24.240.110.99"; // Office Server2
-	$allowableIps[] = "71.13.249.254"; // Home
-	
 	// Sample IPs for documentation
 	$allowableIps[] = "192.0.2.34"; // sample WAN IP
 	$allowableIps[] = "198.51.100.98"; // sample WAN IP
@@ -70,11 +65,6 @@
 		error("Client IP ($clientIp) was not valid.");
 	}
 	
-	
-	$db = "db410586160";
-	$user = "dbo410586160";
-	$pw = "fds8fKJ82084df";
-	$host = "db410586160.db.1and1.com";
 
 
 	exec(

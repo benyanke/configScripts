@@ -79,8 +79,8 @@
 	********************************/
 	
 	function error($message) {
-		echo "<h2>There has been a fatal error</h2>"
-		echo "<h3>" . $message . "</h3>"
+		echo "<h2>There has been a fatal error</h2>";
+		echo "<h3>" . $message . "</h3>";
 		
 		die();
 	}

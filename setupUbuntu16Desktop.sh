@@ -67,7 +67,7 @@ echo " - Midnight Commander (CLI File Manager)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore minitube eclipse virtualbox scribus network-manager-openvpn shutter
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore minitube eclipse virtualbox scribus network-manager-openvpn shutter guake
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -83,6 +83,7 @@ echo " - Virtualbox (VMs)" >> $homeDir/installedTools
 echo " - Scribus (Desktop typesetting)" >> $homeDir/installedTools
 echo " - OpenVPN Network Manager Integration (GUI control for OpenVpn)" >> $homeDir/installedTools
 echo " - Shutter (advanced screenshots)" >> $homeDir/installedTools
+echo " - guake (advanced terminal)" >> $homeDir/installedTools
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1

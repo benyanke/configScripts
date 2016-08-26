@@ -1,0 +1,9 @@
+# Put the following into your htaccess to only allow from those IPs when behind a proxy
+
+order deny,allow
+deny from all
+
+SetEnvIF X-Forwarded-For "1.2.3.4" IP
+SetEnvIF X-Forwarded-For "5.6.7.8" IP
+
+Allow from env=IP

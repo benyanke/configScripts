@@ -51,6 +51,4 @@ echo "Run complete. Things you need to do still:";
 echo "";
 echo " * Setup backups"
 echo " * Fail2Ban"
-echo " * Add benyanke user"
-echo " * Add public key(s) for benyanke"
 echo " * Add to logging system"

@@ -5,29 +5,33 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+
 timestamp=`date --rfc-3339=seconds`
 user="benyanke"
-
-ps auxw | grep mysql | grep -v grep > /dev/null
-
-if [ $? != 0 ]
-then
-  /etc/init.d/mysql start > /dev/null
-  echo "[" $timestamp "]" >> /home/$user/scripts/logs/startServices.log
-  echo "MySql was restarted." >> /home/$user/scripts/logs/startServices.log
-  echo "" >> /home/$user/scripts/logs/startServices.log
-fi
+logfile="/home/$user/scripts/criticalScripts/logs/startServices.log"
 
 
-ps auxw | grep apache2 | grep -v grep > /dev/null
+function startService() {
 
-if [ $? != 0 ]
-then
-  /etc/init.d/apache2 start > /dev/null
-  echo "[" $timestamp "]" >> /home/$user/scripts/logs/startServices.log
-  echo "Apache was restarted." >> /home/$user/scripts/logs/startServices.log
-  echo "" >> /home/$user/scripts/logs/startServices.log
-fi
+    ps auxw | grep $1 | grep -v grep > /dev/null
+
+    if [ $? != 0 ]
+    then
+      /etc/init.d/$1 start > /dev/null
+      echo "[" $timestamp "]" >> $logfile
+      echo "$1 was restarted." >> $logfile
+      echo "" >> $logfile
+    fi
+
+}
+
+
+#startService varnish
+
+startService mysql
+startService apache2
+startService nginx
+
 
 
 

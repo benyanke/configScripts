@@ -37,9 +37,8 @@ wget https://researchvoodoo.files.wordpress.com/2013/06/n01582_10.jpg -O $tempDi
 
 reownHome
 
-# Change desktop
+# Change desktop background
 gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.jpg"
-
 
 # Change menus to in the window
 gsettings set com.canonical.Unity integrated-menus true

@@ -43,6 +43,10 @@ gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.
 # Change menus to in the window
 gsettings set com.canonical.Unity integrated-menus true
 
+# Change scrolling settings
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+
+
 
 #############
 # ROOT TASKS

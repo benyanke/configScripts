@@ -15,12 +15,18 @@ function cleanup {
 }
 trap cleanup EXIT
 
+echo "#########################"
+echo "#### SETTINGS DIGGER ####"
+echo "#########################"
+echo "Find the link between options in GUI and gsettings"
+echo ""
+
 # write old settings to file
 echo "Capturing current configuration before change"
 gsettings list-recursively > $old
 
 # make change
-read -rsp $'Make the change and press any key to continue...\n' -n1 key
+read -rsp $'Make the change you want to detect and press any key to continue...\n' -n1 key
 
 # write new settings to file
 echo "Capturing current configuration after change"

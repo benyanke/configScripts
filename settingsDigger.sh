@@ -33,4 +33,5 @@ gsettings list-recursively > $new
 # look at difference between files
 echo ""
 echo "Here are the settings that have changed: "
+echo ""
 diff $old $new

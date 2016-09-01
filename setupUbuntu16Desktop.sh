@@ -163,6 +163,9 @@ sudo apt-key add - < $tempDir/oc.key
 rm $tempdir/oc.key -f
 
 
+# Setup sync with hard-links to NextCloud
+# mkdir /home/
+
 reownHome
 
 # Enable UFW firewall
@@ -171,6 +174,7 @@ ufw default deny incoming
 ufw default allow outgoing
 ufw allow 22
 ufw --force enable
+
 
 
 # Setup nightly package upgrade 

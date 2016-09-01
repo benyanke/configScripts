@@ -1,6 +1,11 @@
 #!/bin/bash
 
 
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
+
 #CHANGE THESE
 
 # destination for papertrail logging
@@ -15,9 +20,16 @@ homeDir="/home/$currentUser"
 
 mkdir $tempDir -p
 
+
 function reownHome() {
 	chown benyanke:benyanke $homeDir -R
 }
+
+# For the tasks which have to be run as the local user
+function runAsLocalUser() {
+	sudo -u $currentUser $1;
+}
+
 
 
 if [ "$EUID" -ne 0 ];  then
@@ -30,6 +42,8 @@ fi
 #############
 
 
+
+
 # Change Desktop
 
 rm $tempDir/desktop.jpg -r
@@ -38,13 +52,13 @@ wget https://researchvoodoo.files.wordpress.com/2013/06/n01582_10.jpg -O $tempDi
 reownHome
 
 # Change desktop background
-gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.jpg"
+runAsLocalUser gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.jpg"
 
 # Change menus to in the window
-gsettings set com.canonical.Unity integrated-menus true
+runAsLocalUser gsettings set com.canonical.Unity integrated-menus true
 
 # Change scrolling settings
-gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
+runAsLocalUser gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 
 

@@ -2,8 +2,11 @@
 
 
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
-  exit
+  then
+  echo "Starting...."
+  else
+   echo "Please do not run as root"
+   exit
 fi
 
 #CHANGE THESE
@@ -50,6 +53,9 @@ org.gnome.desktop.peripherals.touchpad natural-scroll false
 #############
 # ROOT TASKS
 #############
+
+echo ""
+echo "### Upgrade to root ###"
 
 # Upgrade to root
 if [ "$(whoami)" != "root" ]

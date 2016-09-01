@@ -25,11 +25,6 @@ function reownHome() {
 	chown benyanke:benyanke $homeDir -R
 }
 
-# For the tasks which have to be run as the local user
-function runAsLocalUser() {
-	sudo -u $currentUser $1;
-}
-
 
 #############
 # NONROOT TASKS
@@ -43,19 +38,25 @@ wget https://researchvoodoo.files.wordpress.com/2013/06/n01582_10.jpg -O $tempDi
 reownHome
 
 # Change desktop background
-runAsLocalUser gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.jpg"
+gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.jpg"
 
 # Change menus to in the window
-runAsLocalUser gsettings set com.canonical.Unity integrated-menus true
+gsettings set com.canonical.Unity integrated-menus true
 
 # Change scrolling settings
-runAsLocalUser gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
-
+org.gnome.desktop.peripherals.touchpad natural-scroll false
 
 
 #############
 # ROOT TASKS
 #############
+
+# Upgrade to root
+if [ "$(whoami)" != "root" ]
+then
+    sudo su -s "$0"
+    exit
+fi
 
 # Install packages
 add-apt-repository ppa:n-muench/programs-ppa

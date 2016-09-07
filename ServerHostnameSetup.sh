@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Written by Ben Yanke
+# https://github.com/benyanke
 
 
 # Root check
@@ -11,8 +13,10 @@ fi
 # get current user
 user=${SUDO_USER:-$(whoami)}
 
-# This file will exist in the filesystem of the unconfigured server VMs.
+
 flagFile="/tmp/IsServerUnconfigured"
+
+# touch $flagFile;
 
 # check for flag in temporary directory
 if [ -a $flagFile ]; then

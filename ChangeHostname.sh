@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Designed for CentOS, not sure if it would work on Ubuntu
+
 OLD_HOSTNAME="$( hostname )"
 NEW_HOSTNAME="$1"
 

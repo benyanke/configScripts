@@ -41,7 +41,7 @@ OLD_HOSTNAME="$( hostname )"
 # check for flag in temporary directory
 if [ $notconfigHName = $OLD_HOSTNAME ] ; then
 
-
+    echo ""
 
 else
         echo "This server appears to be already configured."

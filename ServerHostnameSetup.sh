@@ -73,10 +73,10 @@ echo $NEW_HOSTNAME > /etc/hostname
 # Remove flag, marking server as fully configured
 rm $flagFile  2> /dev/null
 
-echo "Hostname successfully changed.
+echo "Hostname successfully changed"
 echo ""
 
-echo "Your IP addresses are: "
+echo "Your current IP addresses are: "
 
 ip addr | awk '
 /^[0-9]+:/ { 

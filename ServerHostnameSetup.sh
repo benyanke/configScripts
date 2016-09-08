@@ -14,7 +14,7 @@ fi
 user=${SUDO_USER:-$(whoami)}
 
 
-flagFile="/tmp/IsServerUnconfigured"
+notconfigHName="unconfiguredServer"
 
 # touch $flagFile;
 

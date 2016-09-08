@@ -27,8 +27,8 @@ if [ -a $flagFile ]; then
         echo "#######################";
 
 else
-        echo "This server appears to be already configured. Not sure why you're running $
-        read -n1 -r -p "Would you like to continue? [Y/N] " key
+        echo "This server appears to be already configured."
+        read -n1 -r -p "Would you like to continue to setup this server? [Y/N] " key
         echo " "
 
                 if [ $key = "Y" ] || [ $key = "y" ]; then
@@ -73,7 +73,20 @@ echo $NEW_HOSTNAME > /etc/hostname
 # Remove flag, marking server as fully configured
 rm $flagFile  2> /dev/null
 
-echo "Successfully changed. Restarting now. Press any key to continue."
+echo "Hostname successfully changed.
+echo ""
+
+echo "Your IP addresses are: "
+
+ip addr | awk '
+/^[0-9]+:/ { 
+  sub(/:/,"",$2); iface=$2 } 
+/^[[:space:]]*inet / { 
+  split($2, a, "/")
+  print iface" : "a[1] 
+}'
+
+echo "Press any key to continue and reboot."
 read nul
 
 shutdown -r now

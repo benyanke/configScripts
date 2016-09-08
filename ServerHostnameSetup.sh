@@ -86,6 +86,7 @@ ip addr | awk '
   print iface" : "a[1] 
 }'
 
+echo ""
 echo "Press any key to continue and reboot."
 read nul
 

@@ -21,7 +21,7 @@ OLD_HOSTNAME="$( hostname )"
 
 # Run Apt Update and Upgrade in the Background
 
-{apt update; apt dist-upgrade -y;  } >/dev/null 2>&1 &
+{ apt update; apt dist-upgrade -y;  } >/dev/null 2>&1 &
 
 # check for flag in temporary directory
 if [ $notconfigHName = $OLD_HOSTNAME ] ; then

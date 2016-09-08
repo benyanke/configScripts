@@ -1,13 +1,19 @@
 #!/bin/bash
 
+# This script is intended to run on new Ubuntu Server VMs to assist in initial setup, including apt upgrades and hostname changing.'
+
+# This will be set up to run in the initial login script
+
+
 # Written by Ben Yanke
 # https://github.com/benyanke
 
 
-# Root check
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
-  exit
+# Upgrade to root if it isn't already
+if [ "$(whoami)" != "root" ]
+then
+    sudo su -s "$0"
+    exit
 fi
 
 # get current user

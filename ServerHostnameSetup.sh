@@ -16,10 +16,15 @@ user=${SUDO_USER:-$(whoami)}
 
 notconfigHName="unconfiguredServer"
 
-# touch $flagFile;
+OLD_HOSTNAME="$( hostname )"
+
+
+# Run Apt Update and Upgrade in the Background
+
+{apt update; apt dist-upgrade -y;  } >/dev/null 2>&1 &
 
 # check for flag in temporary directory
-if [ -a $flagFile ]; then
+if [ $notconfigHName = $OLD_HOSTNAME ] ; then
 
         clear;
         echo "#######################";
@@ -43,13 +48,13 @@ else
 fi
 
 
-OLD_HOSTNAME="$( hostname )"
-NEW_HOSTNAME="$1"
 
 if [ -z "$NEW_HOSTNAME" ]; then
  echo -n "Please enter new hostname: "
  read NEW_HOSTNAME < /dev/tty
 fi
+
+NEW_HOSTNAME="$1"
 
 if [ -z "$NEW_HOSTNAME" ]; then
  echo "Error: no hostname entered. Exiting."
@@ -86,6 +91,13 @@ ip addr | awk '
   print iface" : "a[1] 
 }'
 
+echo ""
+
+
+echo "Waiting for background processes to complete."
+
+# Wait for apt processes to complete
+wait
 echo ""
 echo "Press any key to continue and reboot."
 read nul

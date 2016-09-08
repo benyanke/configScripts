@@ -8,10 +8,18 @@
 # Written by Ben Yanke
 # https://github.com/benyanke
 
+clear;
+echo "#######################";
+echo "New Server Setup Script";
+echo "#######################";
+echo ""        
 
 # Upgrade to root if it isn't already
 if [ "$(whoami)" != "root" ]
 then
+    echo "Need to upgrade this session to root."
+    echo ""
+    
     sudo su -s "$0"
     exit
 fi
@@ -32,10 +40,7 @@ OLD_HOSTNAME="$( hostname )"
 # check for flag in temporary directory
 if [ $notconfigHName = $OLD_HOSTNAME ] ; then
 
-        clear;
-        echo "#######################";
-        echo "New Server Setup Script";
-        echo "#######################";
+
 
 else
         echo "This server appears to be already configured."

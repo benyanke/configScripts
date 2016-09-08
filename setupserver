@@ -14,6 +14,9 @@ echo "New Server Setup Script";
 echo "#######################";
 echo ""        
 
+# get current user
+user=${SUDO_USER:-$(whoami)}
+
 # Upgrade to root if it isn't already
 if [ "$(whoami)" != "root" ]
 then
@@ -24,8 +27,6 @@ then
     exit
 fi
 
-# get current user
-user=${SUDO_USER:-$(whoami)}
 
 
 notconfigHName="unconfiguredServer"
@@ -86,8 +87,8 @@ mv /tmp/newhosts /etc/hosts
 # Change name in hostname file
 echo $NEW_HOSTNAME > /etc/hostname
 
-# Remove flag, marking server as fully configured
-rm $flagFile  2> /dev/null
+# Remove bash login, which makes this script run every login
+rm /home/$user/.bash_login  2> /dev/null
 
 echo "Hostname successfully changed"
 echo ""

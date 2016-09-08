@@ -48,13 +48,13 @@ else
 fi
 
 
+NEW_HOSTNAME="$1"
 
 if [ -z "$NEW_HOSTNAME" ]; then
  echo -n "Please enter new hostname: "
  read NEW_HOSTNAME < /dev/tty
 fi
 
-NEW_HOSTNAME="$1"
 
 if [ -z "$NEW_HOSTNAME" ]; then
  echo "Error: no hostname entered. Exiting."

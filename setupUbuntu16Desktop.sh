@@ -36,7 +36,7 @@ function reownHome() {
 # Change Desktop
 
 rm $tempDir/desktop.jpg -r
-wget https://researchvoodoo.files.wordpress.com/2013/06/n01582_10.jpg -O $tempDir/desktop.jpg
+wget https://raw.githubusercontent.com/benyanke/configScripts/master/img/knightkneeling.jpg -O $tempDir/desktop.jpg
 
 reownHome
 

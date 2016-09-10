@@ -10,3 +10,4 @@ sudo chown -R www-data:www-data /var/www
 sudo find /var/www -type d -exec chmod 0775 {} \;
 sudo find /var/www -type f -exec chmod 0664 {} \;
 
+sudo chown +x /var/www/*.sh

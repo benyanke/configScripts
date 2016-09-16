@@ -25,7 +25,7 @@ apt-get update
 apt-get upgrade -y
 
 # Installing handy tools
-apt-get install git htop tree stress mc iperf iperf3 nethogs -y
+apt-get install git htop tree stress mc iperf iperf3 nethogs zip unzip -y
 
 
 # Adding SSH Keys

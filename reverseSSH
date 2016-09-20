@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# requires autossh from apt
+
+# see more: 
+# https://raymii.org/s/tutorials/Autossh_persistent_tunnels.html

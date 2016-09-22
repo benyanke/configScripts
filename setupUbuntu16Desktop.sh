@@ -47,8 +47,10 @@ gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.
 gsettings set com.canonical.Unity integrated-menus true
 
 # Change scrolling settings
-org.gnome.desktop.peripherals.touchpad natural-scroll false
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
 
+# Change file manager display to list
+gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 
 #############
 # ROOT TASKS
@@ -155,8 +157,8 @@ rm /tmp/owncloud-release.key -f
 
 sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
 apt-get update
-apt-get install owncloud-client -y 
-# apt-get install owncloud-client -y --allow-unauthenticated
+# apt-get install owncloud-client -y 
+apt-get install owncloud-client -y --allow-unauthenticated
 
 echo " - OwnCloud (File Sync)" >> $homeDir/installedTools
 

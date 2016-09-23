@@ -105,6 +105,42 @@
           "response_body_minimum_size": "o"
         }
       ]
+    },
+    {
+      "sitename": "Work",
+      "alert": [
+        {
+          "type": "email",
+          "destination": "benyanke@gmail.com"
+        }
+      ],
+      "default_frequency": "120",
+      "services": [
+        {
+          "type": "http",
+          "url": "caladventures.com",
+          "expected_http_code": "200",
+          "response_body_minimum_size": "2k"
+        },
+        {
+          "type": "http",
+          "url": "www.searchoptimizers.com",
+          "expected_http_code": "200",
+          "response_body_minimum_size": "2k"
+        },
+        {
+          "type": "ping",
+          "url": "caladventures.com",
+          "expected_maximum_response_time": "500",
+          "count": "10"
+        },
+        {
+          "type": "ping",
+          "url": "www.searchoptimizers.com",
+          "expected_maximum_response_time": "500",
+          "count": "10"
+        }
+      ]
     }
   ]
 }

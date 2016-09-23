@@ -89,6 +89,30 @@
       ]
     },
     {
+      "sitename": "Schoenstatt Madison",
+      "alert": [
+        {
+          "type": "email",
+          "destination": "benyanke@gmail.com"
+        }
+      ],
+      "default_frequency": "120",
+      "services": [
+        {
+          "type": "http",
+          "url": "schoenstattmadison.com",
+          "expected_maximum_response_time": "100",
+          "expected_http_code": "301"
+        },
+        {
+          "type": "ping",
+          "url": "schoenstattmadison.com",
+          "expected_maximum_response_time": "500",
+          "count": "10"
+        }
+      ]
+    },
+    {
       "sitename": "Tridentine Mass Society of Madison",
       "alert": [
         {

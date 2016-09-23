@@ -65,6 +65,60 @@
       ]
     },
     {
+      "sitename": "St. Mary's in Pine Bluff",
+      "alert": [
+        {
+          "type": "email",
+          "destination": "benyanke@gmail.com"
+        }
+      ],
+      "default_frequency": "120",
+      "services": [
+        {
+          "type": "ping",
+          "url": "www.stmarypb.com",
+          "expected_maximum_response_time": "500",
+          "count": "10"
+        },
+        {
+          "type": "https",
+          "url": "www.stmarypb.com",
+          "expected_http_code": "200",
+          "response_body_minimum_size": "2k"
+        }
+      ]
+    },
+    {
+      "sitename": "Tridentine Mass Society of Madison",
+      "alert": [
+        {
+          "type": "email",
+          "destination": "benyanke@gmail.com"
+        }
+      ],
+      "default_frequency": "120",
+      "services": [
+        {
+          "type": "http",
+          "url": "www.latinmassmadison.org",
+          "expected_maximum_response_time": "\"10\"",
+          "expected_http_code": "301"
+        },
+        {
+          "type": "ping",
+          "url": "www.latinmassmadison.org",
+          "expected_maximum_response_time": "500",
+          "count": "10"
+        },
+        {
+          "type": "https",
+          "url": "www.latinmassmadison.org",
+          "expected_http_code": "200",
+          "response_body_minimum_size": "2k"
+        }
+      ]
+    },
+    {
       "sitename": "Personal Sites",
       "alert": [
         {

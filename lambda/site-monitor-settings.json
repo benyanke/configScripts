@@ -184,7 +184,7 @@
       "services": [
         {
           "type": "ping",
-          "url": "ballweg.float.publicserver.xy",
+          "url": "ballweg.float.publicserver.xyz",
           "expected_maximum_response_time": "500",
           "count": "10"
         },

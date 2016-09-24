@@ -30,7 +30,7 @@ apt-get install git htop tree stress mc iperf iperf3 nethogs zip unzip -y
 # Setup Scripts dir and populate with a few things
 mkdir -p /home/$user/scripts/
 
-mkdir -p /home/$user/ezservermonitor-sh/
+mkdir -p /home/$user/scripts/ezservermonitor-sh/
 git clone https://github.com/benyanke/ezservermonitor-sh /home/$user/scripts/ezservermonitor-sh/
 chmod +x /home/$user/scripts/ezservermonitor-sh/*.sh
 

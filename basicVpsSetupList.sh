@@ -27,6 +27,11 @@ apt-get upgrade -y
 # Installing handy tools
 apt-get install git htop tree stress mc iperf iperf3 nethogs zip unzip -y
 
+# Setup Scripts dir and populate with a few things
+mkdir -p /home/$user/scripts/
+
+mkdir -p /home/$user/ezservermonitor-sh/
+git clone https://github.com/benyanke/ezservermonitor-sh /home/$user/ezservermonitor-sh/
 
 # Adding SSH Keys
 keyFile="/home/$user/.ssh/authorized_keys"
@@ -45,6 +50,8 @@ chown $user:$user /home/$user/.ssh
 chown $user:$user /home/$user/.ssh/authorized_keys
 chmod 600 /home/$user/.ssh/authorized_keys
 
+# Chown full home one more time, to be sure
+chown -R $user:$user /home/$user/
 
 clear;
 echo "Run complete. Things you need to do still:";

@@ -31,7 +31,8 @@ apt-get install git htop tree stress mc iperf iperf3 nethogs zip unzip -y
 mkdir -p /home/$user/scripts/
 
 mkdir -p /home/$user/ezservermonitor-sh/
-git clone https://github.com/benyanke/ezservermonitor-sh /home/$user/ezservermonitor-sh/
+git clone https://github.com/benyanke/ezservermonitor-sh /home/$user/scripts/ezservermonitor-sh/
+chmod +x /home/$user/scripts/ezservermonitor-sh/*.sh
 
 # Adding SSH Keys
 keyFile="/home/$user/.ssh/authorized_keys"

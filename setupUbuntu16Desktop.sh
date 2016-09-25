@@ -76,7 +76,7 @@ apt-get dist-upgrade -y
 
 
 # CLI packages
-apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip
+apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen
 echo "### Installed CLI tools ###" > $homeDir/installedTools
 echo " - htop (process manager)" >> $homeDir/installedTools
 echo " - git (version control)" >> $homeDir/installedTools
@@ -88,6 +88,7 @@ echo " - Wine (Windows API)" >> $homeDir/installedTools
 echo " - Midnight Commander (CLI File Manager)" >> $homeDir/installedTools
 echo " - NetHogs (HTOP for Network Connections)" >> $homeDir/installedTools
 echo " - Zip and Unzip (.zip file handlers)" >> $homeDir/installedTools
+echo " - Screen (Terminal abstraction)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages

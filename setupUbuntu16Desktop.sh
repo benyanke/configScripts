@@ -6,7 +6,6 @@ if [ "$EUID" -ne 0 ]
   echo "Starting...."
   else
    echo "Please do not run as root"
-   exit
 fi
 
 #CHANGE THESE
@@ -92,7 +91,7 @@ echo " - Screen (Terminal abstraction)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore minitube eclipse virtualbox scribus network-manager-openvpn shutter guake mysql-workbench
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore eclipse virtualbox scribus network-manager-openvpn shutter guake mysql-workbench
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -102,7 +101,6 @@ echo " - FileZilla (FTP and SFTP client)" >> $homeDir/installedTools
 echo " - Cheese (Camera viewer)" >> $homeDir/installedTools
 echo " - VLC (Media viewer)" >> $homeDir/installedTools
 echo " - MuseScore (Music Engraving)" >> $homeDir/installedTools
-echo " - MiniTube (Youtube Player)" >> $homeDir/installedTools
 echo " - Eclipse (Development)" >> $homeDir/installedTools
 echo " - Virtualbox (VMs)" >> $homeDir/installedTools
 echo " - Scribus (Desktop typesetting)" >> $homeDir/installedTools

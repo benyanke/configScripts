@@ -92,7 +92,7 @@ echo " - iperf3 (Bandwidth tester)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore eclipse virtualbox scribus network-manager-openvpn shutter guake mysql-workbench
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore eclipse virtualbox scribus network-manager-openvpn shutter guake mysql-workbench retext
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -109,6 +109,7 @@ echo " - OpenVPN Network Manager Integration (GUI control for OpenVpn)" >> $home
 echo " - Shutter (advanced screenshots)" >> $homeDir/installedTools
 echo " - guake (advanced terminal)" >> $homeDir/installedTools
 echo " - mySQL Workbench (a mysql development tool)" >> $homeDir/installedTools
+echo " - ReText (markdown editor)" >> $homeDir/installedTools
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1

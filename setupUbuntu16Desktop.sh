@@ -92,7 +92,7 @@ echo " - iperf3 (Bandwidth tester)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox scribus network-manager-openvpn shutter guake mysql-workbench retext
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -110,6 +110,7 @@ echo " - Shutter (advanced screenshots)" >> $homeDir/installedTools
 echo " - guake (advanced terminal)" >> $homeDir/installedTools
 echo " - mySQL Workbench (a mysql development tool)" >> $homeDir/installedTools
 echo " - ReText (markdown editor)" >> $homeDir/installedTools
+echo " - XBindKeys (X server keystroke customizer)" >> $homeDir/installedTools
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1

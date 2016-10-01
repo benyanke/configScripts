@@ -26,7 +26,7 @@ apt-get upgrade -y
 apt-get dist-upgrade -y
 
 # Installing handy tools
-apt-get install git htop tree stress mc iperf iperf3 nethogs zip unzip -y
+apt-get install git htop tree stress mc iperf iperf3 nethogs zip unzip traceroute -y
 
 # Setup Scripts dir and populate with a few things
 mkdir -p /home/$user/scripts/

@@ -93,7 +93,7 @@ echo " - traceroute (network path tester)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config 
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -105,6 +105,7 @@ echo " - VLC (Media viewer)" >> $homeDir/installedTools
 echo " - MuseScore (Music Engraving)" >> $homeDir/installedTools
 echo " - Eclipse (Development)" >> $homeDir/installedTools
 echo " - Virtualbox (VMs)" >> $homeDir/installedTools
+echo " - Virt Manager (KVM remote tool)" >> $homeDir/installedTools
 echo " - Scribus (Desktop typesetting)" >> $homeDir/installedTools
 echo " - OpenVPN Network Manager Integration (GUI control for OpenVpn)" >> $homeDir/installedTools
 echo " - Shutter (advanced screenshots)" >> $homeDir/installedTools

@@ -3,11 +3,20 @@
 # installed modules:
 import json
 
+
 # PY2 Specific Packages
 import urllib2
 import pyping
 import sys
+import threading
 
+# Functions
+
+output = "OUTPUT\n"
+
+def addToOutput( input ) :
+
+	output += "[] %s\n" % input
 
 
 
@@ -26,10 +35,10 @@ def httpscan( data ):
 
 		if 'expected_http_code' in data:
 			if data['expected_http_code'] != code:
-				print "HTTP %s : unexpected response for %s" % (code,url)
+				addToOutput("HTTP " + code + " : unexpected response for " + url );
 			if 'response_body_minimum_size' in data:
 				if data['response_body_minimum_size'] < size:
-					print "Page is shorter than expected by %n bytes" % (data['response_body_minimum_size'] - size)
+					addToOutput("Page is shorter than expected by " + (data['response_body_minimum_size'] - size) + " bytes.");
 
 
 	return 0
@@ -44,15 +53,17 @@ def pingscan( data ):
 	if 'url' in data:
 		url = data["url"]
 
+		print "Pinging %s" % url
+
 		r = pyping.ping(url)
 
 		time = r.avg_rtt
 
 		if r.ret_code != 0:
-			print "PING FAIL"
+			print "PING FAIL for %s" % url
 		elif 'expected_maximum_response_time' in data:
 			if data['expected_maximum_response_time'] > time:
-				print "HIGH PING"
+				print "PING FAIL for %s" % url
 
 	return 0
 
@@ -81,6 +92,9 @@ data = data["accounts"]
 
 #print(data)
 
+# Setup array for multithreading
+threads = []
+
 for account in data:
 	print "\n##########"
 	print "Scanning: %s " % account["sitename"]
@@ -92,19 +106,36 @@ for account in data:
 
 		if service["type"] == "http" :
 
-			httpscan(service)
+#			httpscan(service)
+
+			t = threading.Thread(target=httpscan, args=(service,))
+			threads.append(t)
+			t.start()
+
 
 		elif service["type"] == "https" :
 
-			httpsscan(service)
+#			httpsscan(service)
+
+			t = threading.Thread(target=httpsscan, args=(service,))
+			threads.append(t)
+			t.start()
+
 
 		elif service["type"] == "ping" :
 
-			pingscan(service)
+
+#			pingscan(service)
+
+			t = threading.Thread(target=pingscan, args=(service,))
+			threads.append(t)
+			t.start()
+
 
 		else:
 
 			print "Scan type unrecognized"
 
 
+print output
 #		print(service)

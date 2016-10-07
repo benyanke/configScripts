@@ -4,12 +4,20 @@
 
 service mysql stop
 apt-get update
-apt-get remove --purge mysql-server mysql-client mysql-common
-apt-get autoremove
+apt-get remove --purge mysql-server mysql-client mysql-common -y
+apt-get autoremove -y
 apt-get autoclean
 
 apt-get --purge remove "mysql*" "mariadb*" -y
-mv /etc/mysql/ /tmp/mysql_configs/
+
+rm /etc/mysql/ -rf
 
 rm -rf /var/lib/mysql
+
+apt-get autoremove -y
+apt-get autoclean
+apt-get update
+
+
+
 

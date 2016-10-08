@@ -4,4 +4,6 @@
 
 ipRangeFile="filename"
 
-while read line; do sudo ufw insert 1 deny from $line to any; done < $ipRangeFile
+# while read line; do sudo ufw insert 1 deny from $line to any; done < $ipRangeFile
+
+while read line; do sudo ufw deny from $line to any port 22; done < $ipRangeFile

@@ -2,7 +2,10 @@
 
 # https://scottlinux.com/2013/08/30/block-geo-region-list-of-ips-with-ufw-in-linux/
 
-ipRangeFile="filename"
+fileUrl="https://raw.githubusercontent.com/benyanke/configScripts/master/securityScripts/allCountriesExceptUsUk"
+ipRangeFile="ipsToBlockFromSsh"
+
+curl $fileUrl > $ipRangeFile;
 
 # while read line; do sudo ufw insert 1 deny from $line to any; done < $ipRangeFile
 

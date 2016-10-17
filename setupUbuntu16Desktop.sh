@@ -94,7 +94,7 @@ echo " - PIP  (python packman)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina 
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -115,6 +115,7 @@ echo " - mySQL Workbench (a mysql development tool)" >> $homeDir/installedTools
 echo " - ReText (markdown editor)" >> $homeDir/installedTools
 echo " - XBindKeys (X server keystroke customizer)" >> $homeDir/installedTools
 echo " - Remmina (RDP)" >> $homeDir/installedTools
+echo " - Internet DJ Console" >> $homeDir/installedTools
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1

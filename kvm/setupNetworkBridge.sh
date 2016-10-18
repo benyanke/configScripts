@@ -6,6 +6,8 @@ apt update
 apt install bridge-utils -y
 
 
+# https://help.ubuntu.com/community/KVM/Networking
+
 
 INTERFACES FILE:
 

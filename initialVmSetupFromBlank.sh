@@ -121,4 +121,7 @@ echo ""
 echo "Press any key to continue and reboot."
 read nul
 
+dpkg --configure -a 
+apt update && sudo apt install -f -y && apt upgrade -y && apt dist-upgrade -y && apt-get autoremove -y
+
 shutdown -r now

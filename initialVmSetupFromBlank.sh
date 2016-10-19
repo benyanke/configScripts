@@ -91,7 +91,8 @@ mv /tmp/newhosts /etc/hosts
 echo $NEW_HOSTNAME > /etc/hostname
 
 # Remove bash login, which makes this script run every login
-rm /home/$user/.bash_login  2> /dev/null
+mkdir -p temp 2> /dev/null
+mv /home/$user/.bash_login /home/$user/temp/old.bash_login   2> /dev/null
 
 echo "Hostname successfully changed"
 echo ""

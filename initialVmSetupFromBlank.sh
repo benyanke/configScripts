@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# This script is intended to run on new Ubuntu Server VMs to assist in initial setup, including apt upgrades and hostname changing.'
+# This script is intended to run on new Ubuntu 
+# Server VMs to assist in initial setup, including apt 
+# upgrades and hostname changing.'
 
 # This will be set up to run in the initial login script
 
-#!/bin/bash
-
-# /usr/local/bin/setupserver
+# This script goes in: /usr/local/bin/setupserver
 
 # Written by Ben Yanke
 # https://github.com/benyanke

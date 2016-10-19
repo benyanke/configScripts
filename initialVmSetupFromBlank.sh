@@ -4,13 +4,9 @@
 
 # This will be set up to run in the initial login script
 
-
-
 #!/bin/bash
 
 # /usr/local/bin/setupserver
-
-
 
 # Written by Ben Yanke
 # https://github.com/benyanke
@@ -43,7 +39,7 @@ OLD_HOSTNAME="$( hostname )"
 
 # Run Apt Update and Upgrade in the Background
 
-{ apt update; apt-get -f install -y; apt dist-upgrade -y;  } >/dev/null 2>&1 &
+{ apt-get update; apt-get install -y; apt dist-upgrade -y; dpkg --configure -a;  apt update; sudo apt install -f -y; apt upgrade -y; apt dist-upgrade -y; apt-get autoremove -y } >/dev/null 2>&1 &
 
 # check for flag in temporary directory
 if [ $notconfigHName = $OLD_HOSTNAME ] ; then
@@ -121,7 +117,7 @@ echo ""
 echo "Press any key to continue and reboot."
 read nul
 
-dpkg --configure -a 
-apt update && sudo apt install -f -y && apt upgrade -y && apt dist-upgrade -y && apt-get autoremove -y
+
+
 
 shutdown -r now

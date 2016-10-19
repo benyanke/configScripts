@@ -7,6 +7,7 @@
 # This will be set up to run in the initial login script
 
 # This script goes in: /usr/local/bin/setupserver
+# Then add "setupserver" to .bash_login in main user's home
 
 # Written by Ben Yanke
 # https://github.com/benyanke

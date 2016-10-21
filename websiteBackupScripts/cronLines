@@ -1,0 +1,42 @@
+### FILESYSTEM BACKUPS ###
+
+# Monthly backup
+1 * 1 * * /bin/bash /var/www/backups/backupFullSites.sh monthly >/dev/null 2>&1
+
+# Weekly backup
+1 1 * * 0 /bin/bash /var/www/backups/backupFullSites.sh weekly >/dev/null 2>&1
+
+# Nightly backup
+1 1 * * * /bin/bash /var/www/backups/backupFullSites.sh nightly >/dev/null 2>&1
+
+
+
+### DATABASE BACKUPS ###
+
+# Monthly backup
+0 1 1 * *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthlyDatabaseDump.sql
+
+0 1 1 1 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/0-janDatabaseDump.sql
+0 1 1 2 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/1-febDatabaseDump.sql
+0 1 1 3 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/2-marDatabaseDump.sql
+0 1 1 4 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/3-aprDatabaseDump.sql
+0 1 1 5 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/4-mayDatabaseDump.sql
+0 1 1 6 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/5-junDatabaseDump.sql
+0 1 1 7 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/6-julDatabaseDump.sql
+0 1 1 8 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/7-augDatabaseDump.sql
+0 1 1 9 *  mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/8-sepDatabaseDump.sql
+0 1 1 10 * mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/9-octDatabaseDump.sql
+0 1 1 11 * mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/10-novDatabaseDump.sql
+0 1 1 12 * mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/monthly/11-decDatabaseDump.sql
+
+
+# Nightly backup
+0 1 * * * mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/dailyDatabaseDump.sql
+
+0 1 * * 0 mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/weekly/0-sundayDatabaseDump.sql
+0 1 * * 1 mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/weekly/1-mondayDatabaseDump.sql
+0 1 * * 2 mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/weekly/2-tuesdayDatabaseDump.sql
+0 1 * * 3 mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/weekly/3-wednesdayDatabaseDump.sql
+0 1 * * 4 mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/weekly/4-thursdayDatabaseDump.sql
+0 1 * * 5 mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/weekly/5-fridayDatabaseDump.sql
+0 1 * * 6 mysqldump -u DBUSER -pPWPW DBNAME > /var/www/backups/databaseBackups/weekly/6-saturdayDatabaseDump.sql

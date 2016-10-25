@@ -9,6 +9,8 @@ import urllib2
 import pyping
 import sys
 import threading
+import socket
+import ssl
 
 # Functions
 
@@ -18,6 +20,33 @@ def addToOutput( input ) :
 
 	output += "[] %s\n" % input
 
+
+def ssl_valid_time_remaining(hostname):
+    """Get the number of days left in a cert's lifetime."""
+    expires = ssl_expiry_datetime(hostname)
+    logger.debug(
+        "SSL cert for %s expires at %s",
+        hostname, expires.isoformat()
+    )
+    return expires - datetime.datetime.utcnow()
+
+def ssl_expires_in(hostname, buffer_days=14):
+    """Check if `hostname` SSL cert expires is within `buffer_days`.
+
+    Raises `AlreadyExpired` if the cert is past due
+    """
+    remaining = ssl_valid_time_remaining(hostname)
+
+    # if the cert expires in less than two weeks, we should reissue it
+    if remaining < datetime.timedelta(days=0):
+        # cert has already expired - uhoh!
+        raise AlreadyExpired("Cert expired %s days ago" % remaining.days)
+    elif remaining < datetime.timedelta(days=buffer_days):
+        # expires sooner than the buffer
+        return True
+    else:
+        # everything is fine
+        return False
 
 
 def httpscan( data ):

@@ -1,0 +1,41 @@
+
+##########
+Scanning: Roman Catholic Man 
+HIGH PING. Expected max: 500 | Actual: 39.800
+HTTP CODE Expected: 200 | Returned: 301
+HTTP CODE Expected: 200 | Returned: 301
+
+##########
+Scanning: Morber Sites 
+HIGH PING. Expected max: 500 | Actual: 37.760
+
+##########
+Scanning: St. Mary's in Pine Bluff 
+HIGH PING. Expected max: 500 | Actual: 37.466
+
+##########
+Scanning: Schoenstatt Madison 
+HTTP CODE Expected: 200 | Returned: 301
+HIGH PING. Expected max: 500 | Actual: 26.202
+
+##########
+Scanning: Tridentine Mass Society of Madison 
+HTTP CODE Expected: 200 | Returned: 301
+HIGH PING. Expected max: 500 | Actual: 38.396
+
+##########
+Scanning: Yanke Parents 
+PING FAIL
+
+##########
+Scanning: Personal Sites 
+HIGH PING. Expected max: 500 | Actual: 11.422
+HIGH PING. Expected max: 500 | Actual: 43.008
+HIGH PING. Expected max: 500 | Actual: 48.949
+PING FAIL
+
+##########
+Scanning: Work 
+HTTP CODE Expected: 200 | Returned: 200
+HTTP CODE Expected: 200 | Returned: 200
+HIGH PING. Expected max: 500 | Actual: 22.475

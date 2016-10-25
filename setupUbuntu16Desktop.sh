@@ -24,7 +24,7 @@ mkdir $tempDir -p
 
 
 function reownHome() {
-	chown benyanke:benyanke $homeDir -R
+	chown $currentUser:$currentUser $homeDir -R
 }
 
 

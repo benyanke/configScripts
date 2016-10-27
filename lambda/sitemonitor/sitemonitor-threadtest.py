@@ -3,22 +3,32 @@
 # installed modules:
 import json
 
-
 # PY2 Specific Packages
 import urllib2
 import pyping
 import sys
-import threading
 import socket
 import ssl
 
-# Functions
 
-output = "OUTPUT\n"
+import threading
 
-def addToOutput( input ) :
 
-	output += "[] %s\n" % input
+def ssl_expiry_datetime(hostname):
+    ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
+
+    context = ssl.create_default_context()
+    conn = context.wrap_socket(
+        socket.socket(socket.AF_INET),
+        server_hostname=hostnam
+    )
+    # 3 second timeout because Lambda has runtime limitations
+    conn.settimeout(3.0)
+
+    conn.connect((hostname, 443))
+    ssl_info = conn.getpeercert()
+    # parse the string from the certificate into a Python datetime object
+    return datetime.datetime.strptime(ssl_info['notAfter'], ssl_date_fmt)
 
 
 def ssl_valid_time_remaining(hostname):
@@ -48,53 +58,82 @@ def ssl_expires_in(hostname, buffer_days=14):
         # everything is fine
         return False
 
-
 def httpscan( data ):
 
-	if 'url' in data:
+    if 'url' in data:
 
-		url = "http://" + str(data["url"])
+        url = "http://" + str(data["url"])
 
-		response = urllib2.urlopen(url)
-		html = response.read()
-		code = response.getcode()
-		size = sys.getsizeof(html)
+        response = urllib2.urlopen(url)
+        html = response.read()
+        code = response.getcode()
+        size = sys.getsizeof(html)
 
-		print code
+        expectedCode = int(code)
+        actualCode = int(data['expected_http_code'])
 
-		if 'expected_http_code' in data:
-			if data['expected_http_code'] != code:
-				addToOutput("HTTP " + code + " : unexpected response for " + url );
-			if 'response_body_minimum_size' in data:
-				if data['response_body_minimum_size'] < size:
-					addToOutput("Page is shorter than expected by " + (data['response_body_minimum_size'] - size) + " bytes.");
+        if 'expected_http_code' in data:
+            if expectedCode != actualCode:
+                #print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
+                print "HTTP CODE Expected: %s | Returned: %s || BAD || %s" % (expectedCode,actualCode, url)
+        #    else:
+                #print "HTTP CODE Expected: %s | Returned: %s || GOOD || %s" % (expectedCode,actualCode, url)
+
+            if 'response_body_minimum_size' in data:
+                if data['response_body_minimum_size'] < size:
+                    print "Page is shorter than expected by %n bytes" % (data['response_body_minimum_size'] - size)
 
 
-	return 0
+    return 0
 
 def httpsscan( data ):
 
-	return 0
+    if 'url' in data:
+
+        url = "https://" + str(data["url"])
+
+        response = urllib2.urlopen(url)
+        html = response.read()
+        code = response.getcode()
+        size = sys.getsizeof(html)
+
+        expectedCode = int(code)
+        actualCode = int(data['expected_http_code'])
+
+        if 'expected_http_code' in data:
+            if expectedCode != actualCode:
+                #print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
+                print "HTTP TLS CODE Expected: %s | Returned: %s || BAD || %s" % (expectedCode,actualCode, url)
+            #else:
+                #print "HTTP TLS CODE Expected: %s | Returned: %s || GOOD || %s" % (expectedCode,actualCode, url)
+
+            if 'response_body_minimum_size' in data:
+                if data['response_body_minimum_size'] < size:
+                    print "Page is shorter than expected by %n bytes" % (data['response_body_minimum_size'] - size)
+
+    return 0
 
 
 def pingscan( data ):
 
-	if 'url' in data:
-		url = data["url"]
+    if 'url' in data:
+        url = data["url"]
 
-		print "Pinging %s" % url
+        r = pyping.ping(url)
 
-		r = pyping.ping(url)
+        actualPingTime = r.avg_rtt
 
-		time = r.avg_rtt
 
-		if r.ret_code != 0:
-			print "PING FAIL for %s" % url
-		elif 'expected_maximum_response_time' in data:
-			if data['expected_maximum_response_time'] > time:
-				print "PING FAIL for %s" % url
+        if r.ret_code != 0:
+            print "PING FAIL for " , data['url']
+        elif 'expected_maximum_response_time' in data:
+            expectedMaxPingTime = float(data['expected_maximum_response_time'])
+            if expectedMaxPingTime > actualPingTime:
+                print "HIGH PING. Expected max: %s | Actual: %s" % (expectedMaxPingTime, actualPingTime)
+            #else:
+            #    print "Normal ping. Expected max: %s | Actual: %s" % (expectedMaxPingTime, actualPingTime)
 
-	return 0
+    return 0
 
 
 ## MAIN
@@ -119,52 +158,38 @@ data = json.loads(config)
 # Initial pre-loop processing
 data = data["accounts"]
 
-#print(data)
-
-# Setup array for multithreading
 threads = []
 
 for account in data:
-	print "\n##########"
-	print "Scanning: %s " % account["sitename"]
+#    print "\n##########"
+#    print "Scanning: %s " % account["sitename"]
 
-	services = account["services"]
+    services = account["services"]
 
-	for service in services:
-#		print("Type: ", service["type"])
+    for service in services:
+#        print("Type: ", service["type"])
 
-		if service["type"] == "http" :
-
-#			httpscan(service)
+        if service["type"] == "http" :
 
 			t = threading.Thread(target=httpscan, args=(service,))
 			threads.append(t)
 			t.start()
 
-
-		elif service["type"] == "https" :
-
-#			httpsscan(service)
+        elif service["type"] == "https" :
 
 			t = threading.Thread(target=httpsscan, args=(service,))
 			threads.append(t)
 			t.start()
 
-
-		elif service["type"] == "ping" :
-
-
-#			pingscan(service)
+        elif service["type"] == "ping" :
 
 			t = threading.Thread(target=pingscan, args=(service,))
 			threads.append(t)
 			t.start()
 
+        else:
 
-		else:
-
-			print "Scan type unrecognized"
+            print "Scan type unrecognized"
 
 
-print output
-#		print(service)
+#        print(service)

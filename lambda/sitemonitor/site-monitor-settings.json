@@ -105,6 +105,12 @@
           "expected_http_code": "301"
         },
         {
+          "type": "http",
+          "url": "www.schoenstattmadison.com",
+          "expected_maximum_response_time": "100",
+          "expected_http_code": "200"
+        },
+        {
           "type": "ping",
           "url": "schoenstattmadison.com",
           "expected_maximum_response_time": "500",

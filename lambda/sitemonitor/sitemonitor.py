@@ -17,7 +17,6 @@ def ssl_expiry_datetime(hostname):
     conn = context.wrap_socket(
         socket.socket(socket.AF_INET),
         server_hostname=hostnam
-                print "HTTP CODE Expected: %s | Reture,
     )
     # 3 second timeout because Lambda has runtime limitations
     conn.settimeout(3.0)
@@ -72,9 +71,10 @@ def httpscan( data ):
         if 'expected_http_code' in data:
             if expectedCode != actualCode:
                 #print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
-                print "HTTP CODE Expected: %s | Returned: %s" % (expectedCode,actualCode)
+                print "HTTP CODE Expected: %s | Returned: %s || BAD || %s" % (expectedCode,actualCode, url)
             else:
-                print "HTTP CODE Expected: %s | Returned: %s" % (expectedCode,actualCode)
+                #print "HTTP CODE Expected: %s | Returned: %s || GOOD || %s" % (expectedCode,actualCode, url)
+                print ""
             if 'response_body_minimum_size' in data:
                 if data['response_body_minimum_size'] < size:
                     print "Page is shorter than expected by %n bytes" % (data['response_body_minimum_size'] - size)
@@ -98,8 +98,11 @@ def httpsscan( data ):
 
         if 'expected_http_code' in data:
             if expectedCode != actualCode:
-                print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
-                print "  Expected: %s | Returned: %s" % (expectedCode,actualCode)
+                #print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
+                print "HTTP TLS CODE Expected: %s | Returned: %s || BAD || %s" % (expectedCode,actualCode, url)
+            else:
+                #print "HTTP TLS CODE Expected: %s | Returned: %s || GOOD || %s" % (expectedCode,actualCode, url)
+                print ""
             if 'response_body_minimum_size' in data:
                 if data['response_body_minimum_size'] < size:
                     print "Page is shorter than expected by %n bytes" % (data['response_body_minimum_size'] - size)
@@ -116,12 +119,16 @@ def pingscan( data ):
 
         actualPingTime = r.avg_rtt
 
-        if r.ret_code != 0:
-            print "PING FAIL"
-        elif 'expected_maximum_response_time' in data:
-            if data['expected_maximum_response_time'] > actualPingTime:
-                print "HIGH PING. Expected max: %s | Actual: %s" % (data['expected_maximum_response_time'], actualPingTime)
 
+        if r.ret_code != 0:
+            print "PING FAIL for " , data['url']
+        elif 'expected_maximum_response_time' in data:
+            expectedMaxPingTime = float(data['expected_maximum_response_time'])
+            if expectedMaxPingTime > actualPingTime:
+                print "HIGH PING. Expected max: %s | Actual: %s" % (expectedMaxPingTime, actualPingTime)
+            else:
+                # print "Normal ping. Expected max: %s | Actual: %s" % (expectedMaxPingTime, actualPingTime)
+                print ""
     return 0
 
 
@@ -156,7 +163,7 @@ for account in data:
     services = account["services"]
 
     for service in services:
-#		print("Type: ", service["type"])
+#        print("Type: ", service["type"])
 
         if service["type"] == "http" :
 
@@ -175,4 +182,4 @@ for account in data:
             print "Scan type unrecognized"
 
 
-#		print(service)
+#        print(service)

@@ -9,10 +9,12 @@ import pyping
 import sys
 import socket
 import ssl
-
+import time
+import random
 
 import threading
 
+timesToRetry = 10;
 
 def ssl_expiry_datetime(hostname):
     ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
@@ -58,7 +60,9 @@ def ssl_expires_in(hostname, buffer_days=14):
         # everything is fine
         return False
 
-def httpscan( data ):
+def httpscan( data , attempts = 1, wait = 0):
+
+    wait = wait + wait + random.randint(0,3)
 
     if 'url' in data:
 
@@ -75,7 +79,12 @@ def httpscan( data ):
         if 'expected_http_code' in data:
             if expectedCode != actualCode:
                 #print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
-                print "HTTP CODE Expected: %s | Returned: %s || BAD || %s" % (expectedCode,actualCode, url)
+                if(attempts < timesToRetry):
+                    print "a:" , attempts , " w:", wait, " u:", url
+                    time.sleep(wait)
+                    httpscan(data, attempts+1, wait)
+                else:
+                    print "HTTP CODE Expected: %s | Returned: %s | retried %s times || BAD || %s" % (expectedCode,actualCode, attempts, url)
         #    else:
                 #print "HTTP CODE Expected: %s | Returned: %s || GOOD || %s" % (expectedCode,actualCode, url)
 
@@ -86,7 +95,7 @@ def httpscan( data ):
 
     return 0
 
-def httpsscan( data ):
+def httpsscan( data , failcount = 0 ):
 
     if 'url' in data:
 
@@ -114,7 +123,7 @@ def httpsscan( data ):
     return 0
 
 
-def pingscan( data ):
+def pingscan( data , failcount = 0 ):
 
     if 'url' in data:
         url = data["url"]

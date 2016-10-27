@@ -16,6 +16,11 @@ import threading
 
 timesToRetry = 10;
 
+
+def smsAlert(number, message):
+    
+    return 0;
+
 def ssl_expiry_datetime(hostname):
     ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
 

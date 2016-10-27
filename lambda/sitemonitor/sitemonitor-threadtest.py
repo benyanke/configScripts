@@ -14,11 +14,14 @@ import random
 
 import threading
 
-timesToRetry = 10;
+# Retry this many times before reporting a failure
+timesToRetry = 3;
 
+# Timeout time for HTTP connections
+httpTimeout = 3.0
 
 def smsAlert(number, message):
-    
+    print "SENDING SMS: " , message
     return 0;
 
 def ssl_expiry_datetime(hostname):
@@ -27,10 +30,10 @@ def ssl_expiry_datetime(hostname):
     context = ssl.create_default_context()
     conn = context.wrap_socket(
         socket.socket(socket.AF_INET),
-        server_hostname=hostnam
+        server_hostname=hostname
     )
     # 3 second timeout because Lambda has runtime limitations
-    conn.settimeout(3.0)
+    conn.settimeout(httpTimeout)
 
     conn.connect((hostname, 443))
     ssl_info = conn.getpeercert()
@@ -67,7 +70,8 @@ def ssl_expires_in(hostname, buffer_days=14):
 
 def httpscan( data , attempts = 1, wait = 0):
 
-    wait = wait + wait + random.randint(0,3)
+#    wait = wait + random.randint(0,2)
+    wait = random.randint(1,5)
 
     if 'url' in data:
 
@@ -81,11 +85,12 @@ def httpscan( data , attempts = 1, wait = 0):
         actualCode = int(code)
         expectedCode = int(data['expected_http_code'])
 
+
         if 'expected_http_code' in data:
             if expectedCode != actualCode:
                 #print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
                 if(attempts < timesToRetry):
-                    print "a:" , attempts , " w:", wait, " u:", url
+                #    print "a:" , attempts , " w:", wait, " u:", url
                     time.sleep(wait)
                     httpscan(data, attempts+1, wait)
                 else:
@@ -100,30 +105,40 @@ def httpscan( data , attempts = 1, wait = 0):
 
     return 0
 
-def httpsscan( data , failcount = 0 ):
+def httpsscan( data , failcount = 0, wait = 0):
+
+    wait = random.randint(1,5)
 
     if 'url' in data:
 
         url = "https://" + str(data["url"])
 
-        response = urllib2.urlopen(url)
-        html = response.read()
-        code = response.getcode()
-        size = sys.getsizeof(html)
-
-        actualCode = int(code)
-        expectedCode = int(data['expected_http_code'])
-
+        # HTTP Code Check
         if 'expected_http_code' in data:
+            response = urllib2.urlopen(url)
+            html = response.read()
+            code = response.getcode()
+            size = sys.getsizeof(html)
+
+            actualCode = int(code)
+            expectedCode = int(data['expected_http_code'])
+
+
             if expectedCode != actualCode:
                 #print "(TLS) HTTP %s : unexpected response for %s" % (actualCode,url)
-                print "HTTP TLS CODE Expected: %s | Returned: %s || BAD || %s" % (expectedCode,actualCode, url)
+                if(attempts < timesToRetry):
+                #    print "a:" , attempts , " w:", wait, " u:", url
+                    time.sleep(wait)
+                    httpsscan(data, attempts+1, wait)
+                else:
+                    print "HTTP (TLS) CODE Expected: %s | Returned: %s | retried %s times || BAD || %s" % (expectedCode,actualCode, attempts, url)
             #else:
                 #print "HTTP TLS CODE Expected: %s | Returned: %s || GOOD || %s" % (expectedCode,actualCode, url)
 
-            if 'response_body_minimum_size' in data:
-                if data['response_body_minimum_size'] < size:
-                    print "Page is shorter than expected by %n bytes" % (data['response_body_minimum_size'] - size)
+        # Response size check
+        if 'response_body_minimum_size' in data:
+            if data['response_body_minimum_size'] < size:
+                print "Page is shorter than expected by %n bytes" % (data['response_body_minimum_size'] - size)
 
     return 0
 
@@ -185,21 +200,21 @@ for account in data:
 
         if service["type"] == "http" :
 
-			t = threading.Thread(target=httpscan, args=(service,))
-			threads.append(t)
-			t.start()
+            t = threading.Thread(target=httpscan, args=(service,))
+            threads.append(t)
+            t.start()
 
         elif service["type"] == "https" :
 
-			t = threading.Thread(target=httpsscan, args=(service,))
-			threads.append(t)
-			t.start()
+            t = threading.Thread(target=httpsscan, args=(service,))
+            threads.append(t)
+            t.start()
 
         elif service["type"] == "ping" :
 
-			t = threading.Thread(target=pingscan, args=(service,))
-			threads.append(t)
-			t.start()
+            t = threading.Thread(target=pingscan, args=(service,))
+            threads.append(t)
+            t.start()
 
         else:
 

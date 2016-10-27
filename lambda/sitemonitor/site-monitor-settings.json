@@ -179,7 +179,7 @@
         {
           "type": "http",
           "url": "squiresofdivinemercy.com",
-          "expected_http_code": "201",
+          "expected_http_code": "200",
           "response_body_minimum_size": "2k"
         }
       ]

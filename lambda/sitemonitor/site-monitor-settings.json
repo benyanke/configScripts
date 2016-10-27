@@ -175,6 +175,12 @@
           "url": "storage.yankehome.com",
           "expected_http_code": "200",
           "response_body_minimum_size": "2k"
+        },
+        {
+          "type": "http",
+          "url": "squiresofdivinemercy.com",
+          "expected_http_code": "201",
+          "response_body_minimum_size": "2k"
         }
       ]
     },

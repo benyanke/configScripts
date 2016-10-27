@@ -69,8 +69,8 @@ def httpscan( data ):
         code = response.getcode()
         size = sys.getsizeof(html)
 
-        expectedCode = int(code)
-        actualCode = int(data['expected_http_code'])
+        actualCode = int(code)
+        expectedCode = int(data['expected_http_code'])
 
         if 'expected_http_code' in data:
             if expectedCode != actualCode:
@@ -97,8 +97,8 @@ def httpsscan( data ):
         code = response.getcode()
         size = sys.getsizeof(html)
 
-        expectedCode = int(code)
-        actualCode = int(data['expected_http_code'])
+        actualCode = int(code)
+        expectedCode = int(data['expected_http_code'])
 
         if 'expected_http_code' in data:
             if expectedCode != actualCode:

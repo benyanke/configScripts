@@ -75,7 +75,7 @@ apt-get dist-upgrade -y
 
 
 # CLI packages
-apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect
+apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu
 echo "### Installed CLI tools ###" > $homeDir/installedTools
 echo " - htop (process manager)" >> $homeDir/installedTools
 echo " - git (version control)" >> $homeDir/installedTools
@@ -92,6 +92,7 @@ echo " - iperf3 (Bandwidth tester)" >> $homeDir/installedTools
 echo " - traceroute (network path tester)" >> $homeDir/installedTools
 echo " - PIP  (python packman)" >> $homeDir/installedTools
 echo " - OpenConnect  (UWW VPN)" >> $homeDir/installedTools
+echo " - BYOBU (Terminal 	wrapper)" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages

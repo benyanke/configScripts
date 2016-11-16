@@ -73,6 +73,7 @@ apt-get update
 apt-get upgrade -y
 apt-get dist-upgrade -y
 
+# Provisional: Thunar Krename
 
 # CLI packages
 apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu

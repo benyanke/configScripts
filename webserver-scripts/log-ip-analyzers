@@ -1,0 +1,2 @@
+zcat access_log.*.gz | awk '{print $1}' | sort | uniq -c | sort -n | tail -n 20
+tail -10000 access_log | awk '{print $1}' | sort | uniq -c | sort -n | tail

@@ -55,6 +55,8 @@ chmod 600 /home/$user/.ssh/authorized_keys
 # Chown full home one more time, to be sure
 chown -R $user:$user /home/$user/
 
+curl -sSL https://agent.digitalocean.com/install.sh | sh
+
 clear;
 echo "Run complete. Things you need to do still:";
 echo "";

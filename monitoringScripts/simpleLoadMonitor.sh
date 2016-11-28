@@ -15,7 +15,7 @@ response=`echo | awk -v T=$trigger -v L=$load 'BEGIN{if ( L > T){ print "greater
 
 if [[ $response = "greater" ]]; then
 
-        body="Server Load Alert for Novena for our Nation"
+        body="Server Load Alert for $serverName"
         body="$body\n\n"
 
         totalmem=$(grep MemTotal /proc/meminfo | awk '{print $2}')

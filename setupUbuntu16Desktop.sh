@@ -119,7 +119,6 @@ echo " - ReText (markdown editor)" >> $homeDir/installedTools
 echo " - XBindKeys (X server keystroke customizer)" >> $homeDir/installedTools
 echo " - Remmina (RDP)" >> $homeDir/installedTools
 echo " - Internet DJ Console" >> $homeDir/installedTools
-echo " - gconf-editor (Configuration editor)" >> $homeDir/installedTools
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1
@@ -139,6 +138,35 @@ if [ $? != 0 ]; then
 fi
 
 echo " - Chrome (Browser)" >> $homeDir/installedTools
+
+# Install Slack
+
+slackFile="https://downloads.slack-edge.com/linux_releases/slack-desktop-2.3.2-amd64.deb"
+wget $slackFile -O $tempDir/slack.deb
+
+dpkg --install $tempDir/slack.deb
+
+if [ $? != 0 ]; then
+  apt-get install -f -y;
+  dpkg --install $tempDir/slack.deb;
+fi
+
+echo " - Slack (Team messaging)" >> $homeDir/installedTools
+
+
+# Install Atom
+
+slackFile="https://atom.io/download/deb"
+wget $slackFile -O $tempDir/atom.deb
+
+dpkg --install $tempDir/atom.deb
+
+if [ $? != 0 ]; then
+  apt-get install -f -y;
+  dpkg --install $tempDir/atom.deb;
+fi
+
+echo " - Atom (Text Editor)" >> $homeDir/installedTools
 
 
 # Install Dropbox

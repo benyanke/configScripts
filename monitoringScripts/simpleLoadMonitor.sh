@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# From: https://github.com/benyanke/configScripts
+
 to="EMAIL HERE"
 serverName="SERVER NAME HERE"
 

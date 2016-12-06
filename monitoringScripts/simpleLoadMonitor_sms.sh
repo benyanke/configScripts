@@ -6,8 +6,8 @@
 to="PHONE NUMBER HERE"
 serverName="SERVER NAME HERE"
 
-twilioAuth=$(cat ~/.twilio/keys/account_sid)
-twilioKey=$(cat ~/.twilio/keys/auth_token)
+# twilioAuth=$(cat ~/.twilio/keys/account_sid)
+# twilioKey=$(cat ~/.twilio/keys/auth_token)
 
 trigger=0.60
 

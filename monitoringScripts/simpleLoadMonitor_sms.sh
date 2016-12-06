@@ -5,6 +5,9 @@
 to="EMAIL HERE"
 serverName="SERVER NAME HERE"
 
+twilioAuth=$(cat ~/.twilio/keys/account_sid)
+twilioKey=$(cat ~/.twilio/keys/auth_token)
+
 trigger=0.60
 
 rawLoad=`cat /proc/loadavg | awk '{print $1}'`
@@ -44,7 +47,8 @@ if [[ $response = "greater" ]]; then
 
         loadPercent=$(echo "scale=0; $load * 100" | bc -l)
 
-        echo -e "$body" | mail -s"High load on $serverName [ $loadPercent % ]" $to
+#        echo -e "$body" | mail -s"High load on $serverName [ $loadPercent % ]" $to
+        echo -e "High load on $serverName [ $loadPercent % ]" | twilio-sms -v 608-318-3642
 
         echo -e $body
 else

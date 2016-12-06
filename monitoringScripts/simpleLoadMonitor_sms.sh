@@ -2,7 +2,8 @@
 
 # From: https://github.com/benyanke/configScripts
 
-to="EMAIL HERE"
+# Format 123-123-1234
+to="PHONE NUMBER HERE"
 serverName="SERVER NAME HERE"
 
 twilioAuth=$(cat ~/.twilio/keys/account_sid)
@@ -47,8 +48,7 @@ if [[ $response = "greater" ]]; then
 
         loadPercent=$(echo "scale=0; $load * 100" | bc -l)
 
-#        echo -e "$body" | mail -s"High load on $serverName [ $loadPercent % ]" $to
-        echo -e "High load on $serverName [ $loadPercent % ]" | twilio-sms -v 608-318-3642
+        echo -e "High load on $serverName [ $loadPercent % ]" | twilio-sms -v $to
 
         echo -e $body
 else

@@ -11,7 +11,7 @@ fi
 #CHANGE THESE
 
 # destination for papertrail logging
-#example: 
+#example:
 papertrailDest="logs12345.papertrailapp.com:12345"
 
 
@@ -99,7 +99,7 @@ echo " - Sysstat (System statistics )" >> $homeDir/installedTools
 echo "" >> $homeDir/installedTools
 
 # Install gui packages
-apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor
+apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq
 echo "### Installed GUI tools ###" >> $homeDir/installedTools
 echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
 echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
@@ -121,6 +121,9 @@ echo " - ReText (markdown editor)" >> $homeDir/installedTools
 echo " - XBindKeys (X server keystroke customizer)" >> $homeDir/installedTools
 echo " - Remmina (RDP)" >> $homeDir/installedTools
 echo " - Internet DJ Console" >> $homeDir/installedTools
+echo " - Top bar weather indicator" >> $homeDir/installedTools
+echo " - Top bar Load Watcher" >> $homeDir/installedTools
+echo " - indicator-cpufreq (Top bar CPU clock manager)" >> $homeDir/installedTools
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1
@@ -198,7 +201,7 @@ rm /tmp/owncloud-release.key -f
 
 sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
 apt-get update
-# apt-get install owncloud-client -y 
+# apt-get install owncloud-client -y
 apt-get install owncloud-client -y --allow-unauthenticated
 
 echo " - OwnCloud (File Sync)" >> $homeDir/installedTools
@@ -249,4 +252,3 @@ if [ -a /etc/rsyslog.conf ]; then
     service rsyslog restart
   fi
 fi
-

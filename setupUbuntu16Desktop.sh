@@ -23,6 +23,9 @@ homeDir="/home/$currentUser"
 # This file contains a list of installed tools for user reference
 listfile="$homeDir/installedtools.md"
 
+# Version (unity or MATE)
+version=$(grep cdrom: /etc/apt/sources.list | sed -n '1s|.*deb cdrom:\[\([^ ]* *[^ ]*\).*|\1|p');
+
 mkdir $tempDir -p
 
 
@@ -43,25 +46,36 @@ function getBackgroundFile() {
   filename=$1;
   desktopBgBaseUrl="https://github.com/benyanke/configScripts/raw/master/img/desktopbackgrounds";
 
-  rm "$homeDir/Pictures/DesktopBackgrounds/$filename" -r
-  wget "$desktopBgBaseUrl/$filename" -O "$homeDir/Pictures/DesktopBackgrounds/$filename"
+  rm -r "$homeDir/Pictures/DesktopBackgrounds/$filename";
+  wget "$desktopBgBaseUrl/$filename" -O "$homeDir/Pictures/DesktopBackgrounds/$filename";
 
 }
 
-getBackgroundFile "cat6.jpg"
-getBackgroundFile "cloud.png"
-getBackgroundFile "inception-code.jpg"
-getBackgroundFile "knight.jpg"
-getBackgroundFile "ubuntu-blue.jpg"
-getBackgroundFile "ubuntu-grey.jpg"
-
+getBackgroundFile "cat6.jpg";
+getBackgroundFile "cloud.png";
+getBackgroundFile "inception-code.jpg";
+getBackgroundFile "knight.jpg";
+getBackgroundFile "ubuntu-blue.jpg";
+getBackgroundFile "ubuntu-grey.jpg";
 
 reownHome
 
-##### For Unity only
+# Change this to select which desktop is used
+desktopfile="inception-code.jpg";
 
-# Change desktop background
-gsettings set org.gnome.desktop.background picture-uri "file://$homeDir/Pictures/DesktopBackgrounds/knight.jpg"
+##### For MATE only
+if [[ $version == *"MATE"* ]] ; then
+
+    # Change desktop background
+    gsettings set org.gnome.desktop.background picture-uri "$homeDir/Pictures/DesktopBackgrounds/$desktopfile"
+
+##### For Unity only
+else
+
+    # Change desktop background
+    gsettings set org.gnome.desktop.background picture-uri "file://$homeDir/Pictures/DesktopBackgrounds/$desktopfile"
+
+fi
 
 # Change menus to in the window
 gsettings set com.canonical.Unity integrated-menus true

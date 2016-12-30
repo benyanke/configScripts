@@ -39,16 +39,13 @@ function reownHome() {
 
 mkdir -p $homeDir/Pictures/DesktopBackgrounds
 
-
-
-
 function getBackgroundFile() {
   filename=$1;
-  desktopBgBaseUrl="https://raw.githubusercontent.com/benyanke/configScripts/master/img/desktopbackgrounds";
+  desktopBgBaseUrl="https://github.com/benyanke/configScripts/raw/master/img/desktopbackgrounds";
 
   rm "$homeDir/Pictures/DesktopBackgrounds/$filename" -r
-  wget "$desktopBgBaseUrl/$filename" -O ""$homeDir/Pictures/DesktopBackgrounds/$filename"
-  
+  wget "$desktopBgBaseUrl/$filename" -O "$homeDir/Pictures/DesktopBackgrounds/$filename"
+
 }
 
 getBackgroundFile "cat6.jpg"
@@ -58,10 +55,13 @@ getBackgroundFile "knight.jpg"
 getBackgroundFile "ubuntu-blue.jpg"
 getBackgroundFile "ubuntu-grey.jpg"
 
+
 reownHome
 
+##### For Unity only
+
 # Change desktop background
-gsettings set org.gnome.desktop.background picture-uri "file://$tempDir/desktop.jpg"
+gsettings set org.gnome.desktop.background picture-uri "file://$homeDir/Pictures/DesktopBackgrounds/knight.jpg"
 
 # Change menus to in the window
 gsettings set com.canonical.Unity integrated-menus true

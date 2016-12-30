@@ -20,6 +20,9 @@ currentUser=$SUDO_USER
 tempDir="/home/$currentUser/temp"
 homeDir="/home/$currentUser"
 
+# This file contains a list of installed tools for user reference
+listfile="$homeDir/installedtools.md"
+
 mkdir $tempDir -p
 
 
@@ -34,8 +37,26 @@ function reownHome() {
 
 # Change Desktop
 
-rm $tempDir/desktop.jpg -r
-wget https://raw.githubusercontent.com/benyanke/configScripts/master/img/knightkneeling.jpg -O $tempDir/desktop.jpg
+mkdir -p $homeDir/Pictures/DesktopBackgrounds
+
+
+
+
+function getBackgroundFile() {
+  filename=$1;
+  desktopBgBaseUrl="https://raw.githubusercontent.com/benyanke/configScripts/master/img/desktopbackgrounds";
+
+  rm "$homeDir/Pictures/DesktopBackgrounds/$filename" -r
+  wget "$desktopBgBaseUrl/$filename" -O ""$homeDir/Pictures/DesktopBackgrounds/$filename"
+  
+}
+
+getBackgroundFile "cat6.jpg"
+getBackgroundFile "cloud.png"
+getBackgroundFile "inception-code.jpg"
+getBackgroundFile "knight.jpg"
+getBackgroundFile "ubuntu-blue.jpg"
+getBackgroundFile "ubuntu-grey.jpg"
 
 reownHome
 
@@ -75,55 +96,58 @@ apt-get dist-upgrade -y
 
 # Provisional: Thunar Krename
 
+echo "# Tools Installed by Initial Setup Script" > $listfile
+echo "" > $listfile
+
 # CLI packages
 apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat
-echo "### Installed CLI tools ###" > $homeDir/installedTools
-echo " - htop (process manager)" >> $homeDir/installedTools
-echo " - git (version control)" >> $homeDir/installedTools
-echo " - openvpn (vpn)" >> $homeDir/installedTools
-echo " - tree (directory structure viewer)" >> $homeDir/installedTools
-echo " - jq (json formatter)" >> $homeDir/installedTools
-echo " - nmap (network mapping tool)" >> $homeDir/installedTools
-echo " - Wine (Windows API)" >> $homeDir/installedTools
-echo " - Midnight Commander (CLI File Manager)" >> $homeDir/installedTools
-echo " - NetHogs (HTOP for Network Connections)" >> $homeDir/installedTools
-echo " - Zip and Unzip (.zip file handlers)" >> $homeDir/installedTools
-echo " - Screen (Terminal abstraction)" >> $homeDir/installedTools
-echo " - iperf3 (Bandwidth tester)" >> $homeDir/installedTools
-echo " - traceroute (network path tester)" >> $homeDir/installedTools
-echo " - PIP  (python packman)" >> $homeDir/installedTools
-echo " - OpenConnect  (UWW VPN)" >> $homeDir/installedTools
-echo " - BYOBU (Terminal wrapper)" >> $homeDir/installedTools
-echo " - iotop (Disk write monitor by process)" >> $homeDir/installedTools
-echo " - Sysstat (System statistics )" >> $homeDir/installedTools
-echo "" >> $homeDir/installedTools
+echo "## Installed CLI tools" >> $listfile
+echo " * htop (process manager)" >> $listfile
+echo " * git (version control)" >> $listfile
+echo " * openvpn (vpn)" >> $listfile
+echo " * tree (directory structure viewer)" >> $listfile
+echo " * jq (json formatter)" >> $listfile
+echo " * nmap (network mapping tool)" >> $listfile
+echo " * Wine (Windows API)" >> $listfile
+echo " * Midnight Commander (CLI File Manager)" >> $listfile
+echo " * NetHogs (HTOP for Network Connections)" >> $listfile
+echo " * Zip and Unzip (.zip file handlers)" >> $listfile
+echo " * Screen (Terminal abstraction)" >> $listfile
+echo " * iperf3 (Bandwidth tester)" >> $listfile
+echo " * traceroute (network path tester)" >> $listfile
+echo " * PIP  (python packman)" >> $listfile
+echo " * OpenConnect  (UWW VPN)" >> $listfile
+echo " * BYOBU (Terminal wrapper)" >> $listfile
+echo " * iotop (Disk write monitor by process)" >> $listfile
+echo " * Sysstat (System statistics )" >> $listfile
+echo "" >> $listfile
 
 # Install gui packages
 apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq
-echo "### Installed GUI tools ###" >> $homeDir/installedTools
-echo " - Inkscape (Vector Graphics)" >> $homeDir/installedTools
-echo " - GIMP (Raster Graphics)" >> $homeDir/installedTools
-echo " - LyX (LaTeX tool)" >> $homeDir/installedTools
-echo " - Audacity (Audio editor)" >> $homeDir/installedTools
-echo " - FileZilla (FTP and SFTP client)" >> $homeDir/installedTools
-echo " - Cheese (Camera viewer)" >> $homeDir/installedTools
-echo " - VLC (Media viewer)" >> $homeDir/installedTools
-echo " - MuseScore (Music Engraving)" >> $homeDir/installedTools
-echo " - Eclipse (Development)" >> $homeDir/installedTools
-echo " - Virtualbox (VMs)" >> $homeDir/installedTools
-echo " - Virt Manager (KVM remote tool)" >> $homeDir/installedTools
-echo " - Scribus (Desktop typesetting)" >> $homeDir/installedTools
-echo " - OpenVPN Network Manager Integration (GUI control for OpenVpn)" >> $homeDir/installedTools
-echo " - Shutter (advanced screenshots)" >> $homeDir/installedTools
-echo " - guake (advanced terminal)" >> $homeDir/installedTools
-echo " - mySQL Workbench (a mysql development tool)" >> $homeDir/installedTools
-echo " - ReText (markdown editor)" >> $homeDir/installedTools
-echo " - XBindKeys (X server keystroke customizer)" >> $homeDir/installedTools
-echo " - Remmina (RDP)" >> $homeDir/installedTools
-echo " - Internet DJ Console" >> $homeDir/installedTools
-echo " - Top bar weather indicator" >> $homeDir/installedTools
-echo " - Top bar Load Watcher" >> $homeDir/installedTools
-echo " - indicator-cpufreq (Top bar CPU clock manager)" >> $homeDir/installedTools
+echo "## Installed GUI tools" >> $listfile
+echo " * Inkscape (Vector Graphics)" >> $listfile
+echo " * GIMP (Raster Graphics)" >> $listfile
+echo " * LyX (LaTeX tool)" >> $listfile
+echo " * Audacity (Audio editor)" >> $listfile
+echo " * FileZilla (FTP and SFTP client)" >> $listfile
+echo " * Cheese (Camera viewer)" >> $listfile
+echo " * VLC (Media viewer)" >> $listfile
+echo " * MuseScore (Music Engraving)" >> $listfile
+echo " * Eclipse (Development)" >> $listfile
+echo " * Virtualbox (VMs)" >> $listfile
+echo " * Virt Manager (KVM remote tool)" >> $listfile
+echo " * Scribus (Desktop typesetting)" >> $listfile
+echo " * OpenVPN Network Manager Integration (GUI control for OpenVpn)" >> $listfile
+echo " * Shutter (advanced screenshots)" >> $listfile
+echo " * guake (advanced terminal)" >> $listfile
+echo " * mySQL Workbench (a mysql development tool)" >> $listfile
+echo " * ReText (markdown editor)" >> $listfile
+echo " * XBindKeys (X server keystroke customizer)" >> $listfile
+echo " * Remmina (RDP)" >> $listfile
+echo " * Internet DJ Console" >> $listfile
+echo " * Top bar weather indicator" >> $listfile
+echo " * Top bar Load Watcher" >> $listfile
+echo " * indicator-cpufreq (Top bar CPU clock manager)" >> $listfile
 
 # Install Chrome
 apt-get install -y libgconf2-4 libnss3-1d libxss1
@@ -142,7 +166,7 @@ if [ $? != 0 ]; then
   dpkg --install $tempDir/chrome.deb;
 fi
 
-echo " - Chrome (Browser)" >> $homeDir/installedTools
+echo " * Chrome (Browser)" >> $listfile
 
 # Install Slack
 
@@ -156,7 +180,7 @@ if [ $? != 0 ]; then
   dpkg --install $tempDir/slack.deb;
 fi
 
-echo " - Slack (Team messaging)" >> $homeDir/installedTools
+echo " * Slack (Team messaging)" >> $listfile
 
 
 # Install Atom
@@ -171,7 +195,7 @@ if [ $? != 0 ]; then
   dpkg --install $tempDir/atom.deb;
 fi
 
-echo " - Atom (Text Editor)" >> $homeDir/installedTools
+echo " * Atom (Text Editor)" >> $listfile
 
 
 # Install Dropbox
@@ -190,7 +214,7 @@ echo " - Atom (Text Editor)" >> $homeDir/installedTools
 # restart nautilus
 # nautilus -q && nautilus &
 
-# echo " - Dropbox (File Sync)" >> $homeDir/installedTools
+# echo " * Dropbox (File Sync)" >> $listfile
 
 
 # Install OwnCloud
@@ -204,7 +228,7 @@ apt-get update
 # apt-get install owncloud-client -y
 apt-get install owncloud-client -y --allow-unauthenticated
 
-echo " - OwnCloud (File Sync)" >> $homeDir/installedTools
+echo " * OwnCloud (File Sync)" >> $listfile
 
 # add update features
 wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key -O $tempDir/oc.key

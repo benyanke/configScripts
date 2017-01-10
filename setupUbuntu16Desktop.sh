@@ -166,7 +166,7 @@ else # end nonroot tasks, moving on to root
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -191,6 +191,7 @@ else # end nonroot tasks, moving on to root
   echo " * Top bar weather indicator" >> $listfile
   echo " * Top bar Load Watcher" >> $listfile
   echo " * indicator-cpufreq (Top bar CPU clock manager)" >> $listfile
+  echo " * fmit (Music tuner)" >> $listfile
 
   # Install Chrome
   apt-get install -y libgconf2-4 libnss3-1d libxss1

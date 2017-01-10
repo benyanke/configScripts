@@ -143,7 +143,7 @@ else # end nonroot tasks, moving on to root
   echo "" > $listfile
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat
+  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev
   echo "## Installed CLI tools" >> $listfile
   echo " * htop (process manager)" >> $listfile
   echo " * git (version control)" >> $listfile
@@ -163,6 +163,7 @@ else # end nonroot tasks, moving on to root
   echo " * BYOBU (Terminal wrapper)" >> $listfile
   echo " * iotop (Disk write monitor by process)" >> $listfile
   echo " * Sysstat (System statistics )" >> $listfile
+  echo " * systemtap-sdt-dev (Dtrace )" >> $listfile
   echo "" >> $listfile
 
   # Install gui packages

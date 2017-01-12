@@ -52,6 +52,7 @@ runcmd:
   - apt dist-upgrade -y
   - apt autoremove -y
   - apt autoremove -y
+  - shutdown -r now
 
 
 

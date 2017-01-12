@@ -1,23 +1,22 @@
 #cloud-config
 
-
 users:
   - name: benyanke
-    groups: sudo, changepw
+    groups: sudo
     shell: /bin/bash
     ssh-authorized-keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAteFNkftBDhXZIiNoEVIhEKUvfkSO4rNHbLiWj6J+E+RDr32yMyl0Bv5pLBntqxQPlQV0an86BimKpKAQj+ddEiCejXG/AWOcVrqfzcQ9ODjka8RQQwY4wP0TtnH/p5d5fyMZTZvUBr0X+ZYj69sGp9+SdzXamF8cz42g0N4uUXB0bf7VCTTeh7+vf3hb4dqI1dUhvbgy7moKjqJfxIaYfDtqzzNUT6hB7NiHvYJaf59oQOUDXikD30SS7+jck6gqad94UOQkYPKaj4JVIzsIaahl4ZkeAR0lxqgwPMi4w27Ay+CBw78uAxQMg+xKG13q3UhwlEv+otAAOuy7nh1amQ== rsa-key-20160209
       - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAu1kW8KsjsKetkEteNGD30bzGrsWXsgQTxQe74Gq7lkMoUV0nmX+/tmn2zzzqL8RjFSfcbV2K05IknLHi/TzHd+YcKOWQiN4MwRwF9qnclupuDP/GCxI8/RCjGe+jdltBTsWO1SSX+WHAERKAES4QQJ8iWCa5JDN3+GGZOGbuHdXKsHRMXQlIErosKfnhBaKTp8fRpg2KO03UDsVhoUf8y3BryVv9uTmQBOylkUCr/QHOcIIIRs1mCgeA9PCXGYaN8nbdavPfc9KE6OkVt41zkbH+5XdZ3sBzCLamXHHPEQgzIIvNI8uNlx4fMVnuiG8yxn7SLFGfVvBYlDU7a+Pyow== rsa-key-20160209
 
 runcmd:
-  - defaultpw=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-#  - defaultpwHash=$(echo $defaultpw | mkpasswd --method=SHA-512 --rounds=4096 -s)
-#  - echo $defaultpw | passwd benyanke --stdin
-  - echo "echo \"Your password is '$defaultpw'\"" >> /home/benyanke/.bashrc
+  - defaultpw=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)
+  - printf "printf \"####################\n\n\nYour password is '$defaultpw'\". It will now be changed.\n\n" >> /home/benyanke/.bashrc
   - echo "Your password is '$defaultpw'" > /home/benyanke/defaultPw
-#  - echo "if getent group $USR | grep &>/dev/null '\bchangepw\b'; then
-#    passwd $USER
-#fi"
+#  - echo "if getent group $USR | grep &>/dev/null '\bchangepw\b'; then"  >> /home/benyanke/.bashrc
+#  - echo "    passwd $USER"  >> /home/benyanke/.bashrc
+#  - echo "    fi"  >> /home/benyanke/.bashrc
+#  - echo ""  >> /home/benyanke/.bashrc
+
 
 packages:
   - git

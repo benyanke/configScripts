@@ -30,8 +30,6 @@ runcmd:
   - ufw default deny incoming
   - ufw default allow outgoing
   - ufw allow 22
-#  - ufw allow 80
-#  - ufw allow 443
   - ufw --force enable
   - user=benyanke
   - mkdir -p /home/$user/scripts/
@@ -43,6 +41,6 @@ runcmd:
 
 power_state:
   timeout: 120
-  delay: "+5"
-  message: Rebooting in five minutes. Please save your work.
+  delay: "+1"
+  message: Rebooting in one minutes. Please save your work.
   mode: reboot

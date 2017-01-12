@@ -1,0 +1,52 @@
+#cloud-config
+
+users:
+  - name: benyanke
+    groups: sudo
+    shell: /bin/bash
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAteFNkftBDhXZIiNoEVIhEKUvfkSO4rNHbLiWj6J+E+RDr32yMyl0Bv5pLBntqxQPlQV0an86BimKpKAQj+ddEiCejXG/AWOcVrqfzcQ9ODjka8RQQwY4wP0TtnH/p5d5fyMZTZvUBr0X+ZYj69sGp9+SdzXamF8cz42g0N4uUXB0bf7VCTTeh7+vf3hb4dqI1dUhvbgy7moKjqJfxIaYfDtqzzNUT6hB7NiHvYJaf59oQOUDXikD30SS7+jck6gqad94UOQkYPKaj4JVIzsIaahl4ZkeAR0lxqgwPMi4w27Ay+CBw78uAxQMg+xKG13q3UhwlEv+otAAOuy7nh1amQ== rsa-key-20160209
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAu1kW8KsjsKetkEteNGD30bzGrsWXsgQTxQe74Gq7lkMoUV0nmX+/tmn2zzzqL8RjFSfcbV2K05IknLHi/TzHd+YcKOWQiN4MwRwF9qnclupuDP/GCxI8/RCjGe+jdltBTsWO1SSX+WHAERKAES4QQJ8iWCa5JDN3+GGZOGbuHdXKsHRMXQlIErosKfnhBaKTp8fRpg2KO03UDsVhoUf8y3BryVv9uTmQBOylkUCr/QHOcIIIRs1mCgeA9PCXGYaN8nbdavPfc9KE6OkVt41zkbH+5XdZ3sBzCLamXHHPEQgzIIvNI8uNlx4fMVnuiG8yxn7SLFGfVvBYlDU7a+Pyow== rsa-key-20160209
+
+packages:
+  - git
+  - htop
+  - tree
+  - stress
+  - mc
+  - iperf
+  - iperf3
+  - nethogs
+  - zip
+  - unzip
+  - traceroute
+
+
+package_upgrade: true
+
+
+runcmd:
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow 22
+#  - ufw allow 80
+#  - ufw allow 443
+  - ufw --force enable
+  - user=benyanke
+  - mkdir -p /home/$user/scripts/
+  - mkdir -p /home/$user/scripts/ezservermonitor-sh/
+  - git clone https://github.com/benyanke/ezservermonitor-sh /home/$user/scripts/ezservermonitor-sh/
+  - chmod +x /home/$user/scripts/ezservermonitor-sh/*.sh
+  - curl -sSL https://agent.digitalocean.com/install.sh | sh
+  - apt update
+  - apt dist-upgrade -y  
+  - apt autoremove -y
+  - apt autoremove -y
+  
+
+
+power_state:
+  timeout: 120
+  delay: "+5"
+  message: Rebooting in five minutes. Please save your work.
+  mode: reboot

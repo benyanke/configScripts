@@ -13,7 +13,8 @@ runcmd:
   - defaultpw=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
 #  - defaultpwHash=$(echo $defaultpw | mkpasswd --method=SHA-512 --rounds=4096 -s)
   - echo $defaultpw | passwd benyanke --stdin
-  - echo "Your password is ''$defaultpw'" > .bashrc
+  - echo "echo \"Your password is '$defaultpw'\"" >> .bashrc
+  - echo "Your password is '$defaultpw'" > defaultPw
   - echo "if getent group $USR | grep &>/dev/null '\bchangepw\b'; then
     passwd $USER
 fi"

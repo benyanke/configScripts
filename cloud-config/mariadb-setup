@@ -1,5 +1,7 @@
 #cloud-config
 
+# Still in progress
+
 users:
   - name: benyanke
     groups: sudo
@@ -20,6 +22,9 @@ packages:
   - zip
   - unzip
   - traceroute
+  - mariadb-server
+  - phpmyadmin
+  - apache2-utils
 
 
 package_upgrade: true

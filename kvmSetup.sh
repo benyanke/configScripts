@@ -5,6 +5,9 @@
 
 currentUser=$(who -m | awk '{print $1;}');
 
+mkdir /home/$currentUser/kvm/osImages -p
+mkdir /home/$currentUser/kvm/vmDisks -p
+
 # Install packages
 apt update
 apt install -y qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils

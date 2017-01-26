@@ -244,6 +244,21 @@ else # end nonroot tasks, moving on to root
   echo " * Atom (Text Editor)" >> $listfile
 
 
+  # Install __ Chat Client
+
+  mkdir /opt/franz -p
+  mkdir /opt/bin -p
+
+  programArchive="https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz"
+  wget $programArchive -O $tempDir/franz.tgz
+
+  tar -xvzf $tempDir/franz.tgz -C /opt/franz
+
+	ln -s /opt/franz/Franz /opt/bin/franz
+
+	echo " * Franz (Multi-provider chat client)" >> $listfile
+
+
   # Install Dropbox
   # No longer using, keeping code here in case I ever choose to revert
 

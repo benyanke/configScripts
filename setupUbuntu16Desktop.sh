@@ -143,7 +143,7 @@ else # end nonroot tasks, moving on to root
   echo "" > $listfile
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev
+  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras
   echo "## Installed CLI tools" >> $listfile
   echo " * htop (process manager)" >> $listfile
   echo " * git (version control)" >> $listfile
@@ -164,10 +164,12 @@ else # end nonroot tasks, moving on to root
   echo " * iotop (Disk write monitor by process)" >> $listfile
   echo " * Sysstat (System statistics )" >> $listfile
   echo " * systemtap-sdt-dev (Dtrace )" >> $listfile
+  echo " * ubuntu-restricted-extrasv (Audio Codecs - not sure if want to keep)" >> $listfile
+
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -194,6 +196,7 @@ else # end nonroot tasks, moving on to root
   echo " * indicator-cpufreq (Top bar CPU clock manager)" >> $listfile
   echo " * fmit (Music tuner)" >> $listfile
   echo " * unity-tweak-tool (Figure it out)" >> $listfile
+  echo " * gtkpod (Linux iPod Sync Tool)" >> $listfile
 
   # Install Chrome
   apt-get install -y libgconf2-4 libnss3-1d libxss1

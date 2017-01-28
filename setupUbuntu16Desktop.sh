@@ -122,7 +122,7 @@ if [ "$1" != "-f" ] ; then
 
   # Upgrade to root
   if [ "$(whoami)" != "root" ]; then
-      sudo su -s "$0 -f"
+      sudo $0 -f
       exit 0;
   else
       echo "Could not be upgraded to root.";

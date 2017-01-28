@@ -100,9 +100,22 @@ if [ "$1" != "-f" ] ; then
   getBackgroundFile "knight.jpg";
   getBackgroundFile "ubuntu-blue.jpg";
   getBackgroundFile "ubuntu-grey.jpg";
+  getBackgroundFile "O4GTKkE.jpg";
 
   # Set one to be the background
-  setDesktopBackground "cloud.png";
+  setDesktopBackground "O4GTKkE.jpg";
+
+
+  # Changing miscellaneous settings
+  gsettings set org.gnome.system.proxy use-same-proxy false
+  gsettings set com.canonical.indicator.datetime show-day true
+  gsettings set com.canonical.indicator.datetime show-date true
+  gsettings set com.canonical.indicator.datetime show-week-numbers true
+  gsettings set com.canonical.Unity.Launcher favorites ['application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://org.gnome.Software.desktop', 'unity://running-apps', 'application://gnome-terminal.desktop', 'unity://expo-icon', 'unity://devices', 'unity://desktop-icon']
+  gsettings set org.gnome.nautilus.list-view default-visible-columns ['name', 'size', 'type', 'date_modified', 'date_accessed', 'owner', 'group', 'permissions']
+  gsettings set org.gnome.nautilus.list-view default-column-order ['name', 'size', 'type', 'date_modified', 'date_accessed', 'owner', 'group', 'permissions', 'mime_type', 'where']
+
+
 
   echo ""
   echo "### Upgrade to root ###"
@@ -167,7 +180,7 @@ else # end nonroot tasks, moving on to root
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -194,6 +207,7 @@ else # end nonroot tasks, moving on to root
   echo " * indicator-cpufreq (Top bar CPU clock manager)" >> $listfile
   echo " * fmit (Music tuner)" >> $listfile
   echo " * unity-tweak-tool (Figure it out)" >> $listfile
+  echo " * Docky (Dock)" >> $listfile
 
   # Install Chrome
   apt-get install -y libgconf2-4 libnss3-1d libxss1

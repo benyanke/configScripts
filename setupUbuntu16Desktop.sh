@@ -13,7 +13,20 @@ else
   currentUser=$USER;
 fi
 
-tempDir="/home/$currentUser/temp"
+# Request Sudo Access before we continue further
+sudo cat /dev/null
+
+# Delete temp directory after script finishes
+set -e
+function cleanup {
+  echo "Removing temp directory"
+  sudo rm  -rf /tmp/installfiles
+}
+trap cleanup EXIT
+
+
+# tempDir="/home/$currentUser/temp"
+tempDir="/tmp/installfiles"
 homeDir="/home/$currentUser"
 
 # This file contains a list of installed tools for user reference
@@ -22,7 +35,10 @@ listfile="$homeDir/installedtools.md"
 # Version (unity or MATE)
 version=$(grep cdrom: /etc/apt/sources.list | sed -n '1s|.*deb cdrom:\[\([^ ]* *[^ ]*\).*|\1|p');
 
-mkdir $tempDir -p
+
+# Make Temp Directory
+sudo mkdir $tempDir -p
+sudo chown $currentUser:$currentUser $tempDir
 
 
 function reownHome() {
@@ -100,16 +116,29 @@ if [ "$1" != "-f" ] ; then
   getBackgroundFile "knight.jpg";
   getBackgroundFile "ubuntu-blue.jpg";
   getBackgroundFile "ubuntu-grey.jpg";
+  getBackgroundFile "O4GTKkE.jpg";
 
   # Set one to be the background
-  setDesktopBackground "cloud.png";
+  setDesktopBackground "O4GTKkE.jpg";
+
+
+  # Changing miscellaneous settings
+  gsettings set org.gnome.system.proxy use-same-proxy false
+  gsettings set com.canonical.indicator.datetime show-day true
+  gsettings set com.canonical.indicator.datetime show-date true
+  gsettings set com.canonical.indicator.datetime show-week-numbers true
+  gsettings set com.canonical.Unity.Launcher favorites ['application://org.gnome.Nautilus.desktop', 'application://firefox.desktop', 'application://org.gnome.Software.desktop', 'unity://running-apps', 'application://gnome-terminal.desktop', 'unity://expo-icon', 'unity://devices', 'unity://desktop-icon']
+  gsettings set org.gnome.nautilus.list-view default-visible-columns ['name', 'size', 'type', 'date_modified', 'date_accessed', 'owner', 'group', 'permissions']
+  gsettings set org.gnome.nautilus.list-view default-column-order ['name', 'size', 'type', 'date_modified', 'date_accessed', 'owner', 'group', 'permissions', 'mime_type', 'where']
+
+
 
   echo ""
   echo "### Upgrade to root ###"
 
   # Upgrade to root
   if [ "$(whoami)" != "root" ]; then
-      sudo su -s "$0 -f"
+      sudo $0 -f
       exit 0;
   else
       echo "Could not be upgraded to root.";
@@ -136,8 +165,6 @@ else # end nonroot tasks, moving on to root
   apt-get update
   apt-get upgrade -y
   apt-get dist-upgrade -y
-
-  # Provisional: Thunar Krename
 
   echo "# Tools Installed by Initial Setup Script" > $listfile
   echo "" > $listfile
@@ -169,7 +196,7 @@ else # end nonroot tasks, moving on to root
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac docky
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -197,30 +224,13 @@ else # end nonroot tasks, moving on to root
   echo " * fmit (Music tuner)" >> $listfile
   echo " * unity-tweak-tool (Figure it out)" >> $listfile
   echo " * gtkpod (Linux iPod Sync Tool)" >> $listfile
+  echo " * Docky (Dock)" >> $listfile
 
-  # Install Chrome
-  apt-get install -y libgconf2-4 libnss3-1d libxss1
-  if [ $? != 0 ]; then
-    apt-get install -f -y;
-    apt-get install -y libgconf2-4 libnss3-1d libxss1
-  fi
 
-  rm  $tempDir/chrome.deb -f
-  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O $tempDir/chrome.deb
+function installdeb() {
 
-  dpkg --install $tempDir/chrome.deb
-
-  if [ $? != 0 ]; then
-    apt-get install -f -y;
-    dpkg --install $tempDir/chrome.deb;
-  fi
-
-  echo " * Chrome (Browser)" >> $listfile
-
-  # Install Slack
-
-  slackFile="https://downloads.slack-edge.com/linux_releases/slack-desktop-2.3.2-amd64.deb"
-  wget $slackFile -O $tempDir/slack.deb
+  deb="$1"
+  wget $1 -O $tempDir/slack.deb
 
   dpkg --install $tempDir/slack.deb
 
@@ -229,42 +239,46 @@ else # end nonroot tasks, moving on to root
     dpkg --install $tempDir/slack.deb;
   fi
 
-  echo " * Slack (Team messaging)" >> $listfile
+  echo " * $2 ($3)" >> $listfile
 
+}
 
-  # Install Atom
-
-  slackFile="https://atom.io/download/deb"
-  wget $slackFile -O $tempDir/atom.deb
-
-  dpkg --install $tempDir/atom.deb
-
+  # Install Chrome
+  # Get dependencies
+  apt-get install -y libgconf2-4 libnss3-1d libxss1
   if [ $? != 0 ]; then
     apt-get install -f -y;
-    dpkg --install $tempDir/atom.deb;
+    apt-get install -y libgconf2-4 libnss3-1d libxss1
   fi
 
-  echo " * Atom (Text Editor)" >> $listfile
+  installdeb "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" "Chrome" "Browser"
+
+  # Install Slack
+  installdeb "https://downloads.slack-edge.com/linux_releases/slack-desktop-2.3.2-amd64.deb"  "Slack" "Team messaging"
+
+  # Install Atom
+  installdeb "https://atom.io/download/deb" "Atom" "Text Editor"
+
+
+  # Install __ Chat Client
+
+  mkdir /opt/franz -p
+  mkdir /opt/bin -p
+
+  programArchive="https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz"
+  wget $programArchive -O $tempDir/franz.tgz
+
+  tar -xvzf $tempDir/franz.tgz -C /opt/franz
+
+	ln -s /opt/franz/Franz /opt/bin/franz
+
+	echo " * Franz (Multi-provider chat client)" >> $listfile
 
 
   # Install Dropbox
   # No longer using, keeping code here in case I ever choose to revert
 
-  # rm  $tempDir/dropbox.deb -f
-  # wget https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb -O $tempDir/dropbox.deb
-
-  # dpkg --install $tempDir/dropbox.deb
-
-  # if [ $? != 0 ]; then
-  #   apt-get install -f -y;
-  #   dpkg --install $tempDir/dropbox.deb;
-  # fi
-
-  # restart nautilus
-  # nautilus -q && nautilus &
-
-  # echo " * Dropbox (File Sync)" >> $listfile
-
+  # installdeb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb" "Dropbox" "File Sync"
 
   # Install OwnCloud
   curl http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/Release.key > /tmp/owncloud-release.key
@@ -278,6 +292,7 @@ else # end nonroot tasks, moving on to root
   apt-get install owncloud-client -y --allow-unauthenticated
 
   echo " * OwnCloud (File Sync)" >> $listfile
+
 
   # add update features
   wget http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_16.04/Release.key -O $tempDir/oc.key
@@ -304,15 +319,10 @@ else # end nonroot tasks, moving on to root
   apt-get dist-upgrade -y
 
   # Add new programs to launcher
+  reownHome
+
   exit;
 
-  myfile='firefox.desktop'
-  list=`gsettings get com.canonical.Unity.Launcher favorites`
-  newlist=`echo $list | sed s/]/", '${myfile}']"/`
-  gsettings set com.canonical.Unity.Launcher favorites "$newlist"
-  su $currentUser -c "unity --replace"
-
-  reownHome
 
 
   #Add to papertrail

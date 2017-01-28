@@ -1,6 +1,14 @@
 #!/bin/bash
 
 
+# Todo:
+# Make output nicer
+# Change from Owncloud to Nextcloud
+# Add nextcloud setup
+# Add config sync system
+# Setup guake config
+# Look into gnome config
+
 # destination for papertrail logging
 #example:
 papertrailDest="logs12345.papertrailapp.com:12345"
@@ -196,7 +204,7 @@ else # end nonroot tasks, moving on to root
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac docky
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac docky guake
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -225,6 +233,7 @@ else # end nonroot tasks, moving on to root
   echo " * unity-tweak-tool (Figure it out)" >> $listfile
   echo " * gtkpod (Linux iPod Sync Tool)" >> $listfile
   echo " * Docky (Dock)" >> $listfile
+  echo " * Guake (Dropdown Terminal)" >> $listfile
 
 
 function installdeb() {

@@ -1,0 +1,134 @@
+#!/bin/bash
+
+############################
+# COOL, the Classroom Object Oriented Language
+# Compile helper script
+#
+# This script automates a number of tasks:
+# - Compiling COOL programs
+# - Running COOL programs
+# - Cleaning up the messy output from the COOL executor
+#
+# To run a COOL program with this script, pass the source code file as a paramter
+# Alternate syntax: You can also run the program without the .cl extension.
+# For example, to run 'test.cl', you may run either:
+# $ cool test
+# $ cool test.cl
+#
+# Also, if there only exists one .cl file in a directory, it will use that as input
+#
+# Written by Ben Yanke
+# https://github.com/benyanke
+#
+# Last Modified February 2, 2017
+#
+############################
+
+echo "still need to implement auto-select"
+exit;
+
+############################
+# Settings
+############################
+
+# Change these if you need to.
+
+# Path to compiler
+compile="/usr/local/bin/coolc"
+
+# Path to executer
+execute="/usr/local/bin/322spim"
+
+############################
+# Input Processing
+############################
+
+# Get filename from argument
+inRaw=$1
+
+# if file exists, continue normally
+if [ -f $inRaw ]; then
+
+	inSrc=$inRaw
+
+	# Remove the '.cl' from the end of the input and
+	# replace with '.s' to obtain the name of the compiled executable
+
+	noExt="${inRaw%.*}"
+
+	inBin=$noExt.s
+
+
+# If file is not found, but $inRaw.cl is,
+# switch to that silently and continue
+elif [ ! -f $inRaw ] && [ -f $inRaw.cl ]; then
+
+	inSrc=$1.cl
+	inBin=$1.s
+
+fi
+
+############################
+# File State Error Checking
+############################
+
+# check for blank entry
+
+if [ $inRaw = "" ]; then
+	echo ;
+	echo "ERROR: Please enter a file name to run.";
+	echo ;
+	exit 1;
+fi
+
+
+## Check for file existence
+if [ ! -f $inSrc ]; then
+	echo ;
+	echo "ERROR: '$inSrc' does not exist";
+	echo ;
+	exit 1;
+fi
+
+## Check for file readability
+if [ ! -r $inSrc ]; then
+	echo ;
+	echo "ERROR: '$inSrc' is not readable";
+	echo ;
+	exit 1;
+fi
+
+
+## Check for file size > 0
+if [ ! -s $inSrc ]; then
+	echo ;
+	echo "ERROR: '$inSrc' is blank";
+	echo ;
+	exit 1;
+fi
+
+
+
+###########
+# MAIN Section
+###########
+
+# Remove existing binary, if it exists
+if [ -f $inBin ]; then
+	rm $inBin -f;
+fi
+
+# Compile source to binary - exit with error if it fails;
+$compile $inSrc | exit 1;
+
+# Newline
+echo ;
+
+# Run program - remove header and footer from program run to make more readable
+$execute -file $inBin  | tail -n+6 | rev | cut -c 35- | rev
+
+# Newline
+echo ;
+
+# Exit with a success code
+exit 0;

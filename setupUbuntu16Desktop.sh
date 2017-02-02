@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Todo:
 # Make output nicer
 # Change from Owncloud to Nextcloud
@@ -8,6 +7,9 @@
 # Add config sync system
 # Setup guake config
 # Look into gnome config
+# Dockyconf
+# Git repos
+# Scripts folder
 
 # destination for papertrail logging
 #example:
@@ -104,7 +106,7 @@ if [ "$1" != "-f" ] ; then
 
           # Change scrolling settings
           gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
-
+v
           # Change file manager display to list
           gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
 
@@ -178,7 +180,7 @@ else # end nonroot tasks, moving on to root
   echo "" > $listfile
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras
+  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk
   echo "## Installed CLI tools" >> $listfile
   echo " * htop (process manager)" >> $listfile
   echo " * git (version control)" >> $listfile
@@ -200,11 +202,12 @@ else # end nonroot tasks, moving on to root
   echo " * Sysstat (System statistics )" >> $listfile
   echo " * systemtap-sdt-dev (Dtrace )" >> $listfile
   echo " * ubuntu-restricted-extrasv (Audio Codecs - not sure if want to keep)" >> $listfile
+  echo " * latexmk (Latex Processor )" >> $listfile
 
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac docky guake
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -234,7 +237,10 @@ else # end nonroot tasks, moving on to root
   echo " * gtkpod (Linux iPod Sync Tool)" >> $listfile
   echo " * Docky (Dock)" >> $listfile
   echo " * Guake (Dropdown Terminal)" >> $listfile
-
+  echo " * Gnome: Todo (Gnome's Todo Utility)" >> $listfile
+  echo " * Gnome: Calendar (Gnome's Calendar Utility)" >> $listfile
+  echo " * Indicator - Multiload (Top Bar Load Tracking)" >> $listfile
+  echo " * Indicator - CPUfreq (CPU Frequency Indicator for GNOME bar - also adjusts the speed)" >> $listfile
 
 function installdeb() {
 

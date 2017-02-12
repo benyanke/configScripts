@@ -10,6 +10,8 @@
 # Dockyconf
 # Git repos
 # Scripts folder
+# http://www.omgubuntu.co.uk/2016/09/wunderline-nifty-command-line-app-wunderlist
+
 
 # destination for papertrail logging
 #example:
@@ -208,7 +210,7 @@ else # end nonroot tasks, moving on to root
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool gtkpod gtkpod-aac docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -235,7 +237,7 @@ else # end nonroot tasks, moving on to root
   echo " * indicator-cpufreq (Top bar CPU clock manager)" >> $listfile
   echo " * fmit (Music tuner)" >> $listfile
   echo " * unity-tweak-tool (Figure it out)" >> $listfile
-  echo " * gtkpod (Linux iPod Sync Tool)" >> $listfile
+#  echo " * gtkpod (Linux iPod Sync Tool)" >> $listfile
   echo " * Docky (Dock)" >> $listfile
   echo " * Guake (Dropdown Terminal)" >> $listfile
   echo " * Gnome: Todo (Gnome's Todo Utility)" >> $listfile

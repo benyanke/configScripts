@@ -182,7 +182,7 @@ else # end nonroot tasks, moving on to root
   echo "" > $listfile
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown
+  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop
   echo "## Installed CLI tools" >> $listfile
   echo " * htop (process manager)" >> $listfile
   echo " * git (version control)" >> $listfile
@@ -206,6 +206,7 @@ else # end nonroot tasks, moving on to root
   echo " * ubuntu-restricted-extrasv (Audio Codecs - not sure if want to keep)" >> $listfile
   echo " * latexmk (Latex Processor )" >> $listfile
   echo " * markdown (Markdown -> HTML processor)" >> $listfile
+  echo " * iftop (Net Interface TOP)" >> $listfile
 
   echo "" >> $listfile
 

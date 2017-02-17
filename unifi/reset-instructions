@@ -1,0 +1,14 @@
+SSH in with controller creds, and run: 
+
+	syswrapper.sh restore-default
+
+The AP will reset. Find it on the network, and ssh conenct with 
+
+	'ssh ubnt@[IP]'
+	'pw: ubnt'
+
+
+Then run:
+
+	mca-cli
+	set-inform http://10.10.10.47:8080/inform

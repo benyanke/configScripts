@@ -1,8 +1,12 @@
   <?php
 
+/*
+ * DNS Update Script - by Ben Yanke <https://github.com/benyanke>
+ */
+
+
   // change 'false' to 'true' to enable debugging
    define("DEBUG", false);
-//  define("DEBUG", true);
 
   // Setup basic info
   $currentDir = getcwd();

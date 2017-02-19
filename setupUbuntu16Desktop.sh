@@ -93,6 +93,9 @@ if [ "$1" != "-f" ] ; then
       basepath="$homeDir/Pictures/DesktopBackgrounds/";
       desktopfile=$1;
 
+      # Allow VNC connections over localhost
+      gsettings set org.gnome.Vino network-interface lo
+
       ##### For MATE only
       if [[ $version == *"MATE"* ]] ; then
 
@@ -211,7 +214,7 @@ else # end nonroot tasks, moving on to root
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser gnome-disk-utility
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser gnome-disk-utility vino
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -247,6 +250,7 @@ else # end nonroot tasks, moving on to root
   echo " * Indicator - CPUfreq (CPU Frequency Indicator for GNOME bar - also adjusts the speed)" >> $listfile
   echo " * sqlitebrowser (SQLite DB Browser)" >> $listfile
   echo " * gnome-disk-utility (Gnome Disk Utility)" >> $listfile
+  echo " * vino (VNC Server)" >> $listfile
 
 function installdeb() {
 

@@ -1,0 +1,43 @@
+{
+  "apikeys": {
+    "api-key-identifier1": "Do-api-key-goes-here",
+    "api-key-identifier2": "Do-api-key-goes-here",
+    "api-key-identifier3": "Do-api-key-goes-here"
+  },
+  "clients": [
+    {
+      "statictoken": "pick-any-token",
+      "description": "descibe what this is",
+      "location": "describe the location of the client calling this entry",
+      "domains": [
+        {
+          "topdomain": "example.com",
+          "subdomain": "sub.domain",
+          "apikey": "api-key-identifier1"
+        },
+        {
+          "topdomain": "example.org",
+          "subdomain": "sub.domain.here",
+          "apikey": "api-key-identifier2"
+        }
+      ]
+    },
+    {
+      "statictoken": "56d9a222eea3e0346914e532b70ce8b6",
+      "description": "DESCRIPTION GOES HERE",
+      "location": "LOCATION GOES HERE",
+      "domains": [
+        {
+          "topdomain": "example.com",
+          "subdomain": "another.sub.domain",
+          "apikey": "api-key-identifier1"
+        },
+        {
+          "topdomain": "example.org",
+          "subdomain": "another.sub.domain.here",
+          "apikey": "api-key-identifier2"
+        }
+      ]
+    }
+  ]
+}

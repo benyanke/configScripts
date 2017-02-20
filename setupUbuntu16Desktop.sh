@@ -210,11 +210,10 @@ else # end nonroot tasks, moving on to root
   echo " * latexmk (Latex Processor )" >> $listfile
   echo " * markdown (Markdown -> HTML processor)" >> $listfile
   echo " * iftop (Net Interface TOP)" >> $listfile
-
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser gnome-disk-utility vino
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser gnome-disk-utility vino pdfsam
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -251,6 +250,7 @@ else # end nonroot tasks, moving on to root
   echo " * sqlitebrowser (SQLite DB Browser)" >> $listfile
   echo " * gnome-disk-utility (Gnome Disk Utility)" >> $listfile
   echo " * vino (VNC Server)" >> $listfile
+  echo " * pdfsam (PDF Split and Merge)" >> $listfile
 
 function installdeb() {
 

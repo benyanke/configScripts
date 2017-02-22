@@ -174,9 +174,19 @@ else # end nonroot tasks, moving on to root
 
 
   # Install packages
-  add-apt-repository ppa:n-muench/programs-ppa
+
+  # Not sure what this does
+  add-apt-repository ppa:n-muench/programs-ppa -y
+
+  # Get WINE
   add-apt-repository ppa:ubuntu-wine/ppa -y
+
+  # Get most recent shutter version
+  add-apt-repository ppa:shutter/ppa -y
+
+  # Get expanded ubuntu list
   add-apt-repository universe -y
+
   apt-get update
   apt-get upgrade -y
   apt-get dist-upgrade -y

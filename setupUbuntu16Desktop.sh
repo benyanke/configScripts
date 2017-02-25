@@ -30,10 +30,10 @@ sudo cat /dev/null
 
 # Delete temp directory after script finishes
 # set -e
-function cleanup {
-  echo "Removing temp directory"
-  sudo rm  -rf /tmp/installfiles
-}
+# function cleanup {
+#  echo "Removing temp directory"
+#  sudo rm  -rf /tmp/installfiles
+# }
 # trap cleanup EXIT
 
 

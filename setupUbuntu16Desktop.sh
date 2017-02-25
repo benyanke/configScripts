@@ -184,6 +184,10 @@ else # end nonroot tasks, moving on to root
   # Get most recent shutter version
   add-apt-repository ppa:shutter/ppa -y
 
+	# NextCloud
+  add-apt-repository ppa:nextcloud-devs/client -y
+
+
   # Get expanded ubuntu list
   add-apt-repository universe -y
 
@@ -195,7 +199,7 @@ else # end nonroot tasks, moving on to root
   echo "" > $listfile
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop espeak
+  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop espeak openssh-server
   echo "## Installed CLI tools" >> $listfile
   echo " * htop (process manager)" >> $listfile
   echo " * git (version control)" >> $listfile
@@ -221,10 +225,11 @@ else # end nonroot tasks, moving on to root
   echo " * markdown (Markdown -> HTML processor)" >> $listfile
   echo " * iftop (Net Interface TOP)" >> $listfile
   echo " * espeak (text to speech)" >> $listfile
+  echo " * openssh-server (SSH)" >> $listfile
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser gnome-disk-utility vino pdfsam corebird
+  apt-get install -y inkscape gimp lyx audacity filezilla pdfmod cheese vlc sshuttle musescore virtualbox virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlitebrowser gnome-disk-utility vino pdfsam corebird docky nextcloud-client
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -263,6 +268,8 @@ else # end nonroot tasks, moving on to root
   echo " * vino (VNC Server)" >> $listfile
   echo " * pdfsam (PDF Split and Merge)" >> $listfile
   echo " * corebird (Twitter client)" >> $listfile
+  echo " * docky (Dock)" >> $listfile
+  echo " * nextcloud-client (NextCloud Desktop Sync)" >> $listfile
 
 function installdeb() {
 
@@ -311,24 +318,23 @@ function installdeb() {
 
 	echo " * Franz (Multi-provider chat client)" >> $listfile
 
-
   # Install Dropbox
   # No longer using, keeping code here in case I ever choose to revert
 
   # installdeb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb" "Dropbox" "File Sync"
 
   # Install OwnCloud
-  curl http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/Release.key > /tmp/owncloud-release.key
+#  curl http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/Release.key > /tmp/owncloud-release.key
 
-  apt-key add - < /tmp/owncloud-release.key
-  rm /tmp/owncloud-release.key -f
+#  apt-key add - < /tmp/owncloud-release.key
+#  rm /tmp/owncloud-release.key -f
 
-  sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
-  apt-get update
+#  sh -c "echo 'deb http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_16.04/ /' > /etc/apt/sources.list.d/owncloud-client.list"
+#  apt-get update
   # apt-get install owncloud-client -y
-  apt-get install owncloud-client -y --allow-unauthenticated
+#  apt-get install owncloud-client -y --allow-unauthenticated
 
-  echo " * OwnCloud (File Sync)" >> $listfile
+#  echo " * OwnCloud (File Sync)" >> $listfile
 
 
   # add update features

@@ -314,7 +314,7 @@ else # end nonroot tasks, moving on to root
 
 function setstartup() {
 
-  ln -s /usr/share/applications/$1.desktop ~/.config/autostart/ > $inslog 2>&1
+  cp /usr/share/applications/$1.desktop ~/.config/autostart/ > $inslog 2>&1
 
 }
   step "Adding startup apps"

@@ -321,7 +321,7 @@ function setstartup() {
   setstartup "guake"
   setstartup "indicator-multiload"
   setstartup "indicator-weather"
-  setstartup "nextcloud"
+  setstartup "Nextcloud"
   stepdone
 
 function installdeb() {

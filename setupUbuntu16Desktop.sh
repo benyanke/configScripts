@@ -234,7 +234,7 @@ else # end nonroot tasks, moving on to root
   echo "" > $listfile
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw wine winetricks mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop espeak openssh-server wakeonlan > $inslog 2>&1 
+  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop espeak openssh-server wakeonlan > $inslog 2>&1 
   echo "## Installed CLI tools" >> $listfile
   echo " * htop (process manager)" >> $listfile
   echo " * git (version control)" >> $listfile
@@ -242,7 +242,7 @@ else # end nonroot tasks, moving on to root
   echo " * tree (directory structure viewer)" >> $listfile
   echo " * jq (json formatter)" >> $listfile
   echo " * nmap (network mapping tool)" >> $listfile
-  echo " * Wine (Windows API)" >> $listfile
+#  echo " * Wine and winetricks (Windows API)" >> $listfile
   echo " * Midnight Commander (CLI File Manager)" >> $listfile
   echo " * NetHogs (HTOP for Network Connections)" >> $listfile
   echo " * Zip and Unzip (.zip file handlers)" >> $listfile

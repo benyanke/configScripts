@@ -2,6 +2,9 @@
 
 # Todo:
 # APT BROKEN: Jack audio question asked upon install
+# Microsoft fonts issue as well
+# SSH SERVER + keys
+
 # Add nextcloud setup
 # Add config sync system
 # Setup guake config

@@ -4,6 +4,7 @@
 # APT BROKEN: Jack audio question asked upon install
 # Microsoft fonts issue as well
 # SSH SERVER + keys
+# Add guake, docky, etc, to ubuntu startup scripts
 
 # Add nextcloud setup
 # Add config sync system

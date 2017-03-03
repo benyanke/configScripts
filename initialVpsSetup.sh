@@ -57,6 +57,17 @@ chown -R $user:$user /home/$user/
 
 # curl -sSL https://agent.digitalocean.com/install.sh | sh
 
+
+# Add nightly updates to crontab
+crontabTmpFile="/tmp/crontab-tmp
+echo "# Nightly Updates at 3am" > $crontabTmpFile
+echo "touch /var/log/apt/myupdates.log" >> $crontabTmpFile
+echo "0 3 * * * (/usr/bin/apt-get update && /usr/bin/apt-get upgrade -q -y && /usr/bin/apt-get dist-upgrade -q -y && /usr/bin/apt-get autoremove -y) >> /var/log/apt/myupdates.log" > $crontabTmpFile
+
+
+crontab -l | cat - $crontabTmpFile >/tmp/fullcrontab && crontab /tmp/fullcrontab
+rm /tmp/fullcrontab
+
 clear;
 echo "Run complete. Things you need to do still:";
 echo "";

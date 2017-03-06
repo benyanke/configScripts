@@ -238,7 +238,7 @@ else # end nonroot tasks, moving on to root
   echo "" > $listfile
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop espeak openssh-server wakeonlan > $inslog 2>&1 
+  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop espeak openssh-server wakeonlan taskwarrior > $inslog 2>&1
   echo "## Installed CLI tools" >> $listfile
   echo " * htop (process manager)" >> $listfile
   echo " * git (version control)" >> $listfile
@@ -266,6 +266,7 @@ else # end nonroot tasks, moving on to root
   echo " * espeak (text to speech)" >> $listfile
   echo " * openssh-server (SSH)" >> $listfile
   echo " * wakeonlan (Wake on Lan Server)" >> $listfile
+  echo " * taskwarrior (Task Management)" >> $listfile
   echo "" >> $listfile
 
   # Install gui packages

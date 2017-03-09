@@ -270,7 +270,7 @@ else # end nonroot tasks, moving on to root
   echo "" >> $listfile
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity pdfmod cheese vlc sshuttle virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlite sqlitebrowser gnome-disk-utility vino pdfsam corebird docky nextcloud-client  gnome-todo  gnome-calendar  > $inslog 2>&1
+  apt-get install -y inkscape gimp lyx audacity pdfmod cheese vlc sshuttle virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlite sqlitebrowser gnome-disk-utility vino pdfsam corebird docky nextcloud-client  gnome-todo  gnome-calendar thunar > $inslog 2>&1
   echo "## Installed GUI tools" >> $listfile
   echo " * Inkscape (Vector Graphics)" >> $listfile
   echo " * GIMP (Raster Graphics)" >> $listfile
@@ -314,6 +314,8 @@ else # end nonroot tasks, moving on to root
   echo " * nextcloud-client (NextCloud Desktop Sync)" >> $listfile
   echo " * gnome-todo (Gnome Todo List)" >> $listfile
   echo " * gnome-calendar (Gnome Calendar Program)" >> $listfile
+  echo " * thunar (Alternate file manager)" >> $listfile
+
 
   stepdone
 

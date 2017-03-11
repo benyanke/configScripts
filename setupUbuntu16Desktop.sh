@@ -411,14 +411,18 @@ else # end nonroot tasks, moving on to root
 
   function setstartup() {
     mkdir $currentUser/.config/autoload -p > $inslog 2>&1
-#    cp /usr/share/applications/$1.desktop $currentUser/.config/autostart/ > $inslog 2>&1
+    cp /usr/share/applications/$1.desktop /home/$currentUser/.config/autostart/ > $inslog 2>&1
+
+    `grep '^Exec' /home/$currentUser/.config/autostart/$1.desktop | tail -1 | sed 's/^Exec=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g'` &  >/dev/null 2>&1
+    disown;
+
   }
 
   step "Adding startup apps"
   setstartup "guake"
   setstartup "indicator-multiload"
   setstartup "indicator-weather"
-  setstartup "Nextcloud"
+  setstartup "nextcloud"
   stepdone
 
 function installdeb() {

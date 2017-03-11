@@ -359,7 +359,8 @@ else # end nonroot tasks, moving on to root
   aptinstall "openssh-server" "SSH server"
   aptinstall "wakeonlan" "Wake on lan tool"
   aptinstall "taskwarrior" "Task list and management"
-  aptinstall "nfs-common" "NFS mounting tool"
+  aptinstall "nfs-common" "NFS mount lib"
+  aptinstall "cifs-utils" "CIFS mount lib"
 
 #  aptinstall "mc" "Midnight commander"
 #  aptinstall "wine" "Windows (non-)emulation tool"

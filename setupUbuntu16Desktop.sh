@@ -228,6 +228,19 @@ if [ "$1" != "-f" ] ; then
           # Change desktop background
           gsettings set org.gnome.desktop.background picture-uri "file://$basepath/$desktopfile" > $inslog 2>&1
 
+  # Changing miscellaneous settings
+ # step "Configuring Display Manager"
+  gsettings set com.canonical.Unity integrated-menus true
+  gsettings set com.canonical.Unity integrated-menus false
+  gsettings set org.gnome.system.proxy use-same-proxy false
+  gsettings set com.canonical.indicator.datetime show-day true
+  gsettings set com.canonical.indicator.datetime show-date true
+  gsettings set com.canonical.indicator.datetime show-week-numbers true
+ #  stepdone;
+
+
+
+
       fi
   }
 
@@ -247,19 +260,6 @@ if [ "$1" != "-f" ] ; then
   step "Setting desktop background"
   setDesktopBackground "O4GTKkE.jpg";
   stepdone
-
-
-
-
-  # Changing miscellaneous settings
-  step "Configuring Display Manager"
-  gsettings set com.canonical.Unity integrated-menus true
-  gsettings set com.canonical.Unity integrated-menus false
-  gsettings set org.gnome.system.proxy use-same-proxy false
-  gsettings set com.canonical.indicator.datetime show-day true
-  gsettings set com.canonical.indicator.datetime show-date true
-  gsettings set com.canonical.indicator.datetime show-week-numbers true
-  stepdone;
 
 
 #  echo ""
@@ -388,7 +388,15 @@ else # end nonroot tasks, moving on to root
   aptinstall "idjc" "Internet DJ program"
   aptinstall "fmit" "Music tuner"
   aptinstall "gconf-editor" "Advanced unity tweaking"
-  aptinstall "unity-tweak-tool" "Advanced unity tweaking"
+
+  if [[ $version == *"MATE"* ]] ; then
+    # MATE-only things here
+    sleep 0.1;
+  else
+    # Ubuntu unity only things here
+    aptinstall "unity-tweak-tool" "Advanced unity tweaking"
+  fi
+
   aptinstall "guake" "Guake dropdown terminal"
   aptinstall "indicator-weather" "Top dock widget for weather"
   aptinstall "indicator-multiload" "Top dock widget for system load"

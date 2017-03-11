@@ -31,7 +31,7 @@ sudo cat /dev/null
 ##############
 
 # Set to 1 to purge (remove program and settings before install)
-aptPurgeBeforeInstall=1;
+aptPurgeBeforeInstall=0;
 
 # destination for papertrail logging
 #example:

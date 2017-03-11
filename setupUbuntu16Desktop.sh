@@ -233,13 +233,14 @@ if [ "$1" != "-f" ] ; then
 
   # Download files from git repo
   step "Downloading Desktop Backgrounds"
-  getBackgroundFile "cat6.jpg"
-  getBackgroundFile "cloud.png";
-  getBackgroundFile "inception-code.jpg"
-  getBackgroundFile "knight.jpg";
-  getBackgroundFile "ubuntu-blue.jpg";
-  getBackgroundFile "ubuntu-grey.jpg";
-  getBackgroundFile "O4GTKkE.jpg";
+    getBackgroundFile "cat6.jpg" &
+    getBackgroundFile "cloud.png" &
+    getBackgroundFile "inception-code.jpg" &
+    getBackgroundFile "knight.jpg" &
+    getBackgroundFile "ubuntu-blue.jpg" &
+    getBackgroundFile "ubuntu-grey.jpg" &
+    getBackgroundFile "O4GTKkE.jpg" &
+  wait;
   stepdone
 
   # Set one to be the background
@@ -413,8 +414,8 @@ else # end nonroot tasks, moving on to root
     mkdir $currentUser/.config/autoload -p > $inslog 2>&1
     cp /usr/share/applications/$1.desktop /home/$currentUser/.config/autostart/ > $inslog 2>&1
 
-    `grep '^Exec' /home/$currentUser/.config/autostart/$1.desktop | tail -1 | sed 's/^Exec=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g'` &  >/dev/null 2>&1
-    disown;
+ #   runuser -l  $currentUser -c `grep '^Exec' /home/$currentUser/.config/autostart/$1.desktop | tail -1 | sed 's/^Exec=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g'` &  >/dev/null 2>&1
+ #   disown;
 
   }
 
@@ -513,3 +514,4 @@ function installdeb() {
 
 
 fi # end root override
+v

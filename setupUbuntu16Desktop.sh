@@ -6,7 +6,7 @@
 # Get guake settings - github gist?
 # Add nextcloud setup step
 # Configuring multiload - broken settings down here
-
+# Seperate out settings changes from desktop setting
 
 # Todo:
 # APT BROKEN: Jack audio question asked upon install
@@ -236,17 +236,23 @@ if [ "$1" != "-f" ] ; then
           # Change desktop background
           gsettings set org.gnome.desktop.background picture-uri "file://$basepath/$desktopfile" > $inslog 2>&1
 
-  # Changing miscellaneous settings
- # step "Configuring Display Manager"
-  gsettings set com.canonical.Unity integrated-menus true
-  gsettings set com.canonical.Unity integrated-menus false
-  gsettings set org.gnome.system.proxy use-same-proxy false
-  gsettings set com.canonical.indicator.datetime show-day true
-  gsettings set com.canonical.indicator.datetime show-date true
-  gsettings set com.canonical.indicator.datetime show-week-numbers true
- #  stepdone;
+          # Add menus to windows instead of top of screen
+          gsettings set com.canonical.Unity integrated-menus true
+
+          # Change clock setting
+          gsettings set com.canonical.indicator.datetime show-day true
+          gsettings set com.canonical.indicator.datetime show-date true
+          gsettings set com.canonical.indicator.datetime show-week-numbers true
+
+          # Change proxy setting
+          # Not needed?
+#          gsettings set org.gnome.system.proxy use-same-proxy false
 
 
+          # http://askubuntu.com/questions/41241/shortcut-to-change-launcher-hide-setting
+
+          # Additional settings changes
+          # gconftool-2 --type int --set "/apps/compiz-1/plugins/unityshell/screen0/options/launcher_hide_mode" 2
 
 
       fi

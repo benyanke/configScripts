@@ -1,6 +1,14 @@
 #!/bin/bash
 
 # Todo:
+# Add 3x3 workspaces
+# Get docky settings - github gist?
+# Get guake settings - github gist?
+# Add nextcloud setup step
+# Configuring multiload - broken settings down here
+
+
+# Todo:
 # APT BROKEN: Jack audio question asked upon install
 # Microsoft fonts issue as well
 # SSH SERVER + keys
@@ -524,4 +532,4 @@ function installdeb() {
 
 
 fi # end root override
-v
+

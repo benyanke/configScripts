@@ -7,6 +7,8 @@
 # Add nextcloud setup step
 # Configuring multiload - broken settings down here
 # Seperate out settings changes from desktop setting
+# Add weather location changer for widget
+
 
 # Todo:
 # APT BROKEN: Jack audio question asked upon install
@@ -347,6 +349,7 @@ else # end nonroot tasks, moving on to root
   echo "## Installed CLI tools" >> $listfile
 
   aptinstall "htop" "Process manager and viewer"
+  aptinstall "lm-sensor" "Fan speed control"
   aptinstall "git" "Version control"
   aptinstall "tree" "Recursive file listing"
   aptinstall "openvpn" "OpenVPN Client"

@@ -1,6 +1,16 @@
 #!/bin/bash
 
 # Todo:
+# Add 3x3 workspaces
+# Get docky settings - github gist?
+# Get guake settings - github gist?
+# Add nextcloud setup step
+# Configuring multiload - broken settings down here
+# Seperate out settings changes from desktop setting
+# Add weather location changer for widget
+
+
+# Todo:
 # APT BROKEN: Jack audio question asked upon install
 # Microsoft fonts issue as well
 # SSH SERVER + keys
@@ -15,12 +25,35 @@
 # Scripts folder
 # http://www.omgubuntu.co.uk/2016/09/wunderline-nifty-command-line-app-wunderlist
 
+# get current user, and home directory path
+if [ "$USER" == "root" ]; then
+  currentUser=$SUDO_USER;
+else
+  currentUser=$USER;
+fi
+
+# Request Sudo Access before we continue further
+sudo cat /dev/null
+
+
+##############
+# Settings
+##############
+
+# Set to 1 to purge (remove program and settings before install)
+aptPurgeBeforeInstall=0;
 
 # destination for papertrail logging
 #example:
 papertrailDest="logs12345.papertrailapp.com:12345"
 
+
+# Setup log
 inslog="/tmp/installlog"; # install log
+
+sudo touch $inslog
+sudo chown $currentUser:$currentUser $inslog;
+
 echo "Install Log" > $inslog
 echo "" > $inslog
 echo "" > $inslog
@@ -37,21 +70,83 @@ function stepdone() {
   echo -e " [ \e[92mDONE\e[0m ] $curStep"
 }
 
-
 function error() {
-  echo "ERROR: $1";
+  echo -en "\e[1A"
+  echo -e " [ \e[33mERR \e[0m ] $curStep"
+}
+
+function nothing() {
+  echo "";
 }
 
 
-# get current user, and home directory path
-if [ "$USER" == "root" ]; then
-  currentUser=$SUDO_USER;
-else
-  currentUser=$USER;
-fi
+function aptinstall() {
+  packageName=$1;
+  packageDescription=$2;
 
-# Request Sudo Access before we continue further
-sudo cat /dev/null
+  installed=0;
+
+  if [[ $aptPurgeBeforeInstall = 1 ]] ; then
+    step "Purging package before inst: '$packageName' "
+    sudo dpkg --configure -a > $inslog 2>&1
+    sudo apt-get purge -y $packageName > $inslog 2>&1
+    nothing;
+  fi
+
+#  dpkg-query -l $packageName >/dev/null 2>&1 && installed=1;
+#  which $packageName >/dev/null 2>&1 && installed=1;
+  sudo dpkg -s $packageName >/dev/null 2>&1 && installed=1;
+
+  if [[ $installed = 0 ]] ; then
+
+    step "Installing package from apt: '$packageName' "
+
+    sudo apt-get install -y $packageName > $inslog 2>&1
+
+    if [[ $? -ne 0 ]] ; then
+      sudo dpkg --configure -a > $inslog 2>&1
+      sudo apt-get install -y $packageName > $inslog 2>&1
+
+      if [[ $? -ne 0 ]] ; then
+        error;
+        step "Failed to install from apt:  '$packageName' "
+        stepdone;
+
+        return 1;
+      fi
+
+    fi
+
+    echo " * $packageName ($packageDescription)" >> $listfile
+
+  else
+
+    step "Already installed from apt:  '$packageName' "
+
+  fi
+
+  stepdone;
+
+}
+
+function aptppaadd() {
+
+  ppaName=$1;
+
+  if ! grep -q "^deb .*$ppaName" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+
+    step "Adding PPA repo:         '$ppaName'";
+    sudo add-apt-repository ppa:$ppaName -y > $inslog 2>&1
+
+  else
+
+    step "PPA repo already added:  '$ppaName'";
+
+  fi
+
+  stepdone;
+
+}
 
 # Delete temp directory after script finishes
 # set -e
@@ -143,37 +238,44 @@ if [ "$1" != "-f" ] ; then
           # Change desktop background
           gsettings set org.gnome.desktop.background picture-uri "file://$basepath/$desktopfile" > $inslog 2>&1
 
+          # Add menus to windows instead of top of screen
+          gsettings set com.canonical.Unity integrated-menus true
+
+          # Change clock setting
+          gsettings set com.canonical.indicator.datetime show-day true
+          gsettings set com.canonical.indicator.datetime show-date true
+          gsettings set com.canonical.indicator.datetime show-week-numbers true
+
+          # Change proxy setting
+          # Not needed?
+#          gsettings set org.gnome.system.proxy use-same-proxy false
+
+
+          # http://askubuntu.com/questions/41241/shortcut-to-change-launcher-hide-setting
+
+          # Additional settings changes
+          # gconftool-2 --type int --set "/apps/compiz-1/plugins/unityshell/screen0/options/launcher_hide_mode" 2
+
+
       fi
   }
 
   # Download files from git repo
   step "Downloading Desktop Backgrounds"
-  getBackgroundFile "cat6.jpg"
-  getBackgroundFile "cloud.png";
-  getBackgroundFile "inception-code.jpg"
-  getBackgroundFile "knight.jpg";
-  getBackgroundFile "ubuntu-blue.jpg";
-  getBackgroundFile "ubuntu-grey.jpg";
-  getBackgroundFile "O4GTKkE.jpg";
+    getBackgroundFile "cat6.jpg" &
+    getBackgroundFile "cloud.png" &
+    getBackgroundFile "inception-code.jpg" &
+    getBackgroundFile "knight.jpg" &
+    getBackgroundFile "ubuntu-blue.jpg" &
+    getBackgroundFile "ubuntu-grey.jpg" &
+    getBackgroundFile "O4GTKkE.jpg" &
+  wait;
   stepdone
 
   # Set one to be the background
   step "Setting desktop background"
   setDesktopBackground "O4GTKkE.jpg";
   stepdone
-
-
-
-
-  # Changing miscellaneous settings
-  step "Configuring Display Manager"
-  gsettings set com.canonical.Unity integrated-menus true
-  gsettings set com.canonical.Unity integrated-menus false
-  gsettings set org.gnome.system.proxy use-same-proxy false
-  gsettings set com.canonical.indicator.datetime show-day true
-  gsettings set com.canonical.indicator.datetime show-date true
-  gsettings set com.canonical.indicator.datetime show-week-numbers true
-  stepdone;
 
 
 #  echo ""
@@ -205,24 +307,25 @@ else # end nonroot tasks, moving on to root
   # Not sure what this does
 #  add-apt-repository ppa:n-muench/programs-ppa -y
 
-  step "Adding APT PPA repositories"
+  # For good measure
+  step "Running dpkg configure";
+  sudo dpkg --configure -a > $inslog 2>&1
+  stepdone;
 
   # Get WINE
-  add-apt-repository ppa:ubuntu-wine/ppa -y > $inslog 2>&1
+  aptppaadd "ubuntu-wine/ppa"
 
   # Get most recent shutter version
-  add-apt-repository ppa:shutter/ppa -y > $inslog 2>&1
+  aptppaadd "shutter/ppa"
 
   # NextCloud
-  add-apt-repository ppa:nextcloud-devs/client -y > $inslog 2>&1
+  aptppaadd "nextcloud-devs/client"
 
   # Weather widget
-  add-apt-repository ppa:kasra-mp/ubuntu-indicator-weather -y > $inslog 2>&1
+  aptppaadd "kasra-mp/ubuntu-indicator-weather"
 
   # Get expanded ubuntu list
-  add-apt-repository universe -y > $inslog 2>&1
-
-  stepdone
+  aptppaadd "universe"
 
   step "Updating APT List"
   apt-get update > $inslog 2>&1
@@ -236,98 +339,118 @@ else # end nonroot tasks, moving on to root
   step "Installing APT packages"
   echo "# Tools Installed by Initial Setup Script" > $listfile
   echo "" > $listfile
+  stepdone
+
+  step "Updating APT List"
+  apt-get update > $inslog 2>&1
+  stepdone
 
   # CLI packages
-  apt-get install -y htop git tree openvpn jq nmap dconf-tools ufw mc nethogs zip unzip screen iperf3 curl traceroute python-pip openconnect byobu iotop sysstat systemtap-sdt-dev ubuntu-restricted-extras latexmk markdown iftop espeak openssh-server wakeonlan taskwarrior > $inslog 2>&1
   echo "## Installed CLI tools" >> $listfile
-  echo " * htop (process manager)" >> $listfile
-  echo " * git (version control)" >> $listfile
-  echo " * openvpn (vpn)" >> $listfile
-  echo " * tree (directory structure viewer)" >> $listfile
-  echo " * jq (json formatter)" >> $listfile
-  echo " * nmap (network mapping tool)" >> $listfile
-#  echo " * Wine and winetricks (Windows API)" >> $listfile
-  echo " * Midnight Commander (CLI File Manager)" >> $listfile
-  echo " * NetHogs (HTOP for Network Connections)" >> $listfile
-  echo " * Zip and Unzip (.zip file handlers)" >> $listfile
-  echo " * Screen (Terminal abstraction)" >> $listfile
-  echo " * iperf3 (Bandwidth tester)" >> $listfile
-  echo " * traceroute (network path tester)" >> $listfile
-  echo " * PIP  (python packman)" >> $listfile
-  echo " * OpenConnect  (UWW VPN)" >> $listfile
-  echo " * BYOBU (Terminal wrapper)" >> $listfile
-  echo " * iotop (Disk write monitor by process)" >> $listfile
-  echo " * Sysstat (System statistics )" >> $listfile
-  echo " * systemtap-sdt-dev (Dtrace )" >> $listfile
-  echo " * ubuntu-restricted-extrasv (Audio Codecs - not sure if want to keep)" >> $listfile
-  echo " * latexmk (Latex Processor )" >> $listfile
-  echo " * markdown (Markdown -> HTML processor)" >> $listfile
-  echo " * iftop (Net Interface TOP)" >> $listfile
-  echo " * espeak (text to speech)" >> $listfile
-  echo " * openssh-server (SSH)" >> $listfile
-  echo " * wakeonlan (Wake on Lan Server)" >> $listfile
-  echo " * taskwarrior (Task Management)" >> $listfile
-  echo "" >> $listfile
+
+  aptinstall "htop" "Process manager and viewer"
+  aptinstall "lm-sensor" "Fan speed control"
+  aptinstall "git" "Version control"
+  aptinstall "tree" "Recursive file listing"
+  aptinstall "openvpn" "OpenVPN Client"
+  aptinstall "jq" "JSON Formatting"
+  aptinstall "nmap" "Network mapping tool"
+  aptinstall "dconf-tools" "Configuration management tools"
+  aptinstall "ufw" "An Uncomplicated Firewall"
+  aptinstall "nethogs" "Bandwidth shaping"
+  aptinstall "zip" "File packer for .zip files"
+  aptinstall "unzip" "File unpacker for .zip files"
+  aptinstall "screen" "Terminal multiplexing"
+  aptinstall "iperf3" "Bandwidth tracking"
+  aptinstall "curl" "HTTP client"
+  aptinstall "traceroute" "Does what it says"
+  aptinstall "python-pip" "Python package manager"
+  aptinstall "byobu" "Alternate terminal"
+  aptinstall "iotop" "Disk IO stats"
+  aptinstall "sysstat" "System statistics"
+  aptinstall "systemtap-sdt-dev"
+  aptinstall "latexmk" "LaTeX tool"
+  aptinstall "markdown" "Markdown -> HTML conversion"
+  aptinstall "iftop" "Network interface tracking"
+  aptinstall "espeak" "Text to Speech tool"
+  aptinstall "openssh-server" "SSH server"
+  aptinstall "wakeonlan" "Wake on lan tool"
+  aptinstall "taskwarrior" "Task list and management"
+  aptinstall "nfs-common" "NFS mount lib"
+  aptinstall "cifs-utils" "CIFS mount lib"
+
+#  aptinstall "mc" "Midnight commander"
+#  aptinstall "wine" "Windows (non-)emulation tool"
+#  aptinstall "winetricks" "Additional tools for WINE"
+#  aptinstall "openconnect" "Cisco VPN client"
+#  aptinstall "ubuntu-restricted-extras" "Audio tools" # Not sure if needed
 
   # Install gui packages
-  apt-get install -y inkscape gimp lyx audacity pdfmod cheese vlc sshuttle virt-manager scribus network-manager-openvpn shutter guake mysql-workbench retext xbindkeys xbindkeys-config remmina idjc gconf-editor indicator-weather indicator-multiload indicator-cpufreq fmit unity-tweak-tool docky guake gnome-todo gnome-calendar indicator-multiload  indicator-cpufreq sqlite sqlitebrowser gnome-disk-utility vino pdfsam corebird docky nextcloud-client  gnome-todo  gnome-calendar  > $inslog 2>&1
-  echo "## Installed GUI tools" >> $listfile
-  echo " * Inkscape (Vector Graphics)" >> $listfile
-  echo " * GIMP (Raster Graphics)" >> $listfile
-  echo " * LyX (LaTeX tool)" >> $listfile
-  echo " * Audacity (Audio editor)" >> $listfile
-#  echo " * FileZilla (FTP and SFTP client)" >> $listfile
-  echo " * Cheese (Camera viewer)" >> $listfile
-  echo " * VLC (Media viewer)" >> $listfile
-#  echo " * MuseScore (Music Engraving)" >> $listfile
-  echo " * Eclipse (Development)" >> $listfile
-#  echo " * Virtualbox (VMs)" >> $listfile
-  echo " * Virt Manager (KVM remote tool)" >> $listfile
-  echo " * Scribus (Desktop typesetting)" >> $listfile
-  echo " * OpenVPN Network Manager Integration (GUI control for OpenVpn)" >> $listfile
-  echo " * Shutter (advanced screenshots)" >> $listfile
-  echo " * guake (advanced terminal)" >> $listfile
-  echo " * mySQL Workbench (a mysql development tool)" >> $listfile
-  echo " * ReText (markdown editor)" >> $listfile
-  echo " * XBindKeys (X server keystroke customizer)" >> $listfile
-  echo " * Remmina (RDP)" >> $listfile
-  echo " * Internet DJ Console" >> $listfile
-  echo " * Top bar weather indicator" >> $listfile
-  echo " * Top bar Load Watcher" >> $listfile
-  echo " * indicator-cpufreq (Top bar CPU clock manager)" >> $listfile
-  echo " * fmit (Music tuner)" >> $listfile
-  echo " * unity-tweak-tool (Figure it out)" >> $listfile
-#  echo " * gtkpod (Linux iPod Sync Tool)" >> $listfile
-  echo " * Docky (Dock)" >> $listfile
-  echo " * Guake (Dropdown Terminal)" >> $listfile
-  echo " * Gnome: Todo (Gnome's Todo Utility)" >> $listfile
-  echo " * Gnome: Calendar (Gnome's Calendar Utility)" >> $listfile
-  echo " * Indicator - Multiload (Top Bar Load Tracking)" >> $listfile
-  echo " * Indicator - CPUfreq (CPU Frequency Indicator for GNOME bar - also adjusts the speed)" >> $listfile
-  echo " * sqlite (SQLite DB)" >> $listfile
-  echo " * sqlitebrowser (SQLite DB Browser)" >> $listfile
-  echo " * gnome-disk-utility (Gnome Disk Utility)" >> $listfile
-  echo " * vino (VNC Server)" >> $listfile
-  echo " * pdfsam (PDF Split and Merge)" >> $listfile
-  echo " * corebird (Twitter client)" >> $listfile
-  echo " * docky (Dock)" >> $listfile
-  echo " * nextcloud-client (NextCloud Desktop Sync)" >> $listfile
-  echo " * gnome-todo (Gnome Todo List)" >> $listfile
-  echo " * gnome-calendar (Gnome Calendar Program)" >> $listfile
+  aptinstall "gimp" "Raster image editing"
+  aptinstall "inkscape" "Vector image editing"
+  aptinstall "lynx" "Terminal web browser"
+  aptinstall "lyx" "Document tool"
+  aptinstall "audacity" "Audio editor"
+  aptinstall "pdfmod" "PDF editor"
+  aptinstall "cheese" "Webcam snapshots"
+  aptinstall "vlc" "Video and audio viewer"
+  aptinstall "sshuttle" "SSH-based pseudo-VPN"
+  aptinstall "virt-manager" "KVM desktop management frontend"
+  aptinstall "scribus" "Document typesetting"
+  aptinstall "network-manager-openvpn" "GUI for OpenVPN"
+  aptinstall "shutter" "Screenshot tool"
+  aptinstall "mysql-workbench" "DBA tool for mySQL/MariaDB"
+  aptinstall "xbindkeys" "Hotkey additions"
+  aptinstall "xbindkeys-config" "Hotkey tool"
+  aptinstall "remmina" "RDP/VNC client"
+  aptinstall "idjc" "Internet DJ program"
+  aptinstall "fmit" "Music tuner"
+  aptinstall "gconf-editor" "Advanced unity tweaking"
+
+  if [[ $version == *"MATE"* ]] ; then
+    # MATE-only things here
+    sleep 0.1;
+  else
+    # Ubuntu unity only things here
+    aptinstall "unity-tweak-tool" "Advanced unity tweaking"
+  fi
+
+  aptinstall "guake" "Guake dropdown terminal"
+  aptinstall "indicator-weather" "Top dock widget for weather"
+  aptinstall "indicator-multiload" "Top dock widget for system load"
+  aptinstall "indicator-cpufreq" "Top dock widget for cpu speed"
+  aptinstall "sqlite" "Mini SQL RDMS"
+  aptinstall "sqlitebrowser" "Browser for SQLite browser"
+  aptinstall "gnome-disk-utility" "GNOME disk formatting and management utility"
+  aptinstall "pdfsam" "PDF Split and Merge"
+  aptinstall "corebird" "Desktop twitter client"
+  aptinstall "docky" "Program dock"
+  aptinstall "nextcloud-client" "NextCloud desktop client"
+  aptinstall "thunar" "Alternate file manager"
+  aptinstall "gtk-recordmydesktop" "Desktop video recording tool"
+
+#  aptinstall "retext" "Text editor"
+#  aptinstall "vino" "VNC server"
+#  aptinstall "gnome-todo" "Gnome Todo"
+#  aptinstall "gnome-calendar" "Gnome Calendar"
 
   stepdone
 
 
-function setstartup() {
+  function setstartup() {
+    mkdir $currentUser/.config/autoload -p > $inslog 2>&1
+    cp /usr/share/applications/$1.desktop /home/$currentUser/.config/autostart/ > $inslog 2>&1
 
-  cp /usr/share/applications/$1.desktop ~/.config/autostart/ > $inslog 2>&1
+ #   runuser -l  $currentUser -c `grep '^Exec' /home/$currentUser/.config/autostart/$1.desktop | tail -1 | sed 's/^Exec=//' | sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g'` &  >/dev/null 2>&1
+ #   disown;
 
-}
+  }
+
   step "Adding startup apps"
   setstartup "guake"
   setstartup "indicator-multiload"
   setstartup "indicator-weather"
-  setstartup "Nextcloud"
+  setstartup "nextcloud"
   stepdone
 
 function installdeb() {
@@ -362,25 +485,6 @@ function installdeb() {
   # Install Atom
   installdeb "https://atom.io/download/deb" "Atom" "Text Editor"
 
-
-  # Install Franz Chat Client
-  # Disabled for now - keeping for legacy purposes
-#  mkdir /opt/franz -p
-#  mkdir /opt/bin -p
-
-#  programArchive="https://github.com/meetfranz/franz-app/releases/download/4.0.4/Franz-linux-x64-4.0.4.tgz"
-#  wget $programArchive -O $tempDir/franz.tgz
-
-#  tar -xvzf $tempDir/franz.tgz -C /opt/franz
-
-#	ln -s /opt/franz/Franz /opt/bin/franz
-
-#	echo " * Franz (Multi-provider chat client)" >> $listfile
-
-
-  # Install Dropbox
-  # Disabled for now - keeping for legacy purposes
-  # installdeb "https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb" "Dropbox" "File Sync"
 
   # TODO: Setup sync with hard-links to NextCloud
 
@@ -437,3 +541,4 @@ function installdeb() {
 
 
 fi # end root override
+

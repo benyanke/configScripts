@@ -348,6 +348,7 @@ else # end nonroot tasks, moving on to root
   # CLI packages
   echo "## Installed CLI tools" >> $listfile
 
+  aptinstall "virtualenv" "Python virtual environment"
   aptinstall "htop" "Process manager and viewer"
   aptinstall "lm-sensor" "Fan speed control"
   aptinstall "git" "Version control"

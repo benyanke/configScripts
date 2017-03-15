@@ -269,7 +269,7 @@ if [ "$1" != "-f" ] ; then
     getBackgroundFile "ubuntu-blue.jpg" &
     getBackgroundFile "ubuntu-grey.jpg" &
     getBackgroundFile "O4GTKkE.jpg" &
-  wait;
+    wait;
   stepdone
 
   # Set one to be the background
@@ -350,7 +350,8 @@ else # end nonroot tasks, moving on to root
 
   aptinstall "virtualenv" "Python virtual environment"
   aptinstall "htop" "Process manager and viewer"
-  aptinstall "lm-sensor" "Fan speed control"
+#  aptinstall "lm-sensor" "Fan speed control"
+  aptinstall "npm" "NodeJS package manager"
   aptinstall "git" "Version control"
   aptinstall "tree" "Recursive file listing"
   aptinstall "openvpn" "OpenVPN Client"

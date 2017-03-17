@@ -246,6 +246,11 @@ if [ "$1" != "-f" ] ; then
           gsettings set com.canonical.indicator.datetime show-date true
           gsettings set com.canonical.indicator.datetime show-week-numbers true
 
+          # Change workspaces to 3x3 instead of 2x2
+          dconf write  /org/compiz/profiles/unity/plugins/core/vsize 3
+          dconf write  /org/compiz/profiles/unity/plugins/core/hsize 3
+
+
           # Change proxy setting
           # Not needed?
 #          gsettings set org.gnome.system.proxy use-same-proxy false

@@ -435,6 +435,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "nextcloud-client" "NextCloud desktop client"
   aptinstall "thunar" "Alternate file manager"
   aptinstall "gtk-recordmydesktop" "Desktop video recording tool"
+  aptinstall "xarchiver" "Adds compress and extract to file manager right-click"
 
 #  aptinstall "retext" "Text editor"
 #  aptinstall "vino" "VNC server"

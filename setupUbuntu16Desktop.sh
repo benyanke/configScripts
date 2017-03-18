@@ -264,6 +264,7 @@ if [ "$1" != "-f" ] ; then
           # Guake settings
           gconftool-2 --set "/apps/guake/keybindings/local/new_tab" --type string "<Control>t"
           gconftool-2 --set "/apps/guake/keybindings/local/toggle_fullscreen" --type string "<Control><Shift>f"
+          gconftool-2 --set "/apps/guake/keybindings/global/show_hide" --type string "<Primary>space"
           gconftool-2 --set "/apps/guake/keybindings/local/switch_tab1" --type string "<Control>1"
           gconftool-2 --set "/apps/guake/keybindings/local/switch_tab2" --type string "<Control>2"
           gconftool-2 --set "/apps/guake/keybindings/local/switch_tab3" --type string "<Control>3"

@@ -261,6 +261,20 @@ if [ "$1" != "-f" ] ; then
           # Additional settings changes
           # gconftool-2 --type int --set "/apps/compiz-1/plugins/unityshell/screen0/options/launcher_hide_mode" 2
 
+          # Guake settings
+          gconftool-2 --set "/apps/guake/keybindings/local/new_tab" --type string "<Control>t"
+          gconftool-2 --set "/apps/guake/keybindings/local/toggle_fullscreen" --type string "<Control><Shift>f"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab1" --type string "<Control>1"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab2" --type string "<Control>2"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab3" --type string "<Control>3"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab4" --type string "<Control>4"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab5" --type string "<Control>5"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab6" --type string "<Control>6"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab7" --type string "<Control>7"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab8" --type string "<Control>8"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab9" --type string "<Control>9"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab10" --type string "<Control>10"
+
 
       fi
   }

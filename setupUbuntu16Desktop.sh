@@ -250,7 +250,6 @@ if [ "$1" != "-f" ] ; then
           dconf write  /org/compiz/profiles/unity/plugins/core/vsize 3
           dconf write  /org/compiz/profiles/unity/plugins/core/hsize 3
 
-
           # Change proxy setting
           # Not needed?
 #          gsettings set org.gnome.system.proxy use-same-proxy false
@@ -275,6 +274,16 @@ if [ "$1" != "-f" ] ; then
           gconftool-2 --set "/apps/guake/keybindings/local/switch_tab8" --type string "<Control>8"
           gconftool-2 --set "/apps/guake/keybindings/local/switch_tab9" --type string "<Control>9"
           gconftool-2 --set "/apps/guake/keybindings/local/switch_tab10" --type string "<Control>10"
+
+
+          # Multiload tool
+          dconf write /de/mh21/indicator-multiload/general/speed 500
+          dconf write /de/mh21/indicator-multiload/general/width 40
+          dconf write /de/mh21/indicator-multiload/general/menu-expressions ['CPU: $(percent(cpu.inuse)), iowait $(percent(cpu.io))', 'Mem: $(size(mem.user)), cache $(size(mem.cached))', 'Net: down $(speed(net.down)), up $(speed(net.up))', 'Swap: $(size(swap.used))', 'Load: $(decimals(load.avg,2))', 'Disk: read $(speed(disk.read)), write $(speed(disk.write))']
+          dconf write /de/mh21/indicator-multiload/general/graphs ['cpu', 'mem', 'net', 'swap', 'load', 'disk']
+          dconf write /de/mh21/indicator-multiload/general/background-color ambiance:background
+          dconf write /de/mh21/indicator-multiload/general/color-scheme ambiance
+
 
 
       fi

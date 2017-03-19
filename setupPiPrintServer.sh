@@ -21,7 +21,7 @@ after="Order allow,deny\n  Allow @local"
 sudo sed -i -e 's/'"$before"'/'"$after"'/g' /etc/cups/cupsd.conf
 
 before="Order deny,allow"
-after="Order deny,allow\n  Allow @local"
+after="Order deny,allow\n    Allow @local"
 sudo sed -i -e 's/'"$before"'/'"$after"'/g' /etc/cups/cupsd.conf
 
 # Restart

@@ -246,6 +246,10 @@ if [ "$1" != "-f" ] ; then
           gsettings set com.canonical.indicator.datetime show-date true
           gsettings set com.canonical.indicator.datetime show-week-numbers true
 
+          # Change workspaces to 3x3 instead of 2x2
+          dconf write  /org/compiz/profiles/unity/plugins/core/vsize 3
+          dconf write  /org/compiz/profiles/unity/plugins/core/hsize 3
+
           # Change proxy setting
           # Not needed?
 #          gsettings set org.gnome.system.proxy use-same-proxy false
@@ -255,6 +259,31 @@ if [ "$1" != "-f" ] ; then
 
           # Additional settings changes
           # gconftool-2 --type int --set "/apps/compiz-1/plugins/unityshell/screen0/options/launcher_hide_mode" 2
+
+          # Guake settings
+          gconftool-2 --set "/apps/guake/keybindings/local/new_tab" --type string "<Control>t"
+          gconftool-2 --set "/apps/guake/keybindings/local/toggle_fullscreen" --type string "<Control><Shift>f"
+          gconftool-2 --set "/apps/guake/keybindings/global/show_hide" --type string "<Primary>space"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab1" --type string "<Control>1"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab2" --type string "<Control>2"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab3" --type string "<Control>3"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab4" --type string "<Control>4"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab5" --type string "<Control>5"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab6" --type string "<Control>6"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab7" --type string "<Control>7"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab8" --type string "<Control>8"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab9" --type string "<Control>9"
+          gconftool-2 --set "/apps/guake/keybindings/local/switch_tab10" --type string "<Control>10"
+
+
+          # Multiload tool
+          dconf write /de/mh21/indicator-multiload/general/speed 500
+          dconf write /de/mh21/indicator-multiload/general/width 40
+          dconf write /de/mh21/indicator-multiload/general/menu-expressions ['CPU: $(percent(cpu.inuse)), iowait $(percent(cpu.io))', 'Mem: $(size(mem.user)), cache $(size(mem.cached))', 'Net: down $(speed(net.down)), up $(speed(net.up))', 'Swap: $(size(swap.used))', 'Load: $(decimals(load.avg,2))', 'Disk: read $(speed(disk.read)), write $(speed(disk.write))']
+          dconf write /de/mh21/indicator-multiload/general/graphs ['cpu', 'mem', 'net', 'swap', 'load', 'disk']
+          dconf write /de/mh21/indicator-multiload/general/background-color ambiance:background
+          dconf write /de/mh21/indicator-multiload/general/color-scheme ambiance
+
 
 
       fi
@@ -269,7 +298,7 @@ if [ "$1" != "-f" ] ; then
     getBackgroundFile "ubuntu-blue.jpg" &
     getBackgroundFile "ubuntu-grey.jpg" &
     getBackgroundFile "O4GTKkE.jpg" &
-  wait;
+    wait;
   stepdone
 
   # Set one to be the background
@@ -348,8 +377,10 @@ else # end nonroot tasks, moving on to root
   # CLI packages
   echo "## Installed CLI tools" >> $listfile
 
+  aptinstall "virtualenv" "Python virtual environment"
   aptinstall "htop" "Process manager and viewer"
-  aptinstall "lm-sensor" "Fan speed control"
+#  aptinstall "lm-sensor" "Fan speed control"
+  aptinstall "npm" "NodeJS package manager"
   aptinstall "git" "Version control"
   aptinstall "tree" "Recursive file listing"
   aptinstall "openvpn" "OpenVPN Client"
@@ -428,6 +459,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "nextcloud-client" "NextCloud desktop client"
   aptinstall "thunar" "Alternate file manager"
   aptinstall "gtk-recordmydesktop" "Desktop video recording tool"
+  aptinstall "xarchiver" "Adds compress and extract to file manager right-click"
 
 #  aptinstall "retext" "Text editor"
 #  aptinstall "vino" "VNC server"

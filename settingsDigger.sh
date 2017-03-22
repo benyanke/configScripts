@@ -23,12 +23,14 @@ echo ""
 
 # write old settings to file
 gsettings list-recursively > $old
+dconf dump / >> $old
 
 # make change
 read -rsp $'Make the change you want to detect and press any key to continue...\n' -n1 key
 
 # write new settings to file
 gsettings list-recursively > $new
+dconf dump / >> $new
 
 # look at difference between files
 echo ""

@@ -1,20 +1,15 @@
 #!/bin/bash
 
 # Todo:
-# Add 3x3 workspaces
 # Get docky settings - github gist?
 # Get guake settings - github gist?
 # Add nextcloud setup step
 # Configuring multiload - broken settings down here
 # Seperate out settings changes from desktop setting
 # Add weather location changer for widget
-
-
-# Todo:
-# APT BROKEN: Jack audio question asked upon install
-# Microsoft fonts issue as well
 # SSH SERVER + keys
 # Add guake, docky, etc, to ubuntu startup scripts
+
 
 # Add nextcloud setup
 # Add config sync system

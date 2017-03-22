@@ -405,7 +405,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "xbindkeys" "Hotkey additions"
   aptinstall "xbindkeys-config" "Hotkey tool"
   aptinstall "remmina" "RDP/VNC client"
-  aptinstall "idjc" "Internet DJ program"
+#  aptinstall "idjc" "Internet DJ program" # Causes a hang in the install
   aptinstall "fmit" "Music tuner"
   aptinstall "gconf-editor" "Advanced unity tweaking"
 

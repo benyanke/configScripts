@@ -368,6 +368,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "taskwarrior" "Task list and management"
   aptinstall "nfs-common" "NFS mount lib"
   aptinstall "cifs-utils" "CIFS mount lib"
+  aptinstall "trash-cli" "Automated trash can management"
 
 #  aptinstall "mc" "Midnight commander"
 #  aptinstall "wine" "Windows (non-)emulation tool"

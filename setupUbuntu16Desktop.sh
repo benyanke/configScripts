@@ -309,6 +309,9 @@ else # end nonroot tasks, moving on to root
   # Weather widget
   aptppaadd "kasra-mp/ubuntu-indicator-weather"
 
+  # LibreOffice
+  aptppaadd "libreoffice/ppa"
+
   # Get expanded ubuntu list
   aptppaadd "universe"
 
@@ -379,6 +382,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "lyx" "Document tool"
   aptinstall "audacity" "Audio editor"
   aptinstall "pdfmod" "PDF editor"
+  aptinstall "pdftk" "PDF editor"
   aptinstall "cheese" "Webcam snapshots"
   aptinstall "vlc" "Video and audio viewer"
   aptinstall "sshuttle" "SSH-based pseudo-VPN"
@@ -393,6 +397,7 @@ else # end nonroot tasks, moving on to root
 #  aptinstall "idjc" "Internet DJ program" # Causes a hang in the install
   aptinstall "fmit" "Music tuner"
   aptinstall "gconf-editor" "Advanced unity tweaking"
+  aptinstall "libreoffice" "LibreOffice"
 
   if [[ $version == *"MATE"* ]] ; then
     # MATE-only things here

@@ -377,6 +377,7 @@ else # end nonroot tasks, moving on to root
 #  aptinstall "ubuntu-restricted-extras" "Audio tools" # Not sure if needed
 
   # Install gui packages
+  aptinstall "speedcrunch" "SpeedCrunch calculator"
   aptinstall "gimp" "Raster image editing"
   aptinstall "inkscape" "Vector image editing"
   aptinstall "lynx" "Terminal web browser"

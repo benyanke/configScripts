@@ -301,7 +301,7 @@ else # end nonroot tasks, moving on to root
   aptppaadd "ubuntu-wine/ppa"
 
   # Get most recent shutter version
-  aptppaadd "shutter/ppa"
+#  aptppaadd "shutter/ppa"
 
   # NextCloud
   aptppaadd "nextcloud-devs/client"
@@ -391,7 +391,8 @@ else # end nonroot tasks, moving on to root
   aptinstall "virt-manager" "KVM desktop management frontend"
   aptinstall "scribus" "Document typesetting"
   aptinstall "network-manager-openvpn" "GUI for OpenVPN"
-  aptinstall "shutter" "Screenshot tool"
+#  aptinstall "shutter" "Screenshot tool"
+  aptinstall "xfce4-screenshooter" "Screenshot tool"
   aptinstall "mysql-workbench" "DBA tool for mySQL/MariaDB"
   aptinstall "xbindkeys" "Hotkey additions"
   aptinstall "xbindkeys-config" "Hotkey tool"

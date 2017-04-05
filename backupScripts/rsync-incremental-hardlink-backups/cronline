@@ -1,0 +1,19 @@
+##############
+# Backups
+##############
+
+# Nightly    : 3am, except 1st, 9th, 16th, 23rd, and 30th
+0 3 2-8,10-15,17-22,24-29,31 * * /opt/backups/run-backup.sh --night > /opt/backups/log
+
+# Weekly     : 3am on 9th, 16th, 23rd, and 30th
+0 3 9,16,23,30 * * /opt/backups/run-backup.sh --week > /opt/backups/log
+
+# Monthly    : 1st of the month at 3am (except jan, apr, jul, oct)
+0 3 1 2,3,5,6,8,9,11,12 * /opt/backups/run-backup.sh --month > /opt/backups/log
+
+# Quarterly  : 1st of the month (apr, jul, oct) at 3am
+0 3 1 4,7,10 * /opt/backups/run-backup.sh --quarter > /opt/backups/log
+
+# Yearly     : Jan 1 at 3am
+0 3 1 1 * /opt/backups/run-backup.sh --year > /opt/backups/log
+

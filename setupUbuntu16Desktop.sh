@@ -11,7 +11,7 @@
 # Add weather location changer for widget
 # SSH SERVER + keys
 # Add guake, docky, etc, to ubuntu startup scripts
-
+# NEEDED ON SOME COMPUTERS (including BY-Thinkpad)
 
 # Add nextcloud setup
 # Add config sync system

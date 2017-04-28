@@ -372,6 +372,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "cifs-utils" "CIFS mount lib"
   aptinstall "trash-cli" "Automated trash can management"
   aptinstall "mcrypt" "mcrypt encryption tools"
+  aptinstall "xautomation" "X Automation Helper"
 
 #  aptinstall "mc" "Midnight commander"
 #  aptinstall "wine" "Windows (non-)emulation tool"

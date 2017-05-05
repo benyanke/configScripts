@@ -407,6 +407,8 @@ else # end nonroot tasks, moving on to root
   aptinstall "libreoffice" "LibreOffice"
   aptinstall "ptask" "Task warrior gui frontend"
   aptinstall "kazam" "Screen Recording"
+  aptinstall "meld" "File diff gui"
+  aptinstall "texmaker" "Tex Tool"
 
   if [[ $version == *"MATE"* ]] ; then
     # MATE-only things here

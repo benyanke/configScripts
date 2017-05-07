@@ -13,7 +13,7 @@ checkCommand="sudo uptime"
 mainCommand="sudo apt update"
 shutdownCommand="sudo shutdown now"
 
-ssh -o ConnectTimeout=1 -t "$sshHost" "$checkCommand"  >/dev/null 2>&1
+timeout 2 ssh -t "$sshHost" "$checkCommand"  >/dev/null 2>&1
 
 if [[ $? -ne 0 ]] ; then
   isOn=0;
@@ -23,12 +23,11 @@ fi
 
 if [[ $isOn == 0 ]]; then
 
-  ssh -o ConnectTimeout=1 -t "$sshHost" "$checkCommand"  >/dev/null 2>&1
-
+  timeout 2 ssh -t "$sshHost" "$checkCommand"  >/dev/null 2>&1
   while [[ $? -ne 0 ]] ; do
     sudo wakeonlan "$mac"
     sleep 1
-    ssh -o ConnectTimeout=1 -t "$sshHost" "$checkCommand"  >/dev/null 2>&1
+    timeout 2 ssh -t "$sshHost" "$checkCommand"  >/dev/null 2>&1
   done
 
 fi

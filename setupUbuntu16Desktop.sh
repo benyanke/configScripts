@@ -409,6 +409,8 @@ else # end nonroot tasks, moving on to root
   aptinstall "kazam" "Screen Recording"
   aptinstall "meld" "File diff gui"
   aptinstall "texmaker" "Tex Tool"
+  aptinstall "patchage" "Virtual audio patchbay"
+  aptinstall "quasmixer" "Virtual audio mixer"
 
   if [[ $version == *"MATE"* ]] ; then
     # MATE-only things here

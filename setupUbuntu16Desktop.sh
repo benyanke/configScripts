@@ -317,6 +317,9 @@ else # end nonroot tasks, moving on to root
   # Get expanded ubuntu list
   aptppaadd "universe"
 
+  # Get RDP/VNC Client
+  aptppaadd "remmina-ppa-team/remmina-next"
+
   step "Updating APT List"
   apt-get update > $inslog 2>&1
   stepdone
@@ -403,6 +406,8 @@ else # end nonroot tasks, moving on to root
   aptinstall "xbindkeys" "Hotkey additions"
   aptinstall "xbindkeys-config" "Hotkey tool"
   aptinstall "remmina" "RDP/VNC client"
+  aptinstall "remmina-plugin-rdp" "RDP/VNC client"
+  aptinstall "libfreerdp-plugins-standard" "RDP/VNC client"
 #  aptinstall "idjc" "Internet DJ program" # Causes a hang in the install
   aptinstall "fmit" "Music tuner"
   aptinstall "gconf-editor" "Advanced unity tweaking"

@@ -20,12 +20,14 @@ server {
 
     include /etc/nginx/snippets/logging.conf;
     include /etc/nginx/snippets/letsencrypt-handler.conf;
+    include /etc/nginx/snippets/index-handler.conf;
+    include /etc/nginx/snippets/php-locations.conf;
     include /etc/nginx/snippets/sslconfig.conf;
 
     ssl_certificate         /etc/letsencrypt/live/domain/fullchain.pem;
     ssl_certificate_key     /etc/letsencrypt/live/domain/privkey.pem;
 
-    root /var/www/domain/public_html/; 
+    root /var/www/domain/public_html/;
 
 }
 

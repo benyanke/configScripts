@@ -1,0 +1,47 @@
+server {
+    listen 80;
+    server_name www.domain;
+
+    include /etc/nginx/snippets/http-redirect.conf;
+}
+
+server {
+    listen 80;
+    server_name domain;
+
+    include /etc/nginx/snippets/redirect-to-www.conf;
+}
+
+
+server {
+
+    listen 443;
+    server_name www.domain;
+
+    include /etc/nginx/snippets/logging.conf;
+    include /etc/nginx/snippets/letsencrypt-handler.conf;
+    include /etc/nginx/snippets/sslconfig.conf;
+
+    ssl_certificate         /etc/letsencrypt/live/domain/fullchain.pem;
+    ssl_certificate_key     /etc/letsencrypt/live/domain/privkey.pem;
+
+    root /var/www/domain/public_html/; 
+
+}
+
+
+server {
+
+    listen 443;
+    server_name domain;
+
+    include /etc/nginx/snippets/logging.conf;
+    include /etc/nginx/snippets/letsencrypt-handler.conf;
+    include /etc/nginx/snippets/sslconfig.conf;
+
+    ssl_certificate         /etc/letsencrypt/live/domain/fullchain.pem;
+    ssl_certificate_key     /etc/letsencrypt/live/domain/privkey.pem;
+
+    include /etc/nginx/snippets/redirect-to-www.conf;
+
+}

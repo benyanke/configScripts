@@ -153,6 +153,10 @@ function aptppaadd() {
 # }
 # trap cleanup EXIT
 
+# Allow Scroll lock
+xmodmap -e 'add mod3 = Scroll_Lock' > $inslog 2>&1
+
+
 # tempDir="/home/$currentUser/temp"
 tempDir="/tmp/installfiles"
 homeDir="/home/$currentUser"
@@ -378,6 +382,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "xautomation" "X Automation Helper"
   aptinstall "httpie" "API testing tool"
   aptinstall "gnuplot" "Gnu plot"
+  aptinstall "fping" "fping"
 
 #  aptinstall "mc" "Midnight commander"
 #  aptinstall "wine" "Windows (non-)emulation tool"

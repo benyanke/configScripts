@@ -21,6 +21,8 @@
 # Git repos
 # Scripts folder
 # http://www.omgubuntu.co.uk/2016/09/wunderline-nifty-command-line-app-wunderlist
+# Consider: http://mkchromecast.com/
+
 
 # get current user, and home directory path
 if [ "$USER" == "root" ]; then

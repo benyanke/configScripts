@@ -324,6 +324,9 @@ else # end nonroot tasks, moving on to root
   # Get RDP/VNC Client
   aptppaadd "remmina-ppa-team/remmina-next"
 
+  # Get nautilus-git extension, "nautilus-git"
+  aptppaadd "khurshid-alam/nautilus-git"
+
   step "Updating APT List"
   apt-get update > $inslog 2>&1
   stepdone
@@ -383,6 +386,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "httpie" "API testing tool"
   aptinstall "gnuplot" "Gnu plot"
   aptinstall "fping" "fping"
+  aptinstall "nautilus-git" "Nautilus-Git extension"
 
 #  aptinstall "mc" "Midnight commander"
 #  aptinstall "wine" "Windows (non-)emulation tool"

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# For x220:
+# https://pastebin.com/ULpLYjhC
+
 # Todo:
 
 # Add pip install termdown

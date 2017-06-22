@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # Todo:
+
+# Add pip install termdown
+
 # DOCKER https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04 
 #    perhaps only on some computers
 # Get docky settings - github gist?

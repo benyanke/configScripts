@@ -335,6 +335,9 @@ else # end nonroot tasks, moving on to root
   # Get nautilus-git extension, "nautilus-git"
   aptppaadd "khurshid-alam/nautilus-git"
 
+  # Get QOwnNotes
+  aptppaadd "pbek/qownnotes"
+
   step "Updating APT List"
   apt-get update > $inslog 2>&1
   stepdone
@@ -395,6 +398,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "gnuplot" "Gnu plot"
   aptinstall "fping" "fping"
   aptinstall "nautilus-git" "Nautilus-Git extension"
+  aptinstall "qownnotes" "Cloud notepad"
 
 #  aptinstall "mc" "Midnight commander"
 #  aptinstall "wine" "Windows (non-)emulation tool"

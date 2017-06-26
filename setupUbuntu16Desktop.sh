@@ -399,6 +399,7 @@ else # end nonroot tasks, moving on to root
   aptinstall "fping" "fping"
   aptinstall "nautilus-git" "Nautilus-Git extension"
   aptinstall "qownnotes" "Cloud notepad"
+  aptinstall "golang-go" "GO Language tools"
 
 #  aptinstall "mc" "Midnight commander"
 #  aptinstall "wine" "Windows (non-)emulation tool"

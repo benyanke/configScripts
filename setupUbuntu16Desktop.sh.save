@@ -1,0 +1,322 @@
+#!/bin/bash
+
+# For x220:
+# https://pastebin.com/ULpLYjhC
+
+# Todo:
+
+# Add pip install termdown
+
+# DOCKER https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04 
+#    perhaps only on some computers
+# Get docky settings - github gist?
+# Get guake settings - github gist?
+# Add nextcloud setup step
+# Configuring multiload - broken settings down here
+# Seperate out settings changes from desktop setting
+# Add weather location changer for widget
+# SSH SERVER + keys
+# Add guake, docky, etc, to ubuntu startup scripts
+# NEEDED ON SOME COMPUTERS (including BY-Thinkpad)
+
+# Add nextcloud setup
+# Add config sync system
+# Setup guake config
+# Look into gnome config
+# Dockyconf
+# Git repos
+# Scripts folder
+# http://www.omgubuntu.co.uk/2016/09/wunderline-nifty-command-line-app-wunderlist
+# Consider: http://mkchromecast.com/
+
+
+# get current user, and home directory path
+if [ "$USER" == "root" ]; then
+  currentUser=$SUDO_USER;
+else
+  currentUser=$USER;
+fi
+
+# Request Sudo Access before we continue further
+sudo cat /dev/null
+
+
+##############
+# Settings
+##############
+
+# Set to 1 to purge (remove program and settings before install)
+aptPurgeBeforeInstall=0;
+
+# destination for papertrail logging
+#example:
+papertrailDest="logs12345.papertrailapp.com:12345"
+
+
+# Setup log
+inslog="/tmp/installlog"; # install log
+
+sudo touch $inslog
+sudo chown $currentUser:$currentUser $inslog;
+
+echo "Install Log" > $inslog
+echo "" > $inslog
+echo "" > $inslog
+
+
+curStep=""; # current step
+function step() {
+  curStep="$1"
+  echo " [      ] $curStep";
+}
+
+function stepdone() {
+  echo -en "\e[1A"
+  echo -e " [ \e[92mDONE\e[0m ] $curStep"
+}
+
+function error() {
+  echo -en "\e[1A"
+  echo -e " [ \e[33mERR \e[0m ] $curStep"
+}
+
+function nothing() {
+  echo "";
+}
+
+
+function aptinstall() {
+  packageName=$1;
+  packageDescription=$2;
+
+  installed=0;
+
+  if [[ $aptPurgeBeforeInstall = 1 ]] ; then
+    step "Purging package before inst: '$packageName' "
+    sudo dpkg --configure -a > $inslog 2>&1
+    sudo apt-get purge -y $packageName > $inslog 2>&1
+    nothing;
+  fi
+
+#  dpkg-query -l $packageName >/dev/null 2>&1 && installed=1;
+#  which $packageName >/dev/null 2>&1 && installed=1;
+  sudo dpkg -s $packageName >/dev/null 2>&1 && installed=1;
+
+  if [[ $installed = 0 ]] ; then
+
+    step "Installing package from apt: '$packageName' "
+
+    sudo apt-get install -y $packageName > $inslog 2>&1
+
+    if [[ $? -ne 0 ]] ; then
+      sudo dpkg --configure -a > $inslog 2>&1
+      sudo apt-get install -y $packageName > $inslog 2>&1
+
+      if [[ $? -ne 0 ]] ; then
+        error;
+        step "Failed to install from apt:  '$packageName' "
+        stepdone;
+
+        return 1;
+      fi
+
+    fi
+
+    echo " * $packageName ($packageDescription)" >> $listfile
+
+  else
+
+    step "Already installed from apt:  '$packageName' "
+
+  fi
+
+  stepdone;
+
+}
+
+function aptppaadd() {
+
+  ppaName=$1;
+
+  if ! grep -q "^deb .*$ppaName" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+
+    step "Adding PPA repo:         '$ppaName'";
+    sudo add-apt-repository ppa:$ppaName -y > $inslog 2>&1
+
+  else
+
+    step "PPA repo already added:  '$ppaName'";
+
+  fi
+
+  stepdone;
+
+}
+
+# Delete temp directory after script finishes
+# set -e
+# function cleanup {
+#  echo "Removing temp directory"
+#  sudo rm  -rf /tmp/installfiles
+# }
+# trap cleanup EXIT
+
+# Allow Scroll lock
+xmodmap -e 'add mod3 = Scroll_Lock' > $inslog 2>&1
+
+
+# tempDir="/home/$currentUser/temp"
+tempDir="/tmp/installfiles"
+homeDir="/home/$currentUser"
+
+# This file contains a list of installed tools for user reference
+listfile="$homeDir/installedtools.md"
+
+# Version (unity or MATE)
+version=$(grep cdrom: /etc/apt/sources.list | sed -n '1s|.*deb cdrom:\[\([^ ]* *[^ ]*\).*|\1|p');
+
+
+# Make Temp Directory
+sudo mkdir $tempDir -p > $inslog 2>&1
+sudo chown $currentUser:$currentUser $tempDir > $inslog 2>&1
+
+
+function reownHome() {
+	chown $currentUser:$currentUser $homeDir -R > $inslog 2>&1
+}
+
+
+# Root Override Section
+if [ "$1" != "-f" ] ; then
+  if [ "$(whoami)" != "root" ] ; then
+      echo "Starting...." > $inslog 2>&1
+    else
+     echo "Please do not run as root";
+     exit 1;
+  fi
+
+
+  #############
+  # NONROOT TASKS
+  #############
+
+  # Change Desktop
+
+  function getBackgroundFile() {
+    mkdir -p $homeDir/Pictures/DesktopBackgrounds> $inslog 2>&1
+
+    filename=$1;> $inslog 2>&1
+    desktopBgBaseUrl="https://github.com/benyanke/configScripts/raw/master/img/desktopbackgrounds"> $inslog 2>&1
+
+    rm -r "$homeDir/Pictures/DesktopBackgrounds/$filename" > $inslog 2>&1
+    wget "$desktopBgBaseUrl/$filename" -O "$homeDir/Pictures/DesktopBackgrounds/$filename" > $inslog 2>&1
+  }
+
+
+
+  # Function to set the desktop background
+  function setDesktopBackground() {
+      basepath="$homeDir/Pictures/DesktopBackgrounds/" > $inslog 2>&1
+      desktopfile=$1 > $inslog 2>&1
+
+      # Allow VNC connections over localhost
+      gsettings set org.gnome.Vino network-interface lo > $inslog 2>&1
+
+      ##### For MATE only
+      if [[ $version == *"MATE"* ]] ; then
+
+          # Change scrolling settings
+          gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false > $inslog 2>&1
+
+          # Change desktop background
+          gsettings set org.mate.background primary-color "rgb(0,0,0)" > $inslog 2>&1
+          gsettings set org.mate.background picture-filename "$basepath/$desktopfile" > $inslog 2>&1
+
+      ##### For Unity only
+      else
+
+          # Change scrolling settings
+          gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false > $inslog 2>&1
+
+          # Change file manager display to list
+          gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view' > $inslog 2>&1
+
+          # Change menus to in the window
+          gsettings set com.canonical.Unity integrated-menus true > $inslog 2>&1
+
+          # Change desktop background
+          gsettings set org.gnome.desktop.background picture-uri "file://$basepath/$desktopfile" > $inslog 2>&1
+
+          # Add menus to windows instead of top of screen
+          gsettings set com.canonical.Unity integrated-menus true
+
+          # Change clock setting
+          gsettings set com.canonical.indicator.datetime show-day true
+          gsettings set com.canonical.indicator.datetime show-date true
+          gsettings set com.canonical.indicator.datetime show-week-numbers true
+
+
+      fi
+  }
+
+  # Download files from git repo
+  step "Downloading Desktop Backgrounds"
+    getBackgroundFile "cat6.jpg" &
+    getBackgroundFile "cloud.png" &
+    getBackgroundFile "inception-code.jpg" &
+    getBackgroundFile "knight.jpg" &
+    getBackgroundFile "ubuntu-blue.jpg" &
+    getBackgroundFile "ubuntu-grey.jpg" &
+    getBackgroundFile "O4GTKkE.jpg" &
+    wait;
+  stepdone
+
+  # Set one to be the background
+  step "Setting desktop background"
+  setDesktopBackground "O4GTKkE.jpg";
+  stepdone
+
+
+#  echo ""
+#  echo "### Upgrade to root ###"
+
+  # Upgrade to root
+  if [ "$(whoami)" != "root" ]; then
+      sudo $0 -f
+      exit 0;
+  else
+      error "Could not be upgraded to root.";
+      exit 1;
+  fi
+
+else # end nonroot tasks, moving on to root
+
+
+  #############
+  # ROOT TASKS
+  #############
+
+  # Reown the home dir before continuing
+  reownHome
+
+
+
+  # Install packages
+
+  # Not sure what this does
+#  add-apt-repository ppa:n-muench/programs-ppa -y
+
+  # For good measure
+  step "Running dpkg configure";
+  sudo dpkg --configure -a > $inslog 2>&1
+  stepdone;
+
+  # Get WINE
+  aptppaadd "ubuntu-wine/ppa"
+
+  # Get most recent shutter version
+#  aptppaadd "shutter/ppa"
+
+  # NextCloud
+  aptppaadd "nextcloud-devs/client"
+

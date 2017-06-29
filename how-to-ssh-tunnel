@@ -1,0 +1,31 @@
+Run on client:
+
+ssh -M 0 -f -T -N HOSTNAME
+autossh -M 0 -f -T -N HOSTNAME
+
+
+Put in client's sshconfig
+
+Host HOSTNAME
+    HostName      HOSTNAME
+    User          USERNAME
+    Port          22
+    IdentityFile  KEYPATH
+
+    # Forward remote ports to local box
+#    LocalForward  5000 localhost:3306
+
+    RemoteForward 127.0.0.1:2223 127.0.0.1:22
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+
+
+In remote authorized keys
+
+# the key
+
+
+
+Cron
+
+0 0 * * * autossh -f -Nn -M 23000 HOSTNAME  >/dev/null 2>&1 &

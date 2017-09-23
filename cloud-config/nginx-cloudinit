@@ -49,8 +49,10 @@ sudo apt-get update;
 sudo apt-get install -y apg nano htop curl wget git mariadb-client mariadb-server \
     composer phpunit mcrypt tree php7.0 vim screen iotop httpie sqlite sqlite3 swapspace autofs
 
-sudo apt-get dist-upgrade -y;
-sudo apt-get dist-upgrade -y;
+
+sudo apt-get dist-upgrade -qq --force-yes;
+# sudo apt-get dist-upgrade -y;
+# sudo apt-get dist-upgrade -y;
 sudo apt-get autoremove -y;
 sudo apt-get autoremove -y;
 sudo apt-get autoremove -y;
@@ -154,3 +156,6 @@ ufw allow 22
 ufw allow 80
 ufw allow 443
 ufw --force enable
+
+# Reboot
+sudo reboot

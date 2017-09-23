@@ -338,6 +338,9 @@ else # end nonroot tasks, moving on to root
   # Get QOwnNotes
   aptppaadd "pbek/qownnotes"
 
+  # Get Adobe Brackets
+  aptppaadd "webupd8team/brackets"
+
   step "Updating APT List"
   apt-get update > $inslog 2>&1
   stepdone

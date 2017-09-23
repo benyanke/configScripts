@@ -14,6 +14,9 @@
 # Config
 #################
 
+# Server username
+username="ubuntu"
+
 # Mount credentials
 mountUser="webservermount"
 mountPassword="NiapniebnejeymbiOzHyivMunOfpha"
@@ -39,12 +42,36 @@ basedir="$remoteMountPath"
 # main()
 #################
 
-sudo apt-get update -y
-
 
 # Install Basic Packages
+# Make main user
+sudo apt-get update -y;
 sudo apt-get install -y apg nano htop curl wget git mariadb-client mariadb-server \
     composer phpunit mcrypt tree php7.0 vim screen iotop httpie sqlite sqlite3 swapspace autofs
+
+# Setup user and add to sudoers
+sudo useradd $username;
+sudo usermod -aG sudo $username;
+
+# Adding SSH Keys
+keyFile="/home/$username/.ssh/authorized_keys"
+mkdir -p /home/$username/.ssh/
+touch $keyFile
+
+echo "# BY Main Key" >> $keyFile
+curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-43587-ssh2-PubKeyAlt.txt >> $keyFile
+echo " " >> $keyFile
+
+echo "# BY Mobile Key" >> $keyFile
+curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-Mobile-48569-ssh2-PubKeyAlt.txt >> $keyFile
+echo " " >> $keyFile
+
+chown $username:$username /home/$username/.ssh
+chown $username:$username /home/$username/.ssh/authorized_keys
+chmod 600 /home/$username/.ssh/authorized_keys
+
+# Chown full home one more time, to be sure
+chown -R $username:$username /home/$username/
 
 
 # Setting up AutoFS

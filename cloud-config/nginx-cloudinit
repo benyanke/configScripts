@@ -18,16 +18,16 @@
 username="ubuntu"
 
 # Mount credentials
-mountUser="webservermount"
-mountPassword="NiapniebnejeymbiOzHyivMunOfpha"
+mountUser="REDACTED"
+mountPassword="REDACTED"
 # mountDomain="domain.com" # comment out if not needed
 
 # Mount path
-mountPath="//10.136.38.139/webservermount"
+mountPath="//MOUNTSERVER/MOUNTPOINT"
 
 # Can be any alphanumeric string to identify the mount
 # This is used to create various files on the filesystem
-mountSlug="webservermount"
+mountSlug="MOUNTSLUG"
 
 # Friendly message associated with mount
 mountFriendlyName="Web app storage share" # This is used in line comments to describe the mount
@@ -43,19 +43,11 @@ basedir="$remoteMountPath"
 #################
 
 
-# Install Basic Packages
-# Make main user
-sudo apt-get update;
-sudo apt-get install -y -qq --allow apg nano htop curl wget git mariadb-client mariadb-server \
-    composer phpunit mcrypt tree php7.0 vim screen iotop httpie sqlite sqlite3 swapspace autofs
-
-sudo apt-get autoremove -y;
-sudo apt-get autoremove -y;
-sudo apt-get autoremove -y;
-
 # Setup user and add to sudoers
 adduser --disabled-password --gecos "" $username;
-sudo usermod -aG sudo $username;
+echo '# ubuntu user is default user in cloud-images.' > /etc/sudoers.d/90-cloudimg-ubuntu
+echo '# It needs passwordless sudo functionality.' >> /etc/sudoers.d/90-cloudimg-ubuntu
+echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/90-cloudimg-ubuntu
 
 # Adding SSH Keys
 keyFile="/home/$username/.ssh/authorized_keys"
@@ -78,6 +70,15 @@ chmod 600 /home/$username/.ssh/authorized_keys
 chown -R $username:$username /home/$username/
 
 
+
+# Install Basic Packages
+sudo apt-get update
+sudo apt-get install -y -qqq apg nano htop curl wget git mariadb-client mariadb-server composer phpunit mcrypt tree php7.0 vim screen iotop httpie sqlite sqlite3 swapspace autofs cifs-utils;
+
+sudo apt-get autoremove -y;
+sudo apt-get autoremove -y;
+sudo apt-get autoremove -y;
+
 # Setting up AutoFS
 
 # Based on:
@@ -95,9 +96,9 @@ echo "username=$mountUser" > /etc/auto.credentials.$mountSlug
 echo "password=$mountPassword" >> /etc/auto.credentials.$mountSlug
 
 # Add mountDomain if it's set above
-if [[ -z $mountDomain ]] ; then
-  echo "domain=$mountDomain" >> /etc/auto.credentials.$mountSlug
-fi
+# if [[ -z $mountDomain ]] ; then
+#  echo "domain=$mountDomain" >> /etc/auto.credentials.$mountSlug
+# fi
 
 chown root:root /etc/auto.credentials.*
 chmod 600 /etc/auto.credentials.*

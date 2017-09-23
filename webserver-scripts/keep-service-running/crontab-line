@@ -1,0 +1,5 @@
+# Place me at /etc/cron.d/keep-services-running
+
+# Keep services running on this server
+* * * * * root /opt/misc-scripts/keepServicesRunning.sh &> /dev/null
+

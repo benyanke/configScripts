@@ -52,7 +52,7 @@ aptPurgeBeforeInstall=0;
 #example:
 papertrailDest="logs12345.papertrailapp.com:12345"
 
-
+0
 # Setup log
 inslog="/tmp/installlog"; # install log
 
@@ -452,6 +452,7 @@ else # end nonroot tasks, moving on to root
     aptinstall "unity-tweak-tool" "Advanced unity tweaking"
   fi
 
+  aptinstall "touchegg" "Multitouch trackpad getures"
   aptinstall "guake" "Guake dropdown terminal"
   aptinstall "indicator-weather" "Top dock widget for weather"
   aptinstall "indicator-multiload" "Top dock widget for system load"

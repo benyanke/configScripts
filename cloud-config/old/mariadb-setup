@@ -44,14 +44,14 @@ runcmd:
   - chmod +x /home/$user/scripts/ezservermonitor-sh/*.sh
   - curl -sSL https://agent.digitalocean.com/install.sh | sh
   - apt update
-  - apt dist-upgrade -y  
+  - apt dist-upgrade -y
   - apt autoremove -y
   - apt autoremove -y
-  
+
 
 
 power_state:
   timeout: 120
-  delay: "+5"
-  message: Rebooting in five minutes. Please save your work.
+  delay: "+1"
+  message: Rebooting in 1 minute. Please save your work.
   mode: reboot

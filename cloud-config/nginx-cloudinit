@@ -45,9 +45,15 @@ basedir="$remoteMountPath"
 
 # Install Basic Packages
 # Make main user
-sudo apt-get update -y;
+sudo apt-get update;
 sudo apt-get install -y apg nano htop curl wget git mariadb-client mariadb-server \
     composer phpunit mcrypt tree php7.0 vim screen iotop httpie sqlite sqlite3 swapspace autofs
+
+sudo apt-get dist-upgrade -y;
+sudo apt-get dist-upgrade -y;
+sudo apt-get autoremove -y;
+sudo apt-get autoremove -y;
+sudo apt-get autoremove -y;
 
 # Setup user and add to sudoers
 sudo useradd $username;

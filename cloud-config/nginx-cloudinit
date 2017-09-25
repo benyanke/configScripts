@@ -9,6 +9,7 @@
 # Created by Ben Yanke
 #
 # NGINX config is nearly done, apache config is just starting
+# Use this guide: https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04
 #####################################
 
 
@@ -61,7 +62,7 @@ write_files:
 
 
 
-    path: /etc/motd.tail
+    path: /etc/motd
     owner: root:root
     permissions: '0644'
 

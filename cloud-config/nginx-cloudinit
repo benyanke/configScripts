@@ -118,7 +118,6 @@ packages:
  - swapspace
  - autofs
  - cifs-utils
- - apache2
  - php7.0-cli
  - php7.0-curl
  - php7.0-json
@@ -130,6 +129,9 @@ packages:
  - php7.0-tidy
  - php7.0-soap
  - php7.0-dev
+ - apache2
+ - libapache2-mod-php7.0
+
 # - nginx
 # - php7.0-fpm
 
@@ -197,3 +199,9 @@ power_state:
   timeout: 5
   message: Rebooting after provisioning server.
   mode: reboot
+
+# APACHE COMMANDS needed:
+# sudo a2enmod ssl
+# sudo a2enmod rewrite
+
+# Also need to do LetsEncrypt here too

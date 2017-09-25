@@ -8,6 +8,7 @@
 #
 # Created by Ben Yanke
 #
+# NGINX config is nearly done, apache config is just starting
 #####################################
 
 
@@ -116,8 +117,7 @@ packages:
  - swapspace
  - autofs
  - cifs-utils
- - nginx
- - php7.0-fpm
+ - apache2
  - php7.0-cli
  - php7.0-curl
  - php7.0-json
@@ -129,6 +129,8 @@ packages:
  - php7.0-tidy
  - php7.0-soap
  - php7.0-dev
+# - nginx
+# - php7.0-fpm
 
 package_upgrade: true
 
@@ -142,7 +144,7 @@ runcmd:
   - mkdir -p /mnt/remote/appserver;
   - echo "/-    /etc/auto.cifs    --timeout=90 --ghost" > /etc/auto.master
   - echo "+auto.master" >> /etc/auto.master
-  - echo "/mnt/remote/appserver -fstype=cifs,rw,uid=1000,gid=1000,noperm,credentials=/etc/auto.credentials.appserver ://MOUNTSERVER/appserver" >  /etc/auto.cifs
+  - echo "/mnt/remote/appserver -fstype=cifs,rw,uid=1000,gid=1000,noperm,credentials=/etc/auto.credentials.appserver ://REDACTED/appserver" >  /etc/auto.cifs
   - echo "username=REDACTED" > /etc/auto.credentials.appserver
   - echo "password=REDACTED" >> /etc/auto.credentials.appserver
   # - echo "domain=DOMAINHERE" >> /etc/auto.credentials.appserver
@@ -150,11 +152,13 @@ runcmd:
   - chmod 600 /etc/auto.credentials.*
   - service autofs restart
 
-# Setting up Nginx Virtualhost config from network share
+# Setting up Virtualhost config from network share
   - rm -rf /etc/nginx/sites-enabled
   - ln -s /mnt/remote/appserver/config/nginx/sites-enabled /etc/nginx/sites-enabled
+  - rm -rf /etc/apache2/sites-enabled
+  - ln -s /mnt/remote/appserver/config/apache2/sites-enabled /etc/apache2/sites-enabled
 
-# Setting up nginx snippets
+# Setting up nginx snippets - no apache snippets used here
   - rm -rf /etc/nginx/snippets
   - ln -s /mnt/remote/appserver/config/nginx/snippets /etc/nginx/snippets
 
@@ -166,9 +170,9 @@ runcmd:
   - rm -rf /var/www
   - ln -s /mnt/remote/appserver/www /var/www
 
-# Restart nginx
+# Restart webserver
   - sudo service nginx restart
-
+  - sudo service apache2 restart
 
 # Configure PHP-FPM
   - cp /etc/php/7.0/fpm/php.ini /etc/php/7.0/fpm/php.ini.original
@@ -183,11 +187,10 @@ runcmd:
   - ufw allow 443
   - ufw --force enable
 
-# Remote apt packages
+# Remote apt packages - multiples often needed, because removing one package can remove the need for another
   - apt autoremove -y
   - apt autoremove -y
   - apt autoremove -y
-
 
 power_state:
   timeout: 5

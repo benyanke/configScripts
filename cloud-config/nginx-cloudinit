@@ -65,6 +65,33 @@ write_files:
     permissions: '0644'
 
 
+    # Add crontab lines
+
+  - owner: root:root
+    path: /etc/cron.d/010-filesync-cronjobs
+    content:
+    content: |
+      # Cron scripts from the fileshare
+
+      * * * * * root /bin/bash /mnt/remote/appserver/config/scripts/cron/root/minute.sh >> /mnt/remote/appserver/config/scripts/cron/root/log/minute.log
+
+      10 * * * * root /bin/bash /mnt/remote/appserver/config/scripts/cron/root/hourly.sh >> /mnt/remote/appserver/config/scripts/cron/root/log/hourly.log
+
+      0 2 * * * root /bin/bash /mnt/remote/appserver/config/scripts/cron/root/daily.sh >> /mnt/remote/appserver/config/scripts/cron/root/log/daily.log
+
+      @reboot root /bin/bash /mnt/remote/appserver/config/scripts/cron/root/log/boot.sh >> /mnt/remote/appserver/config/scripts/cron/root/log/boot.log
+
+
+      * * * * * ubuntu /bin/bash /mnt/remote/appserver/config/scripts/cron/ubuntu/minute.sh >> /mnt/remote/appserver/config/scripts/cron/ubuntu/log/minute.log
+
+      10 * * * * ubuntu /bin/bash /mnt/remote/appserver/config/scripts/cron/ubuntu/hourly.sh >> /mnt/remote/appserver/config/scripts/cron/ubuntu/log/hourly.log
+
+      0 2 * * * ubuntu /bin/bash /mnt/remote/appserver/config/scripts/cron/ubuntu/daily.sh >> /mnt/remote/appserver/config/scripts/cron/ubuntu/log/daily.log
+
+      @reboot ubuntu /bin/bash /mnt/remote/appserver/config/scripts/cron/ubuntu/boot.sh >> /mnt/remote/appserver/config/scripts/cron/ubuntu/log/boot.log
+
+    permissions: '0644'
+
 # Install packages
 packages:
  - apg
@@ -105,17 +132,19 @@ packages:
 
 package_upgrade: true
 
+
 # AutoFS Setup
 # Based on:
 # http://www.unixmen.com/how-to-mount-a-smbcifs-share-as-an-automount-on-centosfedorarhel/
+
 runcmd:
   - rm -rf /mnt/remote;
   - mkdir -p /mnt/remote/appserver;
   - echo "/-    /etc/auto.cifs    --timeout=90 --ghost" > /etc/auto.master
   - echo "+auto.master" >> /etc/auto.master
-  - echo "/mnt/remote/appserver -fstype=cifs,ro,uid=1000,gid=1000,noperm,credentials=/etc/auto.credentials.appserver ://FILESERVERHERE/MOUNTPOINT" >  /etc/auto.cifs
-  - echo "username=USERNAMEHERE" > /etc/auto.credentials.appserver
-  - echo "password=PASSWORDHERE" >> /etc/auto.credentials.appserver
+  - echo "/mnt/remote/appserver -fstype=cifs,rw,uid=1000,gid=1000,noperm,credentials=/etc/auto.credentials.appserver ://MOUNTSERVER/appserver" >  /etc/auto.cifs
+  - echo "username=REDACTED" > /etc/auto.credentials.appserver
+  - echo "password=REDACTED" >> /etc/auto.credentials.appserver
   # - echo "domain=DOMAINHERE" >> /etc/auto.credentials.appserver
   - chown root:root /etc/auto.credentials.*
   - chmod 600 /etc/auto.credentials.*

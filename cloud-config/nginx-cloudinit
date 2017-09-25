@@ -1,4 +1,4 @@
-#!/bin/bash
+#cloud-config
 
 #####################################
 # Nginx App Server Bootstrap script
@@ -10,149 +10,157 @@
 #
 #####################################
 
-#################
-# Config
-#################
 
-# Server username
-username="ubuntu"
+# Create users and add keys
+users:
+  - name: ubuntu
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAu1kW8KsjsKetkEteNGD30bzGrsWXsgQTxQe74Gq7lkMoUV0nmX+/tmn2zzzqL8RjFSfcbV2K05IknLHi/TzHd+YcKOWQiN4MwRwF9qnclupuDP/GCxI8/RCjGe+jdltBTsWO1SSX+WHAERKAES4QQJ8iWCa5JDN3+GGZOGbuHdXKsHRMXQlIErosKfnhBaKTp8fRpg2KO03UDsVhoUf8y3BryVv9uTmQBOylkUCr/QHOcIIIRs1mCgeA9PCXGYaN8nbdavPfc9KE6OkVt41zkbH+5XdZ3sBzCLamXHHPEQgzIIvNI8uNlx4fMVnuiG8yxn7SLFGfVvBYlDU7a+Pyow== ben@benyanke.com main key
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAteFNkftBDhXZIiNoEVIhEKUvfkSO4rNHbLiWj6J+E+RDr32yMyl0Bv5pLBntqxQPlQV0an86BimKpKAQj+ddEiCejXG/AWOcVrqfzcQ9ODjka8RQQwY4wP0TtnH/p5d5fyMZTZvUBr0X+ZYj69sGp9+SdzXamF8cz42g0N4uUXB0bf7VCTTeh7+vf3hb4dqI1dUhvbgy7moKjqJfxIaYfDtqzzNUT6hB7NiHvYJaf59oQOUDXikD30SS7+jck6gqad94UOQkYPKaj4JVIzsIaahl4ZkeAR0lxqgwPMi4w27Ay+CBw78uAxQMg+xKG13q3UhwlEv+otAAOuy7nh1amQ== ben@benyanke.com mobile key
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCXHLCk0jqd45BjM3e2oQ4y3yHWxF1KWFscxdU8F/rQsYGQU0zYNG5OOy1JeJ8YKJXBZpWskJee/QF2IQAE1jj3Zj2aav+31FNMp3+jLL6OvMjL7e8d0AInsKZGXg7ABC5fs+7h42WBBfFcK+nWNhXZm6d4wKPBmngMkizeGNjaKO0aGdUIfY/RpjNHy0MKxD/vZWk8ure5p6MRe31galTY1Cf4u5ll9nX9n39eYpqHxdJoU1pH6iJ2ARuEZ8qNM/MSTz1xDsZWeFn+r9v3URIMfhWEHuKHJ/bgj0IXgcmn0t318+kqpL5B/nHAF6HARmecjxzXQEKlQUSkB8psYXO2uEc5w/9w4y+xuYHN9peIf5Sat/vrOAl3k8uQVUFfedHw0uH5vsO+ZRLCRjGbdRJtRcyL63ySbx2ejIEAAqlIYDOskJXVgEIsu92NCjDep4ad2KNTUHLvbNukInla/HxZbdcHo/aYx3t6potooSMCO1O59G7h+exAdTCYGOA+5dg53TEZMOeiHeOnWKLo+CQtS0vWwrQQomjfC/GcEddkXw6Fech9vCRerstWrMNnh2OThWPAzQRE7jBHVNPL5A89XVv0hK3tuMoTXS08WBbkZkI1RjgOBNFVrKNPRMKKsRn6lq6KuUrAil8ua11vEdAmYgd0OABJbyfLpuU54VYCew== frh-vps-key.pub
 
-# Mount credentials
-mountUser="REDACTED"
-mountPassword="REDACTED"
-# mountDomain="domain.com" # comment out if not needed
-
-# Mount path
-mountPath="//MOUNTSERVER/MOUNTPOINT"
-
-# Can be any alphanumeric string to identify the mount
-# This is used to create various files on the filesystem
-mountSlug="MOUNTSLUG"
-
-# Friendly message associated with mount
-mountFriendlyName="Web app storage share" # This is used in line comments to describe the mount
-
-# For 'FSTAB' Mounts Only (it's automatically set in AUTOFS mounts)
-remoteMountPath="/mnt/remote/$mountSlug"
-
-# Basedir for the rest of the script, don't change this
-basedir="$remoteMountPath"
-
-#################
-# main()
-#################
-
-
-# Setup user and add to sudoers
-adduser --disabled-password --gecos "" $username;
-echo '# ubuntu user is default user in cloud-images.' > /etc/sudoers.d/90-cloudimg-ubuntu
-echo '# It needs passwordless sudo functionality.' >> /etc/sudoers.d/90-cloudimg-ubuntu
-echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/90-cloudimg-ubuntu
-
-# Adding SSH Keys
-keyFile="/home/$username/.ssh/authorized_keys"
-mkdir -p /home/$username/.ssh/
-touch $keyFile
-
-echo "# BY Main Key" >> $keyFile
-curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-43587-ssh2-PubKeyAlt.txt >> $keyFile
-echo " " >> $keyFile
-
-echo "# BY Mobile Key" >> $keyFile
-curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-Mobile-48569-ssh2-PubKeyAlt.txt >> $keyFile
-echo " " >> $keyFile
-
-chown $username:$username /home/$username/.ssh
-chown $username:$username /home/$username/.ssh/authorized_keys
-chmod 600 /home/$username/.ssh/authorized_keys
-
-# Chown full home one more time, to be sure
-chown -R $username:$username /home/$username/
+  - name: benyanke
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAu1kW8KsjsKetkEteNGD30bzGrsWXsgQTxQe74Gq7lkMoUV0nmX+/tmn2zzzqL8RjFSfcbV2K05IknLHi/TzHd+YcKOWQiN4MwRwF9qnclupuDP/GCxI8/RCjGe+jdltBTsWO1SSX+WHAERKAES4QQJ8iWCa5JDN3+GGZOGbuHdXKsHRMXQlIErosKfnhBaKTp8fRpg2KO03UDsVhoUf8y3BryVv9uTmQBOylkUCr/QHOcIIIRs1mCgeA9PCXGYaN8nbdavPfc9KE6OkVt41zkbH+5XdZ3sBzCLamXHHPEQgzIIvNI8uNlx4fMVnuiG8yxn7SLFGfVvBYlDU7a+Pyow== ben@benyanke.com main key
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAteFNkftBDhXZIiNoEVIhEKUvfkSO4rNHbLiWj6J+E+RDr32yMyl0Bv5pLBntqxQPlQV0an86BimKpKAQj+ddEiCejXG/AWOcVrqfzcQ9ODjka8RQQwY4wP0TtnH/p5d5fyMZTZvUBr0X+ZYj69sGp9+SdzXamF8cz42g0N4uUXB0bf7VCTTeh7+vf3hb4dqI1dUhvbgy7moKjqJfxIaYfDtqzzNUT6hB7NiHvYJaf59oQOUDXikD30SS7+jck6gqad94UOQkYPKaj4JVIzsIaahl4ZkeAR0lxqgwPMi4w27Ay+CBw78uAxQMg+xKG13q3UhwlEv+otAAOuy7nh1amQ== ben@benyanke.com mobile key
 
 
 
-# Install Basic Packages
-sudo apt-get update
-sudo apt-get install -y -qqq apg nano htop curl wget git mariadb-client mariadb-server composer phpunit mcrypt tree php7.0 vim screen iotop httpie sqlite sqlite3 swapspace autofs cifs-utils;
+# Modify the /etc/profile for all shell sessions
+write_files:
+  - content: |
 
-sudo apt-get autoremove -y;
-sudo apt-get autoremove -y;
-sudo apt-get autoremove -y;
+      -----------------------------------------------------------------
+      Webserver cluster instance
+      -----------------------------------------------------------------
+      Hosting web apps with Nginx and PHP7.0-FPM.
 
-# Setting up AutoFS
+      Database is on another instance.
 
+      File storage for the webserver cluster is also on another instance,
+      mounted by CIFS.
+
+      Webserver instances are ephemeral. If desired configuration changes
+      are not made in the provisioning script, assume they will not persist
+      over reboots and scaling.
+
+      -----------------------------------------------------------------
+      If you have any questions about this server, contact Ben Yanke,
+      system administrator for Fr. Richard Heilman
+
+      608-318-3642
+      ben@benyanke.com
+      -----------------------------------------------------------------
+
+
+
+    path: /etc/motd.tail
+    owner: root:root
+    permissions: '0644'
+
+
+# Install packages
+packages:
+ - apg
+ - nano
+ - htop
+ - curl
+ - wget
+ - git
+ - mariadb-client
+ - mariadb-server
+ - composer
+ - phpunit
+ - mcrypt
+ - tree
+ - php7.0
+ - vim
+ - screen
+ - iotop
+ - httpie
+ - sqlite
+ - sqlite3
+ - swapspace
+ - autofs
+ - cifs-utils
+ - nginx
+ - php7.0-fpm
+ - php7.0-cli
+ - php7.0-curl
+ - php7.0-json
+ - php7.0-mysql
+ - php7.0-ldap
+ - php7.0-zip
+ - php7.0-mbstring
+ - php7.0-xml
+ - php7.0-tidy
+ - php7.0-soap
+ - php7.0-dev
+
+package_upgrade: true
+
+# AutoFS Setup
 # Based on:
 # http://www.unixmen.com/how-to-mount-a-smbcifs-share-as-an-automount-on-centosfedorarhel/
-
-sudo umount -a -t cifs -l /mnt/remote/$mountSlug ;
-
-rm -rf  /mnt/remote;
-mkdir -p /mnt/remote/$mountSlug;
-
-echo "/mnt/remote    /etc/auto.cifs    --timeout=10 --ghost" > /etc/auto.master
-echo "$mountSlug    -fstype=cifs,rw,noperm,credentials=/etc/auto.credentials.$mountSlug    :$mountPath" >  /etc/auto.cifs
-
-echo "username=$mountUser" > /etc/auto.credentials.$mountSlug
-echo "password=$mountPassword" >> /etc/auto.credentials.$mountSlug
-
-# Add mountDomain if it's set above
-# if [[ -z $mountDomain ]] ; then
-#  echo "domain=$mountDomain" >> /etc/auto.credentials.$mountSlug
-# fi
-
-chown root:root /etc/auto.credentials.*
-chmod 600 /etc/auto.credentials.*
-
-sudo service autofs restart;
-
-
-# Install nginx and php
-sudo apt-get install -y nginx php7.0-fpm
-sudo apt-get install -y php7.0-cli php7.0-curl php7.0-json php7.0-mysql php7.0-ldap php7.0-zip php7.0-mbstring php7.0-xml php7.0-tidy php7.0-soap php7.0-dev
+runcmd:
+  - rm -rf /mnt/remote;
+  - mkdir -p /mnt/remote/appserver;
+  - echo "/-    /etc/auto.cifs    --timeout=90 --ghost" > /etc/auto.master
+  - echo "+auto.master" >> /etc/auto.master
+  - echo "/mnt/remote/appserver -fstype=cifs,ro,uid=1000,gid=1000,noperm,credentials=/etc/auto.credentials.appserver ://FILESERVERHERE/MOUNTPOINT" >  /etc/auto.cifs
+  - echo "username=USERNAMEHERE" > /etc/auto.credentials.appserver
+  - echo "password=PASSWORDHERE" >> /etc/auto.credentials.appserver
+  # - echo "domain=DOMAINHERE" >> /etc/auto.credentials.appserver
+  - chown root:root /etc/auto.credentials.*
+  - chmod 600 /etc/auto.credentials.*
+  - service autofs restart
 
 # Setting up Nginx Virtualhost config from network share
-sudo rm -rf /etc/nginx/sites-enabled
-sudo ln -s $basedir/config/nginx/sites-enabled /etc/nginx/sites-enabled
+  - rm -rf /etc/nginx/sites-enabled
+  - ln -s /mnt/remote/appserver/config/nginx/sites-enabled /etc/nginx/sites-enabled
 
 # Setting up nginx snippets
-sudo rm -rf /etc/nginx/snippets
-sudo ln -s $basedir/config/nginx/snippets /etc/nginx/snippets
+  - rm -rf /etc/nginx/snippets
+  - ln -s /mnt/remote/appserver/config/nginx/snippets /etc/nginx/snippets
 
-
-# Making some tweaks to the Nginx Config File
-sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.original  | output_handler
-sudo replace \
-   "include /etc/nginx/sites-enabled/*;" \
-   "include /etc/nginx/sites-enabled/*.conf;" -- \
-    /etc/nginx/nginx.conf
-
+# Modifying nginx config
+  - cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.original
+  - sed -i 's/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*.conf;/g' /etc/nginx/nginx.conf
 
 # Linking to the network share
-rm -rf /var/www
-ln -s $basedir/www /var/www
+  - rm -rf /var/www
+  - ln -s /mnt/remote/appserver/www /var/www
 
 # Restart nginx
-sudo service nginx restart
+  - sudo service nginx restart
 
 
 # Configure PHP-FPM
-sudo cp /etc/php/7.0/fpm/php.ini /etc/php/7.0/fpm/php.ini.original
-sudo replace \
-   ";cgi.fix_pathinfo=1" \
-   "cgi.fix_pathinfo=0" -- \
-   /etc/php/7.0/fpm/php.ini
+  - cp /etc/php/7.0/fpm/php.ini /etc/php/7.0/fpm/php.ini.original
+  - sed -i 's/;cgi\.fix_pathinfo=1/cgi\.fix_pathinfo=1/g' /etc/php/7.0/fpm/php.ini
+  - service php7.0-fpm restart
 
-sudo service php7.0-fpm restart
+# Setup UFW firewall
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow 22 # IN ETH1 (private)
+  - ufw allow 80
+  - ufw allow 443
+  - ufw --force enable
+
+# Remote apt packages
+  - apt autoremove -y
+  - apt autoremove -y
+  - apt autoremove -y
 
 
-# Set up firewall
-ufw default deny incoming
-ufw default allow outgoing
-
-ufw allow 22
-ufw allow 80
-ufw allow 443
-ufw --force enable
-
-# Reboot
-sudo reboot
+power_state:
+  timeout: 5
+  message: Rebooting after provisioning server.
+  mode: reboot

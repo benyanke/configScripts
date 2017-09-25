@@ -1,0 +1,158 @@
+#!/bin/bash
+
+#####################################
+# Nginx App Server Bootstrap script
+#
+# Includes network mount storage config
+# Designed to be used in a cluster
+#
+# Created by Ben Yanke
+#
+#####################################
+
+#################
+# Config
+#################
+
+# Server username
+username="ubuntu"
+
+# Mount credentials
+mountUser="REDACTED"
+mountPassword="REDACTED"
+# mountDomain="domain.com" # comment out if not needed
+
+# Mount path
+mountPath="//MOUNTSERVER/MOUNTPOINT"
+
+# Can be any alphanumeric string to identify the mount
+# This is used to create various files on the filesystem
+mountSlug="MOUNTSLUG"
+
+# Friendly message associated with mount
+mountFriendlyName="Web app storage share" # This is used in line comments to describe the mount
+
+# For 'FSTAB' Mounts Only (it's automatically set in AUTOFS mounts)
+remoteMountPath="/mnt/remote/$mountSlug"
+
+# Basedir for the rest of the script, don't change this
+basedir="$remoteMountPath"
+
+#################
+# main()
+#################
+
+
+# Setup user and add to sudoers
+adduser --disabled-password --gecos "" $username;
+echo '# ubuntu user is default user in cloud-images.' > /etc/sudoers.d/90-cloudimg-ubuntu
+echo '# It needs passwordless sudo functionality.' >> /etc/sudoers.d/90-cloudimg-ubuntu
+echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/90-cloudimg-ubuntu
+
+# Adding SSH Keys
+keyFile="/home/$username/.ssh/authorized_keys"
+mkdir -p /home/$username/.ssh/
+touch $keyFile
+
+echo "# BY Main Key" >> $keyFile
+curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-43587-ssh2-PubKeyAlt.txt >> $keyFile
+echo " " >> $keyFile
+
+echo "# BY Mobile Key" >> $keyFile
+curl https://raw.githubusercontent.com/benyanke/PublicKeys/master/BY-Mobile-48569-ssh2-PubKeyAlt.txt >> $keyFile
+echo " " >> $keyFile
+
+chown $username:$username /home/$username/.ssh
+chown $username:$username /home/$username/.ssh/authorized_keys
+chmod 600 /home/$username/.ssh/authorized_keys
+
+# Chown full home one more time, to be sure
+chown -R $username:$username /home/$username/
+
+
+
+# Install Basic Packages
+sudo apt-get update
+sudo apt-get install -y -qqq apg nano htop curl wget git mariadb-client mariadb-server composer phpunit mcrypt tree php7.0 vim screen iotop httpie sqlite sqlite3 swapspace autofs cifs-utils;
+
+sudo apt-get autoremove -y;
+sudo apt-get autoremove -y;
+sudo apt-get autoremove -y;
+
+# Setting up AutoFS
+
+# Based on:
+# http://www.unixmen.com/how-to-mount-a-smbcifs-share-as-an-automount-on-centosfedorarhel/
+
+sudo umount -a -t cifs -l /mnt/remote/$mountSlug ;
+
+rm -rf  /mnt/remote;
+mkdir -p /mnt/remote/$mountSlug;
+
+echo "/mnt/remote    /etc/auto.cifs    --timeout=10 --ghost" > /etc/auto.master
+echo "$mountSlug    -fstype=cifs,rw,noperm,credentials=/etc/auto.credentials.$mountSlug    :$mountPath" >  /etc/auto.cifs
+
+echo "username=$mountUser" > /etc/auto.credentials.$mountSlug
+echo "password=$mountPassword" >> /etc/auto.credentials.$mountSlug
+
+# Add mountDomain if it's set above
+# if [[ -z $mountDomain ]] ; then
+#  echo "domain=$mountDomain" >> /etc/auto.credentials.$mountSlug
+# fi
+
+chown root:root /etc/auto.credentials.*
+chmod 600 /etc/auto.credentials.*
+
+sudo service autofs restart;
+
+
+# Install nginx and php
+sudo apt-get install -y nginx php7.0-fpm
+sudo apt-get install -y php7.0-cli php7.0-curl php7.0-json php7.0-mysql php7.0-ldap php7.0-zip php7.0-mbstring php7.0-xml php7.0-tidy php7.0-soap php7.0-dev
+
+# Setting up Nginx Virtualhost config from network share
+sudo rm -rf /etc/nginx/sites-enabled
+sudo ln -s $basedir/config/nginx/sites-enabled /etc/nginx/sites-enabled
+
+# Setting up nginx snippets
+sudo rm -rf /etc/nginx/snippets
+sudo ln -s $basedir/config/nginx/snippets /etc/nginx/snippets
+
+
+# Making some tweaks to the Nginx Config File
+sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.original  | output_handler
+sudo replace \
+   "include /etc/nginx/sites-enabled/*;" \
+   "include /etc/nginx/sites-enabled/*.conf;" -- \
+    /etc/nginx/nginx.conf
+
+
+# Linking to the network share
+rm -rf /var/www
+ln -s $basedir/www /var/www
+
+# Restart nginx
+sudo service nginx restart
+
+
+# Configure PHP-FPM
+sudo cp /etc/php/7.0/fpm/php.ini /etc/php/7.0/fpm/php.ini.original
+sudo replace \
+   ";cgi.fix_pathinfo=1" \
+   "cgi.fix_pathinfo=0" -- \
+   /etc/php/7.0/fpm/php.ini
+
+sudo service php7.0-fpm restart
+
+
+# Set up firewall
+ufw default deny incoming
+ufw default allow outgoing
+
+ufw allow 22
+ufw allow 80
+ufw allow 443
+ufw --force enable
+
+# Reboot
+sudo reboot

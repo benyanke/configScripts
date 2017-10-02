@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Refresh the wifi if it's down
+
+
+if [ "$(whoami)" != "root" ]; then
+    echo "Please run as root";
+    exit 1;
+fi
+
+    # Kill and restart nm-applet
+    killall nm-applet
+    disown -h nm-applet &

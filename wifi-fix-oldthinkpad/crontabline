@@ -1,0 +1,6 @@
+# WIFI Hacks to always work well
+* * * * * /bin/bash /opt/bin/wifix >/dev/null 2>&1
+* * * * * sleep 15; /bin/bash /opt/bin/wifix >/dev/null 2>&1
+* * * * * sleep 30; /bin/bash /opt/bin/wifix >/dev/null 2>&1
+* * * * * sleep 45; /bin/bash /opt/bin/wifix >/dev/null 2>&1
+

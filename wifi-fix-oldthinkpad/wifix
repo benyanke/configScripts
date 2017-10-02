@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Refresh the wifi if it's down
+
+
+if [ "$(whoami)" != "root" ]; then
+    echo "Please run as root";
+    exit 1;
+fi
+
+host="8.8.8.8";
+
+if ! ping -c 1 -W 2 $host &> /dev/null
+then
+  iwlist wlp3s0 scan
+
+  # If still needed
+  if ! ping -c 1 -W 2 $host &> /dev/null
+  then
+
+    # Refresh network manager
+    sudo service network-manager restart
+
+    # Kill and restart nm-applet
+#    killall nm-applet
+#    disown -h nm-applet &
+
+    # Refresh network manager
+    sudo iwlist wlp3s0 scan
+
+  fi
+fi
+

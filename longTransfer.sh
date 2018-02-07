@@ -23,9 +23,9 @@ RC=$?
 
 while [[ $RC -ne 0 ]]; do
     # Retry
-    sleep 5;
     rsync -azvvP -e ssh "$from" "$to" ;
-    RC=$?
+    RC=$?;
+    sleep 5;
 done
 
 
